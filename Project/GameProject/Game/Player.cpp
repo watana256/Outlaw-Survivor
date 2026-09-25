@@ -54,7 +54,7 @@ Player::Player(const CVector2D& pos)
 {
 	m_img = COPY_RESOURCE("Player", CImage);
 	m_pos_old = m_pos = pos;
-	m_img.SetSize(80, 80);
+	m_img.SetSize(150, 150);
 	m_img.SetCenter(40, 40);
 	m_img.ChangeAnimation(eState_damage_up);
 }
