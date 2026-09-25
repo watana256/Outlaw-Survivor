@@ -20,11 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\Base.h" />
+    <ClInclude Include="Game\Enemy.h" />
     <ClInclude Include="Game\Player.h" />
     <ClInclude Include="Global.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Base\Base.cpp" />
+    <ClCompile Include="Game\Enemy.cpp" />
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
