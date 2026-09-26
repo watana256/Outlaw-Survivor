@@ -9,25 +9,34 @@ private:
 		eState_Walk_left,
 		eState_Walk_up,
 		eState_Walk_down,
-		eState_damage_right,
-		eState_damage_left,
-		eState_damage_up,
-		eState_damage_down,
-		eState_death
+		eState_Damage_right,
+		eState_Damage_left,
+		eState_Damage_up,
+		eState_Damage_down,
+		eState_Death
 	};
 	CImage m_img;
-
+	int m_state;
+	int m_speed_cnt;
 	enum {
 		eAnim_Walk_right,
 		eAnim_Walk_left,
 		eAnim_Walk_up,
 		eAnim_Walk_down,
-		eAnim_damage_right,
-		eAnim_damage_left,
-		eAnim_damage_up,
-		eAnim_damage_down,
-		eAnim_death
+		eAnim_Damage_right,
+		eAnim_Damage_left,
+		eAnim_Damage_up,
+		eAnim_Damage_down,
+		eAnim_Death
 	};
+	void State_Walk_right();
+	void State_Walk_left();
+	void State_Walk_up();
+	void State_Walk_down();
+	void State_Death();
+	void Run();
+
+
 public:
 	Player(const CVector2D& pos);
 	static TexAnimData _anim_data[];
