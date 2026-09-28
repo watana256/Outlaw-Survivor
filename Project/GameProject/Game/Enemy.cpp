@@ -6,7 +6,7 @@ Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
     m_enemy_type = enemy_type;
     m_flip = false;
 
-    // “G‚Ìí—Ş‚²‚Æ‚É HPE‘¬“xE“–‚½‚è”»’èE‰æ‘œ‚ğØ‚è‘Ö‚¦
+    // “G‚Ìí—Ş‚²‚Æ‚É HPE‘¬“xE“–‚½‚è”»’èE‰æ‘œ‚ğØ‚è‘Ö‚¦(©‰¼’u‚«)
     switch (m_enemy_type) {
     case eZombie:
         m_hp = 30;
@@ -17,14 +17,14 @@ Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
 
     case eDog:
         m_hp = 15;
-        m_speed = 4.5f; // ‘«‚ª‘¬‚¢
+        m_speed = 4.5f; // ‘«‚ª‘¬‚¢(ŠG‚Ü‚¾‚È‚¢)
         m_rad = 12;
         m_img.Load("Image/Dog.png");
         break;
 
     case eRobot:
         m_hp = 60;
-        m_speed = 1.5f; // d‚­‚Ä’x‚¢
+        m_speed = 1.5f; // d‚­‚Ä’x‚¢(ŠG‚Ü‚¾‚È‚¢)
         m_rad = 20;
         m_img.Load("Image/Robot.png");
         break;
