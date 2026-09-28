@@ -1,44 +1,65 @@
 #include "Player.h"
 
-#define SPEED 10.0f
+#define SPEED 5.0f
 
 static TexAnim _Walk_right[] =
 {
-	{2,2},
+	{6,5},
+	{7,5}
 };
 static TexAnim _Walk_left[] =
 {
-	{1,1},
+	{1,5},
+	{3,5}
 };
 static TexAnim _Walk_up[] =
 {
-	{12,1},
-	{11,1}
+	{13,5},
+	{14,5}
 };
 static TexAnim _Walk_down[] =
 {
-	{16,1},
-	{17,1}
+	{11,10},
+	{10,10}
 };
 static TexAnim _Damage_right[] =
 {
-	{1,1},
+	{20,5},
+	{21,5},
+	{22,5},
+	{23,5}
 };
 static TexAnim _Damage_left[] =
 {
-	{1,1},
+	{19,5},
+	{18,5},
+	{17,5},
+	{16,5}
 };
 static TexAnim _Damage_up[] =
 {
-	{1,1},
+	{31,5},
+	{30,5},
+	{29,5},
+	{28,5},
 };
 static TexAnim _Damage_down[] =
 {
-	{1,1},
+	{27,5},
+	{26,5},
+	{25,5},
+	{24,5}
 };
 static TexAnim _Death[] =
 {
-	{1,1},
+	{33,15},
+	{34,15},
+	{35,15},
+	{36,15},
+	{37,15},
+	{38,15},
+	{39,15},
+	{40,15},
 };
 
 TexAnimData Player::_anim_data[] =
@@ -91,8 +112,8 @@ void Player::Update()
 
 void Player::Run()
 {
-	int Animu = eAnim_Walk_up;
-	const int move_Speed = 100.0f;
+	int Animu = eAnim_Walk_down;
+	const int move_Speed = SPEED;
 
 	if (HOLD(CInput::eUp))
 	{
@@ -118,24 +139,43 @@ void Player::Run()
 }
 void Player::State_Walk_up()
 {
-	m_img.ChangeAnimation(eAnim_Walk_up);
-
+	/*m_img.ChangeAnimation(eAnim_Walk_up, false);
+	if (m_img.CheckAnimationEnd()) {
+		m_img.ChangeAnimation(eAnim_Walk_up, false);
+		m_state = eState_Walk_down;
+	}*/
 }
 void Player::State_Walk_down()
 {
-
+	/*m_img.ChangeAnimation(eAnim_Walk_down, false);
+	if (m_img.CheckAnimationEnd()) {
+		m_img.ChangeAnimation(eAnim_Walk_down, false);
+		m_state = eState_Walk_down;
+	}*/
 }
 void Player::State_Walk_left()
 {
-
+	/*m_img.ChangeAnimation(eAnim_Walk_left, false);
+	if (m_img.CheckAnimationEnd()) {
+		m_img.ChangeAnimation(eAnim_Walk_left, false);
+		m_state = eState_Walk_down;
+	}*/
 }
 void Player::State_Walk_right()
 {
-
+	/*m_img.ChangeAnimation(eAnim_Walk_right, false);
+	if (m_img.CheckAnimationEnd()) {
+		m_img.ChangeAnimation(eAnim_Walk_right, false);
+		m_state = eState_Walk_down;
+	}*/
 }
 void Player::State_Death()
 {
-
+	/*m_img.ChangeAnimation(eAnim_Death, false);
+	if (m_img.CheckAnimationEnd()) {
+		m_img.ChangeAnimation(eAnim_Death, false);
+		m_state = eState_Walk_down;
+	}*/
 }
 void Player::Draw()
 {
