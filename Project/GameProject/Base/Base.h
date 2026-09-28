@@ -11,7 +11,7 @@ enum {
     eType_Enemy_Attack,
     eType_Effect,
     eType_UI,
-    eType_Scene,
+    eType_Scene, eType_Shop
 };
 
 //d—Í‰Á‘¬“x
