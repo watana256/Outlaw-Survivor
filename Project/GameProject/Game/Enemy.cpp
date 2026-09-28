@@ -1,5 +1,20 @@
 #include "Enemy.h"
 #include "Player.h"
+static TexAnim Zombie[] =
+{
+    {0,3},
+    {1,3}
+};
+static TexAnim Mutant[] =
+{
+    {0,5},
+    {1,5}
+};
+static TexAnim TANK[] =
+{
+    {0,5},
+    {1,5}
+};
 
 Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
     m_pos = pos;
