@@ -12,7 +12,7 @@ Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
         m_hp = 30;
         m_speed = 2.0f;
         m_rad = 16;
-        m_img.Load("Image/Zombie.png");
+        m_img.Load("Image/zonnbi.png");
         break;
 
     case eDog:
@@ -33,15 +33,17 @@ Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
         m_hp = 300;
         m_speed = 2.5f;
         m_rad = 32;
-        m_img.Load("Image/Mutant.png");
+        m_img.Load("Image/hennizonnbi.png");
         break;
 
     case eTank: // ボス（戦車）
         m_hp = 1000;
         m_speed = 1.0f;
         m_rad = 48;
-        m_img.Load("Image/Tank.png");
+        m_img.Load("Image/TANK.png");
         break;
+
+
     }
 }
 
