@@ -6,7 +6,7 @@ Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
     m_enemy_type = enemy_type;
     m_flip = false;
 
-    // 敵の種類ごとに HP・速度・当たり判定・画像を切り替え
+    // 敵の種類ごとに HP・速度・当たり判定・画像を切り替え(←仮置き)
     switch (m_enemy_type) {
     case eZombie:
         m_hp = 30;
