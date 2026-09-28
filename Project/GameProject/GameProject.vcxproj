@@ -22,7 +22,6 @@
     <ClInclude Include="Base\Base.h" />
     <ClInclude Include="Game\Enemy.h" />
     <ClInclude Include="Game\HP.h" />
-    <ClInclude Include="Game\phase.h" />
     <ClInclude Include="Game\Player.h" />
     <ClInclude Include="Global.h" />
   </ItemGroup>
@@ -30,7 +29,6 @@
     <ClCompile Include="Base\Base.cpp" />
     <ClCompile Include="Game\Enemy.cpp" />
     <ClCompile Include="Game\HP.cpp" />
-    <ClCompile Include="Game\phase.cpp" />
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
