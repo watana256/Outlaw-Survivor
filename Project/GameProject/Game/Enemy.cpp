@@ -2,8 +2,8 @@
 #include "Player.h"
 static TexAnim Zombie[] =
 {
-    {0,5},
-    {1,5}
+    {0,3},
+    {1,3}
 };
 static TexAnim Mutant[] =
 {
