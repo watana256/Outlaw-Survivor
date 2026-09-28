@@ -1,6 +1,7 @@
 #include "Player.h"
 
 #define SPEED 5.0f
+#define MUTEKI 1.0f
 
 static TexAnim _Walk_right[] =
 {
@@ -83,6 +84,19 @@ Player::Player(const CVector2D& pos)
 	m_img.SetSize(150, 150);
 	m_img.SetCenter(40, 40);
 	m_img.ChangeAnimation(eState_Damage_up);
+	m_hp = 100;
+}
+void Player::TakeDamage(int damage)
+{
+	if (m_muteki_cnt > 0) return;
+	//HPå∏è≠ÅBâ∫å¿0
+	m_hp = max(m_hp - damage, 0);
+	m_muteki_cnt = MUTEKI;
+	if (m_hp <= 0) {
+		SetKill();
+
+	}
+
 }
 void Player::Update()
 {
@@ -181,5 +195,7 @@ void Player::Draw()
 {
 	m_img.SetPos(m_pos);
 	m_img.Draw();
+	DrawRect();
 	m_img.SetRect(128, 0, 192, 64);
+	Utility::DrawCircle(m_pos, m_rad, CVector4D(0, 0, 1, 0.5));
 }

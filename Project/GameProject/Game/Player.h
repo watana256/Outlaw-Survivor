@@ -18,6 +18,8 @@ private:
 	CImage m_img;
 	int m_state;
 	int m_speed_cnt;
+	int m_hp;
+	int m_muteki_cnt;
 	enum {
 		eAnim_Walk_right,
 		eAnim_Walk_left,
@@ -43,4 +45,13 @@ public:
 	void Update();
 	void Draw();
 	void TakeDamage(int damage);
+	int Gethp()
+	{
+		return m_hp;
+
+	}
+	int Getmaxhp()
+	{
+		return 100;
+	}
 };

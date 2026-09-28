@@ -1,6 +1,6 @@
 #include "Base/Base.h"
 #include "Game/Player.h"
-
+#include "Game/HP.h"
 
 
 
@@ -49,10 +49,10 @@ void Init(void)
 	CInput::SetButton(0, CInput::eButton4, 'V');
 	CInput::SetButton(0, CInput::eButton5, VK_SPACE);
 	CInput::SetButton(0, CInput::eButton10, VK_RETURN);
-	CInput::SetButton(0, CInput::eUp, VK_UP);
-	CInput::SetButton(0, CInput::eDown, VK_DOWN);
-	CInput::SetButton(0, CInput::eLeft, VK_LEFT);
-	CInput::SetButton(0, CInput::eRight, VK_RIGHT);
+	CInput::SetButton(0, CInput::eUp, 'W');
+	CInput::SetButton(0, CInput::eDown, 'S');
+	CInput::SetButton(0, CInput::eLeft, 'A');
+	CInput::SetButton(0, CInput::eRight, 'D');
 	CInput::SetButton(0, CInput::eMouseL, VK_LBUTTON);
 	CInput::SetButton(0, CInput::eMouseR, VK_RBUTTON);
 	CInput::SetButton(0, CInput::eMouseC, VK_MBUTTON);
@@ -98,6 +98,17 @@ void Init(void)
 	                 //“n•Ó
 //-----------------------------------------------------
 	ADD_RESOURCE("Player", CImage::CreateImage("Image/Player.png", Player::_anim_data, 64, 64));
+	ADD_RESOURCE("hp10", CImage::CreateImage("Image/hp10.png"));
+	ADD_RESOURCE("hp20", CImage::CreateImage("Image/hp20.png"));
+	ADD_RESOURCE("hp30", CImage::CreateImage("Image/hp30.png"));
+	ADD_RESOURCE("hp40", CImage::CreateImage("Image/hp40.png"));
+	ADD_RESOURCE("hp50", CImage::CreateImage("Image/hp50.png"));
+	ADD_RESOURCE("hp60", CImage::CreateImage("Image/hp60.png"));
+	ADD_RESOURCE("hp70", CImage::CreateImage("Image/hp70.png"));
+	ADD_RESOURCE("hp80", CImage::CreateImage("Image/hp80.png"));
+	ADD_RESOURCE("hp90", CImage::CreateImage("Image/hp90.png"));
+	ADD_RESOURCE("hp100", CImage::CreateImage("Image/hp100.png"));
+	new HP();
 
 
 
@@ -110,18 +121,7 @@ void Init(void)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-	new Player(CVector2D(72, 800));
+	new Player(CVector2D(950, 500));//124
 //-----------------------------------------------------
 					//‹Tˆä
 //-----------------------------------------------------
