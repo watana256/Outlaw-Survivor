@@ -1,4 +1,5 @@
 #include"phase.h"
+#include"Enemy.h"
 int phase::m_phase(11);
 
 
