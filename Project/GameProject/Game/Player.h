@@ -20,6 +20,7 @@ private:
 	int m_speed_cnt;
 	int m_hp;
 	int m_muteki_cnt;
+	float m_attack_cnt;
 	enum {
 		eAnim_Walk_right,
 		eAnim_Walk_left,

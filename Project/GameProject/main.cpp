@@ -4,7 +4,7 @@
 #include "Game/HP.h"
 #include "Game/Money.h"
 //#include"Game/phase.h"
-
+#include "Game/Bullet.h"
 
 
 
@@ -112,7 +112,7 @@ void Init(void)
 	new HP();
 	ADD_RESOURCE("Money", CImage::CreateImage("Image/koinn.png",Money::_anim_data,20,20));
 	new Money(CVector2D(900, 400));
-
+	ADD_RESOURCE("Bullet", CImage::CreateImage("Image/Bullet.png"));
 
 
 
