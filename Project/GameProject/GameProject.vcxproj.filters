@@ -17,8 +17,10 @@
     <ClInclude Include="Game\Money.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Game\phase.h" />
     <ClInclude Include="Game\Player.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Bullet.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
@@ -39,8 +41,10 @@
     <ClCompile Include="Game\Money.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Game\phase.cpp" />
     <ClCompile Include="Game\Player.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Bullet.cpp">
       <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>

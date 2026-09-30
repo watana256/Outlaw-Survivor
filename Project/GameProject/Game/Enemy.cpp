@@ -98,9 +98,9 @@ void Enemy::Update() {
 void Enemy::Draw() {
     //m_rad();
     m_img.SetPos(m_pos);
-    m_img.SetSize(16, 24);
-
-    m_img.SetRect(0, 0, 12, 25);
+    m_img.SetSize(150, 150);
+    m_img.SetCenter(75, 75);
+    m_rect = CRect(-15, -20, 15, 30);
     m_img.Draw();
 
     Utility::DrawCircle(m_pos, m_rad, CVector4D(0, 0, 1, 0.5));

@@ -20,20 +20,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\Base.h" />
+    <ClInclude Include="Game\Bullet.h" />
     <ClInclude Include="Game\Enemy.h" />
     <ClInclude Include="Game\HP.h" />
     <ClInclude Include="Game\Money.h" />
-    <ClInclude Include="Game\phase.h" />
     <ClInclude Include="Game\Player.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="Weapon\Shop.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Base\Base.cpp" />
+    <ClCompile Include="Game\Bullet.cpp" />
     <ClCompile Include="Game\Enemy.cpp" />
     <ClCompile Include="Game\HP.cpp" />
     <ClCompile Include="Game\Money.cpp" />
-    <ClCompile Include="Game\phase.cpp" />
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Weapon\Shop.cpp" />
