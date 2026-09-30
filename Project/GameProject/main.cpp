@@ -156,7 +156,7 @@ void Init(void)
 //-----------------------------------------------------
 					//‹‚“c
 //-----------------------------------------------------
-	//ADD_RESOURCE("Enemy", CImage::CreateImage("Image/zonnbi.png", Enemy::_anim_data, 64, 64));
+	ADD_RESOURCE("Enemy", CImage::CreateImage("Image/zonnbi.png", Enemy::_anim_data, 64, 64));
 
 
 
@@ -180,7 +180,7 @@ void Init(void)
 
 
 
-	//new Enemy(CVector2D(400, 500), eZombie);
+	new Enemy(CVector2D(400, 500), eZombie);
 
 }
 

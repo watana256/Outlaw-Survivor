@@ -1,5 +1,6 @@
 #pragma once
 #include "Base/Base.h"
+
 enum eEnemyType {
     eZombie,       // ゾンビ
     eRobot,        // ロボ
@@ -18,6 +19,9 @@ private:
     bool    m_flip;       // 左右反転
 
 public:
+    // ★ 修正：main.cpp からアニメーションデータを使えるように宣言を追加
+    static TexAnimData _anim_data[];
+
     // コンストラクタ（出現位置, 敵の種類）
     Enemy(const CVector2D& pos, int enemy_type);
 
@@ -26,4 +30,3 @@ public:
     void Collision(Base* b) override;
     void TakeDamage(int damage); // ダメージ処理
 };
-
