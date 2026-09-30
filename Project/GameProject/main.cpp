@@ -3,7 +3,7 @@
 #include "Game/Enemy.h"
 #include "Game/HP.h"
 #include "Game/Money.h"
-#include"Game/phase.h"
+//#include"Game/phase.h"
 
 
 
@@ -126,8 +126,8 @@ void Init(void)
 //-----------------------------------------------------
 					//‹Tˆä
 //-----------------------------------------------------
-	ADD_RESOURCE("phase", CImage::CreateImage("Image/phase.png"));
-	new phase;
+	//ADD_RESOURCE("phase", CImage::CreateImage("Image/phase.png"));
+	//new phase;
 
 
 
@@ -156,7 +156,7 @@ void Init(void)
 //-----------------------------------------------------
 					//‹‚“c
 //-----------------------------------------------------
-	//ADD_RESOURCE("Enemy", CImage::CreateImage("Image/zonnbi.png", Enemy::_anim_data, 64, 64));
+	ADD_RESOURCE("Enemy", CImage::CreateImage("Image/zonnbi.png", Enemy::_anim_data, 64, 64));
 
 
 
@@ -180,7 +180,7 @@ void Init(void)
 
 
 
-	//new Enemy(CVector2D(400, 500), eZombie);
+	new Enemy(CVector2D(400, 500), eZombie);
 
 }
 

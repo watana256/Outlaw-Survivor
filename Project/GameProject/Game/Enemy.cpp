@@ -15,6 +15,11 @@ static TexAnim TANK[] =
     {0,5},
     {1,5}
 };
+TexAnimData Enemy::_anim_data[] = {
+    ANIMDATA(Zombie),
+    ANIMDATA(Mutant),
+    ANIMDATA(TANK),
+};
 
 Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
     m_pos = pos;
@@ -91,7 +96,14 @@ void Enemy::Update() {
 }
 
 void Enemy::Draw() {
+    //m_rad();
+    m_img.SetPos(m_pos);
+    m_img.SetSize(150, 150);
+    m_img.SetCenter(75, 75);
+    m_rect = CRect(-15, -20, 15, 30);
+    m_img.Draw();
 
+    Utility::DrawCircle(m_pos, m_rad, CVector4D(0, 0, 1, 0.5));
 }
 
 void Enemy::Collision(Base* b){
