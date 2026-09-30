@@ -98,7 +98,7 @@ void Enemy::Update() {
 void Enemy::Draw() {
     //m_rad();
     m_img.SetPos(m_pos);
-    m_img.SetSize(150, 150);
+    m_img.SetSize(14, 26);
     m_img.SetCenter(75, 75);
     m_rect = CRect(-15, -20, 15, 30);
     m_img.Draw();
