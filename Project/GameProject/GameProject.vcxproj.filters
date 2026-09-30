@@ -14,6 +14,12 @@
     <ClInclude Include="Game\HP.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="Weapon\Shop.h">
+      <Filter>Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Money.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -29,6 +35,12 @@
     <ClCompile Include="Game\HP.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Weapon\Shop.cpp">
+      <Filter>Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Money.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -36,6 +48,9 @@
     </Filter>
     <Filter Include="Game">
       <UniqueIdentifier>{e7b02635-49e7-4ea7-8548-353c5f94c61d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Weapon">
+      <UniqueIdentifier>{b7e89ee1-4f83-419a-9a4f-305f63b8a747}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

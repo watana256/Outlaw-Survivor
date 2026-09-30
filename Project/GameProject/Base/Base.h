@@ -10,8 +10,8 @@ enum {
     eType_Player_Attack,
     eType_Enemy_Attack,
     eType_Effect,
-    eType_UI,
-    eType_Scene,
+    eType_UI, eType_Money,
+    eType_Scene, eType_Shop
 };
 
 //èdóÕâ¡ë¨ìx

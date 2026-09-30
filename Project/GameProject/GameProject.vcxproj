@@ -22,15 +22,19 @@
     <ClInclude Include="Base\Base.h" />
     <ClInclude Include="Game\Enemy.h" />
     <ClInclude Include="Game\HP.h" />
+    <ClInclude Include="Game\Money.h" />
     <ClInclude Include="Game\Player.h" />
     <ClInclude Include="Global.h" />
+    <ClInclude Include="Weapon\Shop.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Base\Base.cpp" />
     <ClCompile Include="Game\Enemy.cpp" />
     <ClCompile Include="Game\HP.cpp" />
+    <ClCompile Include="Game\Money.cpp" />
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Weapon\Shop.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FE2CE3B1-49BF-46A5-9DB1-9BD5B52FE1A0}</ProjectGuid>
