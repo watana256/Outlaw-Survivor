@@ -85,27 +85,9 @@ Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
 void Enemy::Update() {
 
     m_img.UpdateAnimation();
-    /*switch (m_state) {
-    case eState_Walk_up:
-        State_Walk_left();
-        break;
-    case eState_Walk_down:
-        State_Walk_down();
-        break;
-    case eState_Walk_left:
-        State_Walk_left();
-        break;
-    case eState_Walk_right:
-        State_Walk_right();
-        break;
-    case eState_Death:
-        State_Death();
-        break;
-    }*/
-    // 1. プレイヤーの探索
     Base* player = Base::FindObject(eType_Player);
 
-    // 2. プレイヤーが存在する場合、追尾
+    //  プレイヤーが存在する場合、追尾
     if (player) {
         CVector2D dir = player->m_pos - m_pos;
         float len = dir.Length();
@@ -155,23 +137,6 @@ void Enemy::Draw() {
     Utility::DrawLine(bottomRight, bottomLeft, color);
     Utility::DrawLine(bottomLeft, topLeft, color);
 }
-
-/*void Enemy::Draw() {
-    // 画像切り出し範囲（元画像 28x26 の左半分 14x26 を指定）
-    m_img.SetRect(0, 0, 14, 26);
-    m_img.SetPos(m_pos);
-
-    // 表示サイズ（拡大表示 28x52）
-    m_img.SetSize(28, 52);
-
-    // 中心点（表示サイズの半分 14, 26）
-    m_img.SetCenter(14, 26);
-
-    m_img.Draw();
-
-    // デバッグ用の四角形枠の描画
-    Utility::DrawCube(m_pos, CVector2D(28, 52), CVector4D(0, 0, 1, 0.5f));
-}*/
 
 void Enemy::Collision(Base* b) {
    
