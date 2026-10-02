@@ -39,7 +39,6 @@ private:
 	void State_Death();
 	void Run();
 
-
 public:
 	Player(const CVector2D& pos);
 	static TexAnimData _anim_data[];

@@ -132,7 +132,7 @@ void Player::Run()
 	int Animu = eAnim_Walk_down;
 	const int move_Speed = SPEED;
 
-	if (HOLD(CInput::eButton1))
+	if (HOLD(CInput::eMouseL))
 	{
 		if (m_attack_cnt > ATTACK_TIME)
 		{
