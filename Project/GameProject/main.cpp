@@ -111,7 +111,7 @@ void Init(void)
 	ADD_RESOURCE("hp100", CImage::CreateImage("Image/hp100.png"));
 	new HP();
 	ADD_RESOURCE("Money", CImage::CreateImage("Image/koinn.png",Money::_anim_data,20,20));
-	new Money(CVector2D(900, 400));
+	new Money(CVector2D(900, 400),eGold);
 	ADD_RESOURCE("Bullet", CImage::CreateImage("Image/Bullet.png"));
 	ADD_RESOURCE("Score", CImage::CreateImage("Image/Score.png"));
 
