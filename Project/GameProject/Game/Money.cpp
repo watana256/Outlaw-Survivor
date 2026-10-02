@@ -2,11 +2,11 @@
 #include "Score.h"
 static TexAnim _eMoney_Gold[] =
 {
-	{0,1}
+	{1,1}
 };
 static TexAnim _eMoney_Silver[] =
 {
-	{1,1}
+	{0,1}
 };
 TexAnimData Money::_anim_data[] = 
 {
