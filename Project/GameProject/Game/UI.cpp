@@ -11,7 +11,8 @@ UI::UI() :Base(eType_UI)
 	//‰æ‘œ‚ÌƒTƒCƒYİ’è
 	m_img.SetSize(250, 100);
 	//•`‰æ
-	
+	UIType = 0;
+
 
 }
 void UI::Draw()
@@ -21,7 +22,7 @@ void UI::Draw()
 
 
 			//‰æ‘œ‚ÌØ‚è”²‚«
-			m_img.SetRect(i * 360, 0, i * 360 + 360, 148);
+			m_img.SetRect(UIType * 360, 0, UIType * 360 + 360, 148);
 			m_img.Draw();
 		}
 
