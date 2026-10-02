@@ -3,7 +3,7 @@
 #include "Game/Enemy.h"
 #include "Game/HP.h"
 #include "Game/Money.h"
-//#include"Game/phase.h"
+//#include"Game/UI.h"
 
 
 
@@ -126,8 +126,8 @@ void Init(void)
 //-----------------------------------------------------
 					//‹Tˆä
 //-----------------------------------------------------
-	//ADD_RESOURCE("phase", CImage::CreateImage("Image/phase.png"));
-	//new phase;
+	//ADD_RESOURCE("UI", CImage::CreateImage("Image/phase.png"));
+	//new UI;
 
 
 
