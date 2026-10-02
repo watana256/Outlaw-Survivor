@@ -4,12 +4,15 @@
 
 UI::UI() :Base(eType_UI)
 {
+	m_img = COPY_RESOURCE("UI",CImage);
+
 	//位置設定
 	m_img.SetPos(728, 30);
 	//画像のサイズ設定
 	m_img.SetSize(250, 100);
 	//描画
 	
+
 }
 void UI::Draw()
 {
@@ -18,7 +21,7 @@ void UI::Draw()
 
 
 			//画像の切り抜き
-			m_img.SetRect(11 * 360, 0, 11 * 360 + 360, 148);
+			m_img.SetRect(i * 360, 0, i * 360 + 360, 148);
 			m_img.Draw();
 		}
 
