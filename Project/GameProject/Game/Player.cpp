@@ -137,7 +137,9 @@ void Player::Run()
 		if (m_attack_cnt > ATTACK_TIME)
 		{
 			m_attack_cnt = 0;
-			Base::Add(new Bullet(m_pos));
+			CVector2D mouse_pos = CInput::GetMousePoint();
+			CVector2D dir = (mouse_pos - m_pos).GetNormalize();
+			Base::Add(new Bullet(m_pos, dir));
 		}
 		m_attack_cnt += CFPS::GetDeltaTime();
 	}

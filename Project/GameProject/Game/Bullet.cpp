@@ -1,18 +1,20 @@
 #include "Bullet.h"
 
-Bullet::Bullet(const CVector2D& pos) :Base(eType_Bullet)
+Bullet::Bullet(const CVector2D& pos, const CVector2D& dir) :Base(eType_Bullet)
 {
     m_img.Load("Image/Bullet.png");
     m_pos = pos;
-    m_rad = 16;
-    m_img.SetSize(100, 100);
-    m_img.SetCenter(16, 16);
+    m_vec = dir;
+    m_rect = CRect(-10, -10, 10, 10);
+    m_img.SetSize(10, 10);
+    m_img.SetCenter(10, 10);
+    m_img.SetAng(atan2f(-m_vec.y, m_vec.x));
 
 }
 void Bullet::Update()
 {
-    const int move_speed = 16;
-    m_pos.x += move_speed;
+    const float move_speed = 1;
+    m_pos += m_vec * move_speed;
 }
 void Bullet::Draw()
 {

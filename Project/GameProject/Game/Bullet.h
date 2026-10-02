@@ -7,7 +7,7 @@ public:
     void Collision(Base* b);
 
 public:
-    Bullet(const CVector2D& pos);
+    Bullet(const CVector2D& pos, const CVector2D& dir);
     void Update();
     void Draw();
 };
