@@ -1,113 +1,180 @@
 #include "Enemy.h"
 #include "Player.h"
+
+// アニメーション定義
 static TexAnim Zombie[] =
-{
-    {0,3},
-    {1,3}
-};
-static TexAnim Mutant[] =
-{
-    {0,5},
+{ 
+    {0,5}, 
     {1,5}
 };
-static TexAnim TANK[] =
-{
-    {0,5},
-    {1,5}
+static TexAnim Dog[] = { 
+    {0,5}, 
+    {1,5} 
 };
+static TexAnim Robot[] = 
+{ 
+    {0,5}, 
+    {1,5} 
+};
+
+static TexAnim Mutant[] = 
+{ 
+    {0,5}, 
+    {1,5} 
+};
+static TexAnim TANK[] = {
+    {0,5}, 
+    {1,5} 
+};
+
+// enum（eZombie, eDog, eRobot, eMutant, eTank）の順番と合わせる
 TexAnimData Enemy::_anim_data[] = {
     ANIMDATA(Zombie),
+    ANIMDATA(Dog),
+    ANIMDATA(Robot),
     ANIMDATA(Mutant),
     ANIMDATA(TANK),
 };
 
 Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
     m_pos = pos;
+    int Anim;
     m_enemy_type = enemy_type;
     m_flip = false;
 
-    // 敵の種類ごとに HP・速度・当たり判定・画像を切り替え(←仮置き)
+    // 敵の種類ごとにパラメータ設定
     switch (m_enemy_type) {
     case eZombie:
         m_hp = 30;
         m_speed = 2.0f;
         m_rad = 16;
-        m_img.Load("Image/zonnbi.png");
+        m_img = COPY_RESOURCE("Enemy", CImage);
         break;
 
     case eDog:
         m_hp = 15;
-        m_speed = 4.5f; // 足が速い(絵まだない)
+        m_speed = 4.5f;
         m_rad = 12;
-        m_img.Load("Image/Dog.png");
+        m_img = COPY_RESOURCE("Enemy", CImage);
         break;
 
     case eRobot:
         m_hp = 60;
-        m_speed = 1.5f; // 硬くて遅い(絵まだない)
+        m_speed = 1.5f;
         m_rad = 20;
-        m_img.Load("Image/Robot.png");
+        m_img = COPY_RESOURCE("Enemy", CImage);
         break;
 
-    case eMutant: // 中間ボス（変異ゾンビ）
+    case eMutant:
         m_hp = 300;
         m_speed = 2.5f;
         m_rad = 32;
-        m_img.Load("Image/hennizonnbi.png");
+        m_img = COPY_RESOURCE("Enemy", CImage);
         break;
 
-    case eTank: // ボス（戦車）
+    case eTank:
         m_hp = 1000;
         m_speed = 1.0f;
         m_rad = 48;
-        m_img.Load("Image/TANK.png");
+        m_img = COPY_RESOURCE("Enemy", CImage);
         break;
-
-
     }
+    m_img.ChangeAnimation(0);
 }
 
 void Enemy::Update() {
-    // 1. プレイヤー（主人公）の探索
+
+    m_img.UpdateAnimation();
+    /*switch (m_state) {
+    case eState_Walk_up:
+        State_Walk_left();
+        break;
+    case eState_Walk_down:
+        State_Walk_down();
+        break;
+    case eState_Walk_left:
+        State_Walk_left();
+        break;
+    case eState_Walk_right:
+        State_Walk_right();
+        break;
+    case eState_Death:
+        State_Death();
+        break;
+    }*/
+    // 1. プレイヤーの探索
     Base* player = Base::FindObject(eType_Player);
 
-    // 2. プレイヤーが存在する場合、その方向へ360度追尾
+    // 2. プレイヤーが存在する場合、追尾
     if (player) {
-        // 自分からプレイヤーへのベクトルを計算
         CVector2D dir = player->m_pos - m_pos;
         float len = dir.Length();
 
-        if (len > 0) {
-            dir.x /= len; // 正規化（単位ベクトル化）
+        if (len > 0.0f) {
+            dir.x /= len;
             dir.y /= len;
         }
 
-        // プレイヤーの方向へ移動
         m_pos += dir * m_speed;
 
-        // 向きの更新（左にいるなら反転）
-        if (player->m_pos.x < m_pos.x) {
-            m_flip = true;
-        }
-        else {
-            m_flip = false;
-        }
+        // 向きの更新
+        m_flip = (player->m_pos.x < m_pos.x);
     }
+
+    // 当たり判定用四角形の領域を更新 (中心 m_pos、幅28、高さ52)
+    m_rect = CRect(m_pos.x - 14, m_pos.y - 26, m_pos.x + 14, m_pos.y + 26);
 }
 
 void Enemy::Draw() {
-    //m_rad();
+    // アニメーションの切り出し計算
+    int left = m_anim_frame * 14;
+    int right = left + 14;
+
+    // 左向き(m_flip == true)の時は左右を入れ替えて反転させる
+    if (m_flip) {
+        m_img.SetRect(right, 0, left, 26);
+    }
+    else {
+        m_img.SetRect(left, 0, right, 26);
+    }
+
     m_img.SetPos(m_pos);
-    m_img.SetSize(14, 26);
-    m_img.SetCenter(75, 75);
-    m_rect = CRect(-15, -20, 15, 30);
+    m_img.SetSize(28, 52);
+    m_img.SetCenter(14, 26);
     m_img.Draw();
 
-    Utility::DrawCircle(m_pos, m_rad, CVector4D(0, 0, 1, 0.5));
+    // デバッグ用の青い四角枠を描画（前回のコードのまま）
+    CVector2D topLeft(m_pos.x - 14, m_pos.y - 26);
+    CVector2D topRight(m_pos.x + 14, m_pos.y - 26);
+    CVector2D bottomLeft(m_pos.x - 14, m_pos.y + 26);
+    CVector2D bottomRight(m_pos.x + 14, m_pos.y + 26);
+    CVector4D color(0, 0, 1, 0.5f);
+
+    Utility::DrawLine(topLeft, topRight, color);
+    Utility::DrawLine(topRight, bottomRight, color);
+    Utility::DrawLine(bottomRight, bottomLeft, color);
+    Utility::DrawLine(bottomLeft, topLeft, color);
 }
 
-void Enemy::Collision(Base* b){
+/*void Enemy::Draw() {
+    // 画像切り出し範囲（元画像 28x26 の左半分 14x26 を指定）
+    m_img.SetRect(0, 0, 14, 26);
+    m_img.SetPos(m_pos);
 
+    // 表示サイズ（拡大表示 28x52）
+    m_img.SetSize(28, 52);
+
+    // 中心点（表示サイズの半分 14, 26）
+    m_img.SetCenter(14, 26);
+
+    m_img.Draw();
+
+    // デバッグ用の四角形枠の描画
+    Utility::DrawCube(m_pos, CVector2D(28, 52), CVector4D(0, 0, 1, 0.5f));
+}*/
+
+void Enemy::Collision(Base* b) {
+   
 }
 
 void Enemy::TakeDamage(int damage) {

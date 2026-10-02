@@ -1,7 +1,9 @@
 #include "Player.h"
+#include "Bullet.h"
 
 #define SPEED 5.0f
 #define MUTEKI 1.0f
+#define ATTACK_TIME 0.19f
 
 static TexAnim _Walk_right[] =
 {
@@ -130,6 +132,15 @@ void Player::Run()
 	int Animu = eAnim_Walk_down;
 	const int move_Speed = SPEED;
 
+	if (HOLD(CInput::eButton1))
+	{
+		if (m_attack_cnt > ATTACK_TIME)
+		{
+			m_attack_cnt = 0;
+			Base::Add(new Bullet(m_pos));
+		}
+		m_attack_cnt += CFPS::GetDeltaTime();
+	}
 	if (HOLD(CInput::eUp))
 	{
 		m_pos.y -= move_Speed;

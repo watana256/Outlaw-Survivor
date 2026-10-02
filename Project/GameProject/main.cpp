@@ -4,8 +4,8 @@
 #include "Game/HP.h"
 #include "Game/Money.h"
 //#include"Game/UI.h"
-
-
+#include "Game/Bullet.h"
+#include "Game/Score.h"
 
 
 
@@ -112,6 +112,8 @@ void Init(void)
 	new HP();
 	ADD_RESOURCE("Money", CImage::CreateImage("Image/koinn.png",Money::_anim_data,20,20));
 	new Money(CVector2D(900, 400));
+	ADD_RESOURCE("Bullet", CImage::CreateImage("Image/Bullet.png"));
+	ADD_RESOURCE("Score", CImage::CreateImage("Image/Score.png"));
 
 
 
@@ -119,10 +121,8 @@ void Init(void)
 
 
 
-
-
-
-	new Player(CVector2D(950, 500));//124
+	new Score();
+	new Player(CVector2D(950, 500));//125
 //-----------------------------------------------------
 					//‹Tˆä
 //-----------------------------------------------------
@@ -156,7 +156,7 @@ void Init(void)
 //-----------------------------------------------------
 					//‹‚“c
 //-----------------------------------------------------
-	ADD_RESOURCE("Enemy", CImage::CreateImage("Image/zonnbi.png", Enemy::_anim_data, 64, 64));
+	ADD_RESOURCE("Enemy", CImage::CreateImage("Image/zonnbi.png", Enemy::_anim_data, 14, 24));
 
 
 
