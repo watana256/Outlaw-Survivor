@@ -156,7 +156,7 @@ void Init(void)
 //-----------------------------------------------------
 					//‹‚“c
 //-----------------------------------------------------
-	ADD_RESOURCE("Enemy", CImage::CreateImage("Image/zonnbi.png", Enemy::_anim_data, 64, 64));
+	ADD_RESOURCE("Enemy", CImage::CreateImage("Image/zonnbi.png", Enemy::_anim_data, 14, 24));
 
 
 

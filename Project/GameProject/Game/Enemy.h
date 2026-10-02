@@ -18,6 +18,9 @@ private:
     float   m_speed;      // 移動速度
     bool    m_flip;       // 左右反転
 
+    int m_anim_frame; // 現在のコマ番号（0 または 1）
+    int m_anim_timer; // コマ切り替え用のカウントタイマー
+
 public:
     // ★ 修正：main.cpp からアニメーションデータを使えるように宣言を追加
     static TexAnimData _anim_data[];
