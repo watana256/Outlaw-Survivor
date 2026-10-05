@@ -93,12 +93,24 @@ void Enemy::Update() {
         CVector2D dir = player->m_pos - m_pos;
         float len = dir.Length();
 
-        if (len > 0.0f) {
+        // šŽ~‚ß‚½‚¢‹——£‚ðÝ’èi“G‚Ì”¼Œa + ƒvƒŒƒCƒ„[‚Ì”¼Œa‚È‚Çj
+// —á: “G‚Ì”¼Œa(m_rad) + 8ƒsƒNƒZƒ‹•ª —£‚ê‚½êŠ‚ÅŽ~‚Ü‚é
+        float stop_dist = m_rad + 8.0f;
+
+        // š‹——£‚ª stop_dist ‚æ‚è—£‚ê‚Ä‚¢‚éê‡‚¾‚¯ˆÚ“®‚·‚éI
+        if (len > stop_dist) {
+            dir.x /= len;
+            dir.y /= len;
+
+            m_pos += dir * m_speed;
+        }
+
+        /*if (len > 0.0f) {
             dir.x /= len;
             dir.y /= len;
         }
 
-        m_pos += dir * m_speed;
+        m_pos += dir * m_speed;*/
 
         // Œü‚«‚ÌXV
         m_flip = (player->m_pos.x < m_pos.x);
@@ -116,7 +128,6 @@ void Enemy::Draw() {
     m_img.SetSize(28, 52);
     m_img.SetCenter(14, 26);
     m_img.Draw();
-    //Utility::DrawCircle(m_pos, m_rad, CVector4D(0, 1, 0, 0.5));
     DrawRect();
 
 
