@@ -126,8 +126,8 @@ void Enemy::Draw() {
     m_img.Draw();
 
     // ★ 当たり判定の四角を「青色」で描画
-    CRect rect(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_top, m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom);
-    Utility::DrawQuad(rect.m_pos, rect.m_size, CVector4D(0, 0, 1, 0.5f)); // CVector4D(R, G, B, Alpha)
+   /* CRect rect(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_top, m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom);
+    Utility::DrawQuad(rect.m_pos, rect.m_size, CVector4D(0, 0, 1, 0.5f)); // CVector4D(R, G, B, Alpha)*/
 }
 
 void Enemy::Collision(Base* b) {
