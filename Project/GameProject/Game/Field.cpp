@@ -13,4 +13,5 @@ Field::Field() :Base(eType_Field)
 }
 void Field::Draw()
 {
+	m_img.Draw();
 }
