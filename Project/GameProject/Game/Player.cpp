@@ -2,7 +2,7 @@
 #include "Bullet.h"
 
 #define SPEED 5.0f
-#define MUTEKI 1.0f
+#define MUTEKI 60.0f
 #define ATTACK_TIME 1.0f
 
 static TexAnim _Walk_right[] =
@@ -88,6 +88,7 @@ Player::Player(const CVector2D& pos)
 	m_rect = CRect(-15, -20, 15, 30);
 	m_img.ChangeAnimation(eState_Damage_up);
 	m_hp = 100;
+	m_muteki_cnt = 0.0f;
 }
 void Player::TakeDamage(int damage)
 {
@@ -103,6 +104,14 @@ void Player::TakeDamage(int damage)
 }
 void Player::Update()
 {
+	// ★追加：無敵時間が残っていればタイマーを減らす処理
+	if (m_muteki_cnt > 0.0f) {
+		m_muteki_cnt -= CFPS::GetDeltaTime();
+		if (m_muteki_cnt < 0.0f) {
+			m_muteki_cnt = 0.0f; // 0以下になったら0に補正
+		}
+	}
+
 	m_img.UpdateAnimation();
 	m_pos_old = m_pos;
 	Run();
@@ -123,8 +132,6 @@ void Player::Update()
 		State_Death();
 		break;
 	}
-
-
 }
 
 void Player::Run()
