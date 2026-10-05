@@ -93,25 +93,20 @@ void Enemy::Update() {
     if (player) {
         CVector2D dir = player->m_pos - m_pos;
 
-        // š ‰¡(X)‚Æc(Y)‚»‚ê‚¼‚ê‚Ì’âŽ~‹——£‚ðÝ’è
-        // ‰¡•ûŒüF“G”¼•ª(15) + ƒvƒŒƒCƒ„[”¼•ª(15) + 8 = 38.0f
         float stop_x = 12.0f + 12.0f + 2.0f;
-        // c•ûŒüF“G”¼•ª(25) + ƒvƒŒƒCƒ„[”¼•ª(25) + 8 = 58.0f
         float stop_y = 20.0f + 22.0f + 2.0f;
 
         CVector2D move_dir(0.0f, 0.0f);
 
-        // X•ûŒüi‰¡jF˜g‚©‚ç8ƒhƒbƒg‚æ‚è—£‚ê‚Ä‚¢‚ê‚ÎˆÚ“®
         if (fabsf(dir.x) > stop_x) {
             move_dir.x = (dir.x > 0) ? 1.0f : -1.0f;
         }
 
-        // Y•ûŒüicjF˜g‚©‚ç8ƒhƒbƒg‚æ‚è—£‚ê‚Ä‚¢‚ê‚ÎˆÚ“®
         if (fabsf(dir.y) > stop_y) {
             move_dir.y = (dir.y > 0) ? 1.0f : -1.0f;
         }
 
-        // ˆÚ“®¬•ª‚ª‚ ‚éê‡A³‹K‰»‚µ‚ÄˆÚ“®iŽÎ‚ßˆÚ“®‚Ì‰Á‘¬–hŽ~j
+    
         float move_len = move_dir.Length();
         if (move_len > 0.0f) {
             move_dir.x /= move_len;
