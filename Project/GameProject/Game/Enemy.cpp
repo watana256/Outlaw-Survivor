@@ -123,8 +123,17 @@ void Enemy::Draw() {
 }
 
 void Enemy::Collision(Base* b) {
-   
+    // 相手がプレイヤーの場合
+    if (b->m_type == eType_Player) {
+        // 当たり判定（円判定または矩形判定）
+        if (Base::CollisionCircle(this, b)) { // または Base::CollisionRect(this, b)
+            if (Player* p = dynamic_cast<Player*>(b)) {
+                p->TakeDamage(10); // プレイヤー側のTakeDamageを呼ぶだけ！
+            }
+        }
+    }
 }
+
 
 void Enemy::TakeDamage(int damage) {
     m_hp -= damage;
