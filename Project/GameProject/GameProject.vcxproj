@@ -27,6 +27,7 @@
     <ClInclude Include="Game\Money.h" />
     <ClInclude Include="Game\Player.h" />
     <ClInclude Include="Game\Score.h" />
+    <ClInclude Include="Game\Shop.h" />
     <ClInclude Include="Game\UI.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="Weapon\Shop.h" />
@@ -40,6 +41,7 @@
     <ClCompile Include="Game\Money.cpp" />
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="Game\Score.cpp" />
+    <ClCompile Include="Game\Shop.cpp" />
     <ClCompile Include="Game\UI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Weapon\Shop.cpp" />
