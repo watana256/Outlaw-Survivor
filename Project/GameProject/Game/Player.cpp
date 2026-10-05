@@ -3,7 +3,7 @@
 
 #define SPEED 5.0f
 #define MUTEKI 1.0f
-#define ATTACK_TIME 0.19f
+#define ATTACK_TIME 1.0f
 
 static TexAnim _Walk_right[] =
 {

@@ -1,5 +1,7 @@
 #include "Bullet.h"
 
+#define  BULLET_SPEED 5.0f
+
 Bullet::Bullet(const CVector2D& pos, const CVector2D& dir) :Base(eType_Bullet)
 {
     m_img.Load("Image/Bullet.png");
@@ -13,7 +15,7 @@ Bullet::Bullet(const CVector2D& pos, const CVector2D& dir) :Base(eType_Bullet)
 }
 void Bullet::Update()
 {
-    const float move_speed = 1;
+    const float move_speed = BULLET_SPEED;
     m_pos += m_vec * move_speed;
 }
 void Bullet::Draw()
