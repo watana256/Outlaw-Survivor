@@ -6,7 +6,7 @@
 #include"Game/UI.h"
 #include "Game/Bullet.h"
 #include "Game/Score.h"
-
+#include"Game/Field.h"
 
 
 
@@ -127,9 +127,9 @@ void Init(void)
 					//‹Tˆä
 //-----------------------------------------------------
 	ADD_RESOURCE("UI", CImage::CreateImage("Image/UI.png"));
+	ADD_RESOURCE("Field", CImage::CreateImage("Image/Field.png"));
 	new UI;
-
-
+	new Field;
 
 
 
