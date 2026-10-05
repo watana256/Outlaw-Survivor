@@ -40,6 +40,7 @@ Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
     m_pos = pos;
     int Anim;
     m_enemy_type = enemy_type;
+    m_rect = CRect(-15, -25, 15, 25);
     m_flip = false;
 
     // 敵の種類ごとにパラメータ設定
@@ -104,38 +105,21 @@ void Enemy::Update() {
     }
 
     // 当たり判定用四角形の領域を更新 (中心 m_pos、幅28、高さ52)
-    m_rect = CRect(m_pos.x - 14, m_pos.y - 26, m_pos.x + 14, m_pos.y + 26);
+    //m_rect = CRect(m_pos.x - 14, m_pos.y - 26, m_pos.x + 14, m_pos.y + 26);
 }
 
 void Enemy::Draw() {
-    // アニメーションの切り出し計算
-    int left = m_anim_frame * 14;
-    int right = left + 14;
 
-    // 左向き(m_flip == true)の時は左右を入れ替えて反転させる
-    if (m_flip) {
-        m_img.SetRect(right, 0, left, 26);
-    }
-    else {
-        m_img.SetRect(left, 0, right, 26);
-    }
+    m_img.SetFlipH(m_flip);
 
     m_img.SetPos(m_pos);
     m_img.SetSize(28, 52);
     m_img.SetCenter(14, 26);
     m_img.Draw();
+    //Utility::DrawCircle(m_pos, m_rad, CVector4D(0, 1, 0, 0.5));
+    DrawRect();
 
-    // デバッグ用の青い四角枠を描画（前回のコードのまま）
-    CVector2D topLeft(m_pos.x - 14, m_pos.y - 26);
-    CVector2D topRight(m_pos.x + 14, m_pos.y - 26);
-    CVector2D bottomLeft(m_pos.x - 14, m_pos.y + 26);
-    CVector2D bottomRight(m_pos.x + 14, m_pos.y + 26);
-    CVector4D color(0, 0, 1, 0.5f);
 
-    Utility::DrawLine(topLeft, topRight, color);
-    Utility::DrawLine(topRight, bottomRight, color);
-    Utility::DrawLine(bottomRight, bottomLeft, color);
-    Utility::DrawLine(bottomLeft, topLeft, color);
 }
 
 void Enemy::Collision(Base* b) {
