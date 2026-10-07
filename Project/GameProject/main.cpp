@@ -117,7 +117,7 @@ void Init(void)
 	ADD_RESOURCE("Score", CImage::CreateImage("Image/Score.png"));
 	ADD_RESOURCE("SHOP", CImage::CreateImage("Image/SHOP.png"));
 	//new Shop();
-
+	ADD_RESOURCE("Pistol", CImage::CreateImage("Image/Pistol.png"));
 
 
 
