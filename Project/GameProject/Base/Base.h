@@ -11,7 +11,7 @@ enum {
     eType_Enemy_Attack,
     eType_Effect,
     eType_UI, eType_Money, eType_Bullet,
-    eType_Scene, eType_Shop
+    eType_Scene, eType_Shop,
     eType_System,
 };
 
