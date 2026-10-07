@@ -17,7 +17,10 @@ UI::UI() :Base(eType_UI)
 }
 void UI::Draw()
 {
-
+	/*
+	
+	
+	*/
 		for (int i = 0; i < 10; i++) {
 
 

@@ -23,10 +23,12 @@
     <ClInclude Include="Game\Bullet.h" />
     <ClInclude Include="Game\Enemy.h" />
     <ClInclude Include="Game\Field.h" />
+    <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Game\HP.h" />
     <ClInclude Include="Game\Money.h" />
     <ClInclude Include="Game\Player.h" />
     <ClInclude Include="Game\Score.h" />
+    <ClInclude Include="Game\Title.h" />
     <ClInclude Include="Game\UI.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="Weapon\Shop.h" />
@@ -36,10 +38,12 @@
     <ClCompile Include="Game\Bullet.cpp" />
     <ClCompile Include="Game\Enemy.cpp" />
     <ClCompile Include="Game\Field.cpp" />
+    <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Game\HP.cpp" />
     <ClCompile Include="Game\Money.cpp" />
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="Game\Score.cpp" />
+    <ClCompile Include="Game\Title.cpp" />
     <ClCompile Include="Game\UI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Weapon\Shop.cpp" />
