@@ -31,6 +31,7 @@
     <ClInclude Include="Game\Shop.h" />
     <ClInclude Include="Game\Title.h" />
     <ClInclude Include="Game\UI.h" />
+    <ClInclude Include="Game\Weapon\Pistol.h" />
     <ClInclude Include="Global.h" />
     <ClInclude Include="Weapon\Shop.h" />
   </ItemGroup>
@@ -47,6 +48,7 @@
     <ClCompile Include="Game\Shop.cpp" />
     <ClCompile Include="Game\Title.cpp" />
     <ClCompile Include="Game\UI.cpp" />
+    <ClCompile Include="Game\Weapon\Pistol.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Weapon\Shop.cpp" />
   </ItemGroup>

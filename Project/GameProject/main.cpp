@@ -8,7 +8,7 @@
 #include "Game/Score.h"
 #include"Game/Field.h"
 #include "Game/Shop.h"
-
+#include "Game/Weapon/Pistol.h"
 
 
 void MainLoop(void) {

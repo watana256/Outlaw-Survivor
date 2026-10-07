@@ -4,14 +4,14 @@ enum {
     eType_Map,
     eType_Door, eTpe_Shop,
     eType_AreaChange,
-    eType_Player,
+    eType_Player, eType_Pistil,
     eType_Enemy,
     eType_Goal,
     eType_Player_Attack,
     eType_Enemy_Attack,
     eType_Effect,
     eType_UI, eType_Money, eType_Bullet,
-    eType_Scene, eType_Shop
+    eType_Scene, eType_Shop,
 };
 
 //èdóÕâ¡ë¨ìx
