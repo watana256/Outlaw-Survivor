@@ -7,7 +7,7 @@
 #include "Game/Bullet.h"
 #include "Game/Score.h"
 #include"Game/Field.h"
-
+#include "Game/Shop.h"
 
 
 
@@ -114,8 +114,8 @@ void Init(void)
 	new Money(CVector2D(900, 400),eGold);
 	ADD_RESOURCE("Bullet", CImage::CreateImage("Image/Bullet.png"));
 	ADD_RESOURCE("Score", CImage::CreateImage("Image/Score.png"));
-
-
+	ADD_RESOURCE("SHOP", CImage::CreateImage("Image/SHOP.png"));
+	//new Shop();
 
 
 

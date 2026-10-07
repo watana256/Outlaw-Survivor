@@ -30,6 +30,10 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\Field.h" />
+    <ClInclude Include="Game\Shop.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Field.h" />
     <ClInclude Include="Game\Title.h" />
     <ClInclude Include="Game\Game.h">
       <Filter>Game</Filter>
@@ -62,6 +66,10 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\UI.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Field.cpp" />
+    <ClCompile Include="Game\Shop.cpp">
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\Field.cpp" />

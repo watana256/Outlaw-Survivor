@@ -3,7 +3,7 @@
 
 #define SPEED 5.0f
 #define MUTEKI 60.0f
-#define ATTACK_TIME 0.19f
+#define ATTACK_TIME 1.0f
 
 static TexAnim _Walk_right[] =
 {
@@ -139,12 +139,14 @@ void Player::Run()
 	int Animu = eAnim_Walk_down;
 	const int move_Speed = SPEED;
 
-	if (HOLD(CInput::eButton1))
+	if (HOLD(CInput::eMouseL))
 	{
 		if (m_attack_cnt > ATTACK_TIME)
 		{
 			m_attack_cnt = 0;
-			Base::Add(new Bullet(m_pos));
+			CVector2D mouse_pos = CInput::GetMousePoint();
+			CVector2D dir = (mouse_pos - m_pos).GetNormalize();
+			Base::Add(new Bullet(m_pos, dir));
 		}
 		m_attack_cnt += CFPS::GetDeltaTime();
 	}

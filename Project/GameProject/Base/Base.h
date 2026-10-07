@@ -2,7 +2,7 @@
 enum {
     eType_Field,
     eType_Map,
-    eType_Door,
+    eType_Door, eTpe_Shop,
     eType_AreaChange,
     eType_Player,
     eType_Enemy,
