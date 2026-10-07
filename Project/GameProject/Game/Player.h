@@ -1,9 +1,11 @@
 #pragma once
 #include "../Base/Base.h"
+class Pistol;
 
 class Player :public Base
 {
 private:
+	static Player* ms_instance;
 	enum {
 		eState_Walk_right,
 		eState_Walk_left,
@@ -20,7 +22,8 @@ private:
 	int m_speed_cnt;
 	int m_hp;
 	int m_muteki_cnt;
-	float m_attack_cnt;
+	Pistol* m_pistol;
+
 	enum {
 		eAnim_Walk_right,
 		eAnim_Walk_left,
@@ -41,6 +44,8 @@ private:
 
 public:
 	Player(const CVector2D& pos);
+	~Player();
+	static Player* Instance();
 	static TexAnimData _anim_data[];
 	void Update();
 	void Draw();

@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Bullet.h"
+#include "Weapon/Pistol.h"
 
 #define SPEED 5.0f
 #define MUTEKI 60.0f
@@ -77,10 +78,16 @@ TexAnimData Player::_anim_data[] =
 	ANIMDATA(_Damage_down),
 	ANIMDATA(_Death),
 };
+
+Player* Player::ms_instance = nullptr;
+
 Player::Player(const CVector2D& pos)
 	:Base(eType_Player)
 	, m_speed_cnt(0)
 {
+	ms_instance = this;
+	
+	m_vec = CVector2D::right;
 	m_img = COPY_RESOURCE("Player", CImage);
 	m_pos_old = m_pos = pos;
 	m_img.SetSize(150, 150);
@@ -89,6 +96,16 @@ Player::Player(const CVector2D& pos)
 	m_img.ChangeAnimation(eState_Damage_up);
 	m_hp = 100;
 	m_muteki_cnt = 0.0f;
+
+	m_pistol = new Pistol();
+
+	m_pistol->SetEnable(true);
+}
+Player::~Player() {
+	ms_instance = nullptr;
+}
+Player* Player::Instance() {
+	return ms_instance;
 }
 void Player::TakeDamage(int damage)
 {
@@ -139,35 +156,30 @@ void Player::Run()
 	int Animu = eAnim_Walk_down;
 	const int move_Speed = SPEED;
 
-	if (HOLD(CInput::eMouseL))
-	{
-		if (m_attack_cnt > ATTACK_TIME)
-		{
-			m_attack_cnt = 0;
-			CVector2D mouse_pos = CInput::GetMousePoint();
-			CVector2D dir = (mouse_pos - m_pos).GetNormalize();
-			Base::Add(new Bullet(m_pos, dir));
-		}
-		m_attack_cnt += CFPS::GetDeltaTime();
-	}
+	
+
 	if (HOLD(CInput::eUp))
 	{
-		m_pos.y -= move_Speed;
+		m_vec = CVector2D::up;
+		m_pos += m_vec * move_Speed;
 		Animu = eAnim_Walk_up;
 	}
 	else if (HOLD(CInput::eDown))
 	{
-		m_pos.y += move_Speed;
+		m_vec = CVector2D::down;
+		m_pos += m_vec * move_Speed;
 		Animu = eAnim_Walk_down;
 	}
 	if (HOLD(CInput::eLeft))
 	{
-		m_pos.x -= move_Speed;
+		m_vec = CVector2D::left;
+		m_pos += m_vec * move_Speed;
 		Animu = eAnim_Walk_left;
 	}
 	else if (HOLD(CInput::eRight))
 	{
-		m_pos.x += move_Speed;
+		m_vec = CVector2D::right;
+		m_pos += m_vec * move_Speed;
 		Animu = eAnim_Walk_right;
 	}
 	m_img.ChangeAnimation(Animu);

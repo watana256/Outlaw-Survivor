@@ -2,7 +2,10 @@
 
 #define  BULLET_SPEED 5.0f
 
-Bullet::Bullet(const CVector2D& pos, const CVector2D& dir) :Base(eType_Bullet)
+Bullet::Bullet(const CVector2D& pos, const CVector2D& dir,float dist)
+    :Base(eType_Bullet)
+    , m_flying_dist(dist)
+    ,m_move_dist(0.0f)
 {
     m_img.Load("Image/Bullet.png");
     m_pos = pos;
@@ -17,6 +20,11 @@ void Bullet::Update()
 {
     const float move_speed = BULLET_SPEED;
     m_pos += m_vec * move_speed;
+
+    m_move_dist += move_speed;
+    if (m_move_dist >= m_flying_dist) {
+        SetKill();
+    }
 }
 void Bullet::Draw()
 {
