@@ -8,6 +8,7 @@
 #include "Game/Score.h"
 #include"Game/Field.h"
 #include "Game/Shop.h"
+#include"Game/Title.h"
 #include "Game/Weapon/Pistol.h"
 
 
@@ -130,9 +131,9 @@ void Init(void)
 	ADD_RESOURCE("Field", CImage::CreateImage("Image/Field.png"));
 	new UI;
 	new Field;
-
-
-
+	//ADD_RESOURCE("1117", CImage::CreateImage("Image/1117.png"));//Œã‚Å‰ğœ
+	//ADD_RESOURCE("1118", CImage::CreateImage("Image/1118.png"));//Œã‚Å‰ğœ
+		//new Title;//Œã‚Å‰ğœ
 
 
 

@@ -1,4 +1,5 @@
 #include"Title.h"
+#include"Game.h"
 #include"../Base/Base.h"
 Title::Title() :Base(eType_Scene)
 {
@@ -9,7 +10,7 @@ Title::Title() :Base(eType_Scene)
 	//画像のサイズ設定
 	m_img.SetSize(1920, 1080);
 	//位置設定
-	m_Logo.SetPos(1100, 500);
+	m_Logo.SetPos(110, 700);
 	//画像のサイズ設定
 	m_Logo.SetSize(1567, 320);
 }
