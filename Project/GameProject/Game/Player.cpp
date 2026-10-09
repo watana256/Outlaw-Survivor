@@ -70,14 +70,14 @@ static TexAnim _Damage_down[] =
 };
 static TexAnim _Death[] =
 {
-	{33,15},
-	{34,15},
-	{35,15},
-	{36,15},
-	{37,15},
-	{38,15},
-	{39,15},
-	{40,15},
+	{33,30},
+	{34,30},
+	{35,30},
+	{36,30},
+	{37,30},
+	{38,30},
+	{39,30},
+	{40,30},
 };
 
 TexAnimData Player::_anim_data[] =
@@ -121,18 +121,7 @@ Player::~Player() {
 Player* Player::Instance() {
 	return ms_instance;
 }
-void Player::TakeDamage(int damage)
-{
-	if (m_muteki_cnt > 0) return;
-	//HP減少。下限0
-	m_hp = max(m_hp - damage, 0);
-	m_muteki_cnt = MUTEKI;
-	if (m_hp <= 0) {
-		SetKill();
 
-	}
-
-}
 void Player::Update()
 {
 	// ★追加：無敵時間が残っていればタイマーを減らす処理
@@ -164,7 +153,18 @@ void Player::Update()
 		break;
 	}
 }
+void Player::TakeDamage(int damage)
+{
+	if (m_muteki_cnt > 0) return;
+	//HP減少。下限0
+	m_hp = max(m_hp - damage, 0);
+	m_muteki_cnt = MUTEKI;
+	if (m_hp <= 0) {
+		SetKill();
+		m_img.ChangeAnimation(eState_Death);
+	}
 
+}
 void Player::Run()
 {
 	int Animu = eAnim_Walk_down;
@@ -197,6 +197,7 @@ void Player::Run()
 		Animu = eAnim_Walk_right;
 	}
 	m_img.ChangeAnimation(Animu);
+
 }
 void Player::State_Walk_up()
 {
