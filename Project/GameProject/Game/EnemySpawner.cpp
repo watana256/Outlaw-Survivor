@@ -76,11 +76,13 @@ void EnemySpawner::Update() {
 
         // 2. 規定数出し切り ＆ 画面の敵が全滅 で 次のフェイズへ！
         if (m_spawned_count >= m_max_spawn_count && Base::FindObject(eType_Enemy) == nullptr) {
-            m_phase++;              // 次のフェイズへ進む
-            m_spawned_count = 0;    // 出現数をリセット
-            m_spawn_timer = 0.0f;
+            NextPhase(); // 関数を呼び出して次のフェイズへ
         }
     }
+}
+
+void EnemySpawner::NextPhase()
+{
 }
 
 // プレイヤーの周囲750px（画面外）のランダム位置計算

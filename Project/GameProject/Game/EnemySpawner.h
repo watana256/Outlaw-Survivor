@@ -17,6 +17,8 @@ public:
     EnemySpawner();
     void Update() override;
 
+    void NextPhase();
+
     // 現在のフェイズを取得（UI表示用など）
     int GetPhase() const { return m_phase; }
 };
