@@ -26,7 +26,7 @@ enum {
     eType_Molotov,
     eType_Drone,
     eType_Flamethrower,
-
+    eType_Medical,
 
 
 

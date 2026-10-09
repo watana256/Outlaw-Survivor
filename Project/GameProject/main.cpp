@@ -18,7 +18,7 @@
 #include"Game/Weapon/Rocket.h"
 #include"Game/Weapon/Shotgun.h"
 #include"Game/Weapon/Stella.h"
-
+#include"Game/Medical.h"
 
 
 
@@ -178,8 +178,8 @@ void Init(void)
 	//ADD_RESOURCE("1117", CImage::CreateImage("Image/1117.png"));//å„Ç≈âèú
 	//ADD_RESOURCE("1118", CImage::CreateImage("Image/1118.png"));//å„Ç≈âèú
 		//new Title;//å„Ç≈âèú
-
-
+	ADD_RESOURCE("Medical", CImage::CreateImage("Image/Medical.png", Medical::_anim_data, 51, 40));
+	new Medical(CVector2D(500, 300), eKit);
 
 
 
