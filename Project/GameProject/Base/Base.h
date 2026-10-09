@@ -24,7 +24,8 @@ enum {
     eType_Rocket,
     eType_Landmine,
     eType_Molotov,
-    eType_Drone
+    eType_Drone,
+    eType_Flamethrower,
 
 
 

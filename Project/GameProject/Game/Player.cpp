@@ -1,6 +1,20 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Weapon/Pistol.h"
+#include "Weapon/Ax.h"
+#include "Weapon/Drone.h"
+#include "Weapon/Flamethrower.h"
+#include "Weapon/Landmine.h"
+#include "Weapon/Molotov.h"
+#include "Weapon/Rocket.h"
+#include "Weapon/Shotgun.h"
+#include "Weapon/Stella.h"
+
+
+
+
+
+
 
 #define SPEED 5.0f
 #define MUTEKI 60.0f

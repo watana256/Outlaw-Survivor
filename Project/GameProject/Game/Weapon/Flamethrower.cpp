@@ -1,16 +1,21 @@
+#include "Flamethrower.h"
+#include "../Player.h"
+#include "../Bullet.h"
+
+#define ATTACK_TIME 0.5f
 #define FLYING_DIST 100.0f
-Pistol::Pistol()
-	: Base(eType_Pistil)
+Flamethrower::Flamethrower()
+	: Base(eType_Flamethrower)
 	, m_attak_cnt(0)
 	, m_is_enable(false)
 {
 
 }
-void Pistol::SetEnable(bool enable)
+void Flamethrower::SetEnable(bool enable)
 {
 	m_is_enable = enable;
 }
-void Pistol::Update()
+void Flamethrower::Update()
 {
 	if (m_is_enable) {
 		if (m_attak_cnt > ATTACK_TIME) {
@@ -26,11 +31,11 @@ void Pistol::Update()
 		m_attak_cnt += CFPS::GetDeltaTime();
 	}
 }
-void Pistol::Draw()
+void Flamethrower::Draw()
 {
 
 }
-void Pistol::Collision(Base* b)
+void Flamethrower::Collision(Base* b)
 {
 
 }
