@@ -18,13 +18,13 @@ enum {
     eType_Scene, 
     eType_Shop,
     eType_System,
-
-
-
-
-
-
-
+    eType_Ax,
+    eType_Stella,
+    eType_Shotgun,
+    eType_Rocket,
+    eType_Landmine,
+    eType_Molotov,
+    eType_Drone
 
 
 

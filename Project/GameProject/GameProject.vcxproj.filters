@@ -11,9 +11,6 @@
     <ClInclude Include="Game\HP.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Weapon\Shop.h">
-      <Filter>Weapon</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Money.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -41,6 +38,33 @@
     <ClInclude Include="Game\EnemySpawner.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Weapon\Pistol.h">
+      <Filter>Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Weapon\Ax.h">
+      <Filter>Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Weapon\Molotov.h">
+      <Filter>Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Weapon\Shotgun.h">
+      <Filter>Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Weapon\Flamethrower.h">
+      <Filter>Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Weapon\Landmine.h">
+      <Filter>Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Weapon\Drone.h">
+      <Filter>Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Weapon\Stella.h">
+      <Filter>Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Weapon\Rocket.h">
+      <Filter>Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -52,9 +76,6 @@
     </ClCompile>
     <ClCompile Include="Game\HP.cpp">
       <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Weapon\Shop.cpp">
-      <Filter>Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Game\Money.cpp">
       <Filter>Game</Filter>
@@ -80,6 +101,33 @@
     <ClCompile Include="Game\Title.cpp" />
     <ClCompile Include="Game\EnemySpawner.cpp">
       <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Weapon\Pistol.cpp">
+      <Filter>Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Weapon\Ax.cpp">
+      <Filter>Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Weapon\Molotov.cpp">
+      <Filter>Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Weapon\Shotgun.cpp">
+      <Filter>Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Weapon\Flamethrower.cpp">
+      <Filter>Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Weapon\Landmine.cpp">
+      <Filter>Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Weapon\Drone.cpp">
+      <Filter>Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Weapon\Stella.cpp">
+      <Filter>Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Weapon\Rocket.cpp">
+      <Filter>Weapon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

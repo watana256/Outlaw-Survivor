@@ -32,7 +32,15 @@
     <ClInclude Include="Game\Shop.h" />
     <ClInclude Include="Game\Title.h" />
     <ClInclude Include="Game\UI.h" />
+    <ClInclude Include="Game\Weapon\Ax.h" />
+    <ClInclude Include="Game\Weapon\Drone.h" />
+    <ClInclude Include="Game\Weapon\Flamethrower.h" />
+    <ClInclude Include="Game\Weapon\Landmine.h" />
+    <ClInclude Include="Game\Weapon\Molotov.h" />
     <ClInclude Include="Game\Weapon\Pistol.h" />
+    <ClInclude Include="Game\Weapon\Rocket.h" />
+    <ClInclude Include="Game\Weapon\Shotgun.h" />
+    <ClInclude Include="Game\Weapon\Stella.h" />
     <ClInclude Include="Global.h" />
   </ItemGroup>
   <ItemGroup>
@@ -49,7 +57,15 @@
     <ClCompile Include="Game\Shop.cpp" />
     <ClCompile Include="Game\Title.cpp" />
     <ClCompile Include="Game\UI.cpp" />
+    <ClCompile Include="Game\Weapon\Ax.cpp" />
+    <ClCompile Include="Game\Weapon\Drone.cpp" />
+    <ClCompile Include="Game\Weapon\Flamethrower.cpp" />
+    <ClCompile Include="Game\Weapon\Landmine.cpp" />
+    <ClCompile Include="Game\Weapon\Molotov.cpp" />
     <ClCompile Include="Game\Weapon\Pistol.cpp" />
+    <ClCompile Include="Game\Weapon\Rocket.cpp" />
+    <ClCompile Include="Game\Weapon\Shotgun.cpp" />
+    <ClCompile Include="Game\Weapon\Stella.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

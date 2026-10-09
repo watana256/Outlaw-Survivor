@@ -10,9 +10,14 @@
 #include "Game/Shop.h"
 #include"Game/Title.h"
 #include "Game/Weapon/Pistol.h"
-
-
-
+#include"Game/Weapon/Ax.h"
+#include"Game/Weapon/Drone.h"
+#include"Game/Weapon/Flamethrower.h"
+#include"Game/Weapon/Landmine.h"
+#include"Game/Weapon/Molotov.h"
+#include"Game/Weapon/Rocket.h"
+#include"Game/Weapon/Shotgun.h"
+#include"Game/Weapon/Stella.h"
 
 
 
