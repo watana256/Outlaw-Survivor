@@ -1,7 +1,7 @@
 #include "HP.h"
 #include "Player.h"
 
-HP::HP() :Base(eType_UI)
+HP::HP() :Base(eType_Hp)
 {
 	char* nem[9] = {
 		"hp10",

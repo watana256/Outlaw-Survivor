@@ -1,6 +1,7 @@
 #include "Base/Base.h"
 #include "Game/Player.h"
 #include "Game/Enemy.h"
+#include "Game/EnemySpawner.h"
 #include "Game/HP.h"
 #include "Game/Money.h"
 #include"Game/UI.h"
@@ -147,6 +148,15 @@ void Init(void)
 	ADD_RESOURCE("SHOP", CImage::CreateImage("Image/SHOP.png"));
 	//new Shop();
 	ADD_RESOURCE("Pistol", CImage::CreateImage("Image/Pistol.png"));
+	ADD_RESOURCE("Drone", CImage::CreateImage("Image/Drone.png"));
+	ADD_RESOURCE("Landmine", CImage::CreateImage("Image/Landmine.png"));
+	ADD_RESOURCE("Molotov", CImage::CreateImage("Image/Molotov.png"));
+	ADD_RESOURCE("Rocket", CImage::CreateImage("Image/Rocket.png"));
+	ADD_RESOURCE("Shotgun", CImage::CreateImage("Image/Shotgun.png"));
+	ADD_RESOURCE("Stella", CImage::CreateImage("Image/Stella.png"));
+	ADD_RESOURCE("Ax", CImage::CreateImage("Image/Ax.png"));
+	ADD_RESOURCE("Flamethrower", CImage::CreateImage("Image/Flamethrower.png"));
+
 
 
 
@@ -205,6 +215,7 @@ void Init(void)
 	//ADD_RESOURCE("Enemy", CImage::CreateImage("Image/Dog.png", Enemy::_anim_data, 14, 24));
 
 
+	new EnemySpawner();
 
 
 
@@ -225,7 +236,6 @@ void Init(void)
 
 
 
-	new Enemy(CVector2D(400, 500), eZombie);
 
 }
 

@@ -1,6 +1,6 @@
 #include "Bullet.h"
 
-#define  BULLET_SPEED 5.0f
+#define  BULLET_SPEED 7.0f
 
 Bullet::Bullet(const CVector2D& pos, const CVector2D& dir,float dist)
     :Base(eType_Bullet)

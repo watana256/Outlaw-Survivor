@@ -2,7 +2,7 @@
 
 int Score::s_score = 0;
 
-Score::Score() :Base(eType_UI)
+Score::Score() :Base(eType_Score)
 {
 	m_img = COPY_RESOURCE("Score", CImage);
 	Score::s_score = 0;
