@@ -4,10 +4,15 @@
 class UI : public Base {
 private:
 
+public:
+
     int UIType;
 
-public:
     CImage m_img;
     UI();
     void Draw();
+
+    void AddUIType() {
+        UIType++;
+    }
 };

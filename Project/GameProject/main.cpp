@@ -1,6 +1,7 @@
 #include "Base/Base.h"
 #include "Game/Player.h"
 #include "Game/Enemy.h"
+#include "Game/EnemySpawner.h"
 #include "Game/HP.h"
 #include "Game/Money.h"
 #include"Game/UI.h"
@@ -214,6 +215,7 @@ void Init(void)
 	//ADD_RESOURCE("Enemy", CImage::CreateImage("Image/Dog.png", Enemy::_anim_data, 14, 24));
 
 
+	new EnemySpawner();
 
 
 
@@ -234,7 +236,6 @@ void Init(void)
 
 
 
-	new Enemy(CVector2D(400, 500), eZombie);
 
 }
 

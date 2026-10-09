@@ -1,6 +1,7 @@
 #include "EnemySpawner.h"
 #include "Game/Enemy.h"    
 #include "Game/Player.h"  
+#include "UI.h"
 #include <cmath>
 #include <cstdlib>
 
@@ -8,7 +9,7 @@ EnemySpawner::EnemySpawner() : Base(eType_System) {
     m_phase = 1;               // フェイズ1からスタート
     m_spawn_timer = 0.0f;
     m_spawned_count = 0;
-    m_max_spawn_count = 15;    // 通常フェイズでの雑魚敵の数（調整OK）
+    m_max_spawn_count = 3;    // 通常フェイズでの雑魚敵の数（調整OK）
     m_boss_spawned = false;
 }
 
@@ -27,11 +28,11 @@ void EnemySpawner::Update() {
 
             if (m_phase == 6) {
                 //  フェイズ6の中ボス（例: eMutant）
-                Base::Add(new Enemy(boss_pos, eMutant));
+                new Enemy(boss_pos, eMutant);
             }
             else if (m_phase == 11) {
                 //  フェイズ11のラストボス（例: eTank）
-                Base::Add(new Enemy(boss_pos, eTank));
+                new Enemy(boss_pos, eTank);
             }
 
             m_boss_spawned = true;
@@ -44,7 +45,7 @@ void EnemySpawner::Update() {
             m_spawn_timer = 0.0f;
             CVector2D spawn_pos = GetRandomSpawnPos(player->m_pos);
             int enemy_type = rand() % 3; // 雑魚敵（Zombie, Dog, Robot）
-            Base::Add(new Enemy(spawn_pos, enemy_type));
+            new Enemy(spawn_pos, enemy_type);
         }
 
         // 3. ボス撃破（全滅）検知 で 次のフェイズへ！
@@ -69,7 +70,7 @@ void EnemySpawner::Update() {
                 m_spawn_timer = 0.0f;
                 CVector2D spawn_pos = GetRandomSpawnPos(player->m_pos);
                 int enemy_type = rand() % 3; // 雑魚敵
-                Base::Add(new Enemy(spawn_pos, enemy_type));
+                new Enemy(spawn_pos, enemy_type);
                 m_spawned_count++;
             }
         }
@@ -77,12 +78,24 @@ void EnemySpawner::Update() {
         // 2. 規定数出し切り ＆ 画面の敵が全滅 で 次のフェイズへ！
         if (m_spawned_count >= m_max_spawn_count && Base::FindObject(eType_Enemy) == nullptr) {
             NextPhase(); // 関数を呼び出して次のフェイズへ
+
+
+
         }
     }
 }
 
 void EnemySpawner::NextPhase()
 {
+
+    m_phase++;            //  フェイズを進める（1 -> 2 -> 3 ...）
+    m_spawned_count = 0;  //  出現数をリセット
+    m_spawn_timer = 0.0f; //  タイマーリセット
+
+    UI* ui = dynamic_cast<UI*>(Base::FindObject(eType_UI));
+    if (ui != nullptr) {    //ここ通ってないから通らせて
+        ui->UIType++;
+    }
 }
 
 // プレイヤーの周囲750px（画面外）のランダム位置計算
