@@ -28,6 +28,7 @@
     <ClInclude Include="Game\HP.h" />
     <ClInclude Include="Game\Money.h" />
     <ClInclude Include="Game\Player.h" />
+    <ClInclude Include="Game\Result.h" />
     <ClInclude Include="Game\Score.h" />
     <ClInclude Include="Game\Shop.h" />
     <ClInclude Include="Game\Title.h" />
@@ -53,6 +54,7 @@
     <ClCompile Include="Game\HP.cpp" />
     <ClCompile Include="Game\Money.cpp" />
     <ClCompile Include="Game\Player.cpp" />
+    <ClCompile Include="Game\Result.cpp" />
     <ClCompile Include="Game\Score.cpp" />
     <ClCompile Include="Game\Shop.cpp" />
     <ClCompile Include="Game\Title.cpp" />
