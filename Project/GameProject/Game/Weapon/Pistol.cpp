@@ -3,7 +3,7 @@
 #include "../Bullet.h"
 
 #define ATTACK_TIME 0.5f
-#define FLYING_DIST 100.0f
+#define FLYING_DIST 500.0f
 Pistol::Pistol()
 	: Base(eType_Pistil) 
 	, m_attak_cnt(0)
