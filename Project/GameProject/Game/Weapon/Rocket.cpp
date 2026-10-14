@@ -1,6 +1,6 @@
 #include "Rocket.h"
 #include "../Player.h"
-#include "../BulletAll/RocketBullt.h"
+#include "../BulletAll/RocketBullet.h"
 
 #define ATTACK_TIME 1.0f
 #define FLYING_DIST 500.0f
@@ -20,7 +20,7 @@ int Rocket::GetDamage() const
 	int lv = 1;
 	switch (lv)
 	{
-	case 1: return 1;
+	case 1: return 10;
 	case 2: return 2;
 	case 3: return 3;
 	case 4: return 4;
@@ -36,7 +36,7 @@ void Rocket::Update()
 			if (player != nullptr) {
 				CVector2D pos = player->m_pos;
 				CVector2D dir = player->m_vec;
-				new RcoketBullet(pos, dir, FLYING_DIST, GetDamage());
+				new RocketBullet(pos, dir, FLYING_DIST, GetDamage());
 			}
 
 		}

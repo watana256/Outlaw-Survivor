@@ -20,7 +20,7 @@
 #include"Game/Weapon/Shotgun.h"
 #include"Game/Weapon/Stella.h"
 #include"Game/Medical.h"
-#include"Game/BulletAll/RocketBullt.h"
+#include"Game/BulletAll/RocketBullet.h"
 
 
 
@@ -157,6 +157,7 @@ void Init(void)
 	ADD_RESOURCE("Ax", CImage::CreateImage("Image/Ax.png"));
 	ADD_RESOURCE("Flamethrower", CImage::CreateImage("Image/Flamethrower.png"));
 	ADD_RESOURCE("RocketBullt", CImage::CreateImage("Image/RocketBullt.png"));
+	ADD_RESOURCE("Explosion", CImage::CreateImage("Image/Explosion.png", RocketBullet::_anim_data, 64, 64));
 
 
 

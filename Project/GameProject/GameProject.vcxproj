@@ -22,7 +22,7 @@
     <ClInclude Include="Base\Base.h" />
     <ClInclude Include="Game\BulletAll\Bullet.h" />
     <ClInclude Include="Game\BulletAll\FlamethrowerBullet.h" />
-    <ClInclude Include="Game\BulletAll\RocketBullt.h" />
+    <ClInclude Include="Game\BulletAll\RocketBullet.h" />
     <ClInclude Include="Game\Enemy.h" />
     <ClInclude Include="Game\EnemySpawner.h" />
     <ClInclude Include="Game\Field.h" />
@@ -51,7 +51,7 @@
     <ClCompile Include="Base\Base.cpp" />
     <ClCompile Include="Game\BulletAll\Bullet.cpp" />
     <ClCompile Include="Game\BulletAll\FlamethrowerBullt.cpp" />
-    <ClCompile Include="Game\BulletAll\RocketBullt.cpp" />
+    <ClCompile Include="Game\BulletAll\RocketBullet.cpp" />
     <ClCompile Include="Game\Enemy.cpp" />
     <ClCompile Include="Game\EnemySpawner.cpp" />
     <ClCompile Include="Game\Field.cpp" />
