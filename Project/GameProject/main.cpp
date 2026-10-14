@@ -5,7 +5,7 @@
 #include "Game/HP.h"
 #include "Game/Money.h"
 #include"Game/UI.h"
-#include "Game/Bullet.h"
+#include "Game/BulletAll/Bullet.h"
 #include "Game/Score.h"
 #include"Game/Field.h"
 #include "Game/Shop.h"

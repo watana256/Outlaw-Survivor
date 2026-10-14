@@ -1,5 +1,5 @@
 #include "Bullet.h"
-#include "Enemy.h"
+#include "../Enemy.h"
 
 #define  BULLET_SPEED 7.0f
 

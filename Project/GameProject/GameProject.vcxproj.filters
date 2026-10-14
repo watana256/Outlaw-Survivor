@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="Global.h" />
-    <ClInclude Include="Base\Base.h">
-      <Filter>Base</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Enemy.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -15,9 +12,6 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\Player.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Bullet.h">
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\Score.h">
@@ -65,6 +59,17 @@
     <ClInclude Include="Game\Weapon\Rocket.h">
       <Filter>Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Medical.h" />
+    <ClInclude Include="Game\Result.h" />
+    <ClInclude Include="Base\Base.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\BulletAll\Bullet.h">
+      <Filter>Game\BulletAll</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\RocketBullt.h">
+      <Filter>Game\BulletAll</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -81,9 +86,6 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\Player.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Bullet.cpp">
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\Score.cpp">
@@ -129,6 +131,14 @@
     <ClCompile Include="Game\Weapon\Rocket.cpp">
       <Filter>Weapon</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Medical.cpp" />
+    <ClCompile Include="Game\Result.cpp" />
+    <ClCompile Include="Game\BulletAll\Bullet.cpp">
+      <Filter>Game\BulletAll</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\RocketBullt.cpp">
+      <Filter>Game\BulletAll</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Base">
@@ -139,6 +149,9 @@
     </Filter>
     <Filter Include="Weapon">
       <UniqueIdentifier>{b7e89ee1-4f83-419a-9a4f-305f63b8a747}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\BulletAll">
+      <UniqueIdentifier>{831fd214-bd5b-4240-b5d5-eaba82f6756f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

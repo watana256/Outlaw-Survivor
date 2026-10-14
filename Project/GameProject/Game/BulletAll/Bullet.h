@@ -1,5 +1,6 @@
 #pragma once
-#include"../Base/Base.h"
+#include "Base/Base.h"
+
 
 class Bullet :public Base {
 public:
