@@ -29,7 +29,7 @@ enum {
     eType_Score,
     eType_Flamethrower,
     eType_Medical,
-
+    eType_RoketBullet,
 
 
 
