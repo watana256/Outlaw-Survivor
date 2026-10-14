@@ -43,6 +43,7 @@ void RcoketBullet::Collision(Base* b)
             if (Enemy* e = dynamic_cast<Enemy*>(b)) {
                 e->TakeDamage(m_damage); // エネミーにダメージ
                 SetKill();
+
             }
         }
     }

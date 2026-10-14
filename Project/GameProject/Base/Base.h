@@ -30,7 +30,7 @@ enum {
     eType_Flamethrower,
     eType_Medical,
     eType_RoketBullet,
-
+    eType_FlamethrowerBullet,
 
 
 
