@@ -110,9 +110,12 @@ Player::Player(const CVector2D& pos)
 	m_hp = 100;
 	m_muteki_cnt = 0.0f;
 
-	m_pistol = new Pistol();
+	//m_pistol = new Pistol();
 
-	m_pistol->SetEnable(true);
+	//m_pistol->SetEnable(true);
+
+	m_rocket = new Rocket();
+	m_rocket->SetEnable(true);
 }
 Player::~Player() {
 	ms_instance = nullptr;

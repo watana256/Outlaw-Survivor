@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="Base\Base.h" />
     <ClInclude Include="Game\BulletAll\Bullet.h" />
+    <ClInclude Include="Game\BulletAll\RocketBullt.h" />
     <ClInclude Include="Game\Enemy.h" />
     <ClInclude Include="Game\EnemySpawner.h" />
     <ClInclude Include="Game\Field.h" />
@@ -30,7 +31,6 @@
     <ClInclude Include="Game\Money.h" />
     <ClInclude Include="Game\Player.h" />
     <ClInclude Include="Game\Result.h" />
-    <ClInclude Include="Game\RocketBullt.h" />
     <ClInclude Include="Game\Score.h" />
     <ClInclude Include="Game\Shop.h" />
     <ClInclude Include="Game\Title.h" />
@@ -49,6 +49,7 @@
   <ItemGroup>
     <ClCompile Include="Base\Base.cpp" />
     <ClCompile Include="Game\BulletAll\Bullet.cpp" />
+    <ClCompile Include="Game\BulletAll\RocketBullt.cpp" />
     <ClCompile Include="Game\Enemy.cpp" />
     <ClCompile Include="Game\EnemySpawner.cpp" />
     <ClCompile Include="Game\Field.cpp" />
@@ -58,7 +59,6 @@
     <ClCompile Include="Game\Money.cpp" />
     <ClCompile Include="Game\Player.cpp" />
     <ClCompile Include="Game\Result.cpp" />
-    <ClCompile Include="Game\RocketBullt.cpp" />
     <ClCompile Include="Game\Score.cpp" />
     <ClCompile Include="Game\Shop.cpp" />
     <ClCompile Include="Game\Title.cpp" />

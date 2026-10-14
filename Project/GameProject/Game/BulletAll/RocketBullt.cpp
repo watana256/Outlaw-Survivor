@@ -1,5 +1,5 @@
 #include "RocketBullt.h"
-#include "Enemy.h"
+#include "../Enemy.h"
 
 #define  BULLET_SPEED 7.0f
 
@@ -9,13 +9,13 @@ RcoketBullet::RcoketBullet(const CVector2D& pos, const CVector2D& dir, float dis
     , m_move_dist(0.0f)
     , m_damage(damage)
 {
-    m_img.Load("Image/Bullet.png");
+    m_img.Load("Image/RocketBullt.png");
     m_pos = pos;
     m_vec = dir;
-    m_rad = 5;
-    m_rect = CRect(-10, -10, 10, 10);
-    m_img.SetSize(10, 10);
-    m_img.SetCenter(10, 10);
+    m_rad = 10;
+    m_rect = CRect(-20, -20, 20, 20);
+    m_img.SetSize(20, 20);
+    m_img.SetCenter(20, 20);
     m_img.SetAng(atan2f(-m_vec.y, m_vec.x));
 
 }

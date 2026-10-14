@@ -67,7 +67,7 @@
     <ClInclude Include="Game\BulletAll\Bullet.h">
       <Filter>Game\BulletAll</Filter>
     </ClInclude>
-    <ClInclude Include="Game\RocketBullt.h">
+    <ClInclude Include="Game\BulletAll\RocketBullt.h">
       <Filter>Game\BulletAll</Filter>
     </ClInclude>
   </ItemGroup>
@@ -136,7 +136,7 @@
     <ClCompile Include="Game\BulletAll\Bullet.cpp">
       <Filter>Game\BulletAll</Filter>
     </ClCompile>
-    <ClCompile Include="Game\RocketBullt.cpp">
+    <ClCompile Include="Game\BulletAll\RocketBullt.cpp">
       <Filter>Game\BulletAll</Filter>
     </ClCompile>
   </ItemGroup>
