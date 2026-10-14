@@ -28,6 +28,8 @@ public:
     // コンストラクタ（出現位置, 敵の種類）
     Enemy(const CVector2D& pos, int enemy_type);
 
+    ~Enemy();
+
     void Update() override;
     void Draw() override;
     void Collision(Base* b) override;

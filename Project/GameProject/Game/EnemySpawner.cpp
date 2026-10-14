@@ -5,12 +5,15 @@
 #include <cmath>
 #include <cstdlib>
 
+
+bool EnemySpawner::boss_kill;
 EnemySpawner::EnemySpawner() : Base(eType_System) {
     m_phase = 1;               // フェイズ1からスタート
     m_spawn_timer = 0.0f;
     m_spawned_count = 0;
     m_max_spawn_count = 3;    // 通常フェイズでの雑魚敵の数（調整OK）
     m_boss_spawned = false;
+    boss_kill = false;
 }
 
 void EnemySpawner::Update() {
@@ -49,11 +52,11 @@ void EnemySpawner::Update() {
         }
 
         // 3. ボス撃破（全滅）検知 で 次のフェイズへ！
-        if (m_boss_spawned && Base::FindObject(eType_Enemy) == nullptr) {
-            m_phase++;              // フェイズを進める（6から7、11から12[クリア]）
-            m_spawned_count = 0;
-            m_spawn_timer = 0.0f;
+        if (m_boss_spawned && boss_kill) {
+            Base::Kill(1<<eType_Enemy);
+            NextPhase();           
             m_boss_spawned = false;
+            boss_kill = false;
         }
 
     }
@@ -83,6 +86,9 @@ void EnemySpawner::Update() {
 
         }
     }
+    else {
+        //END地点
+    }
 }
 
 void EnemySpawner::NextPhase()
@@ -93,7 +99,7 @@ void EnemySpawner::NextPhase()
     m_spawn_timer = 0.0f; //  タイマーリセット
 
     UI* ui = dynamic_cast<UI*>(Base::FindObject(eType_UI));
-    if (ui != nullptr) {    //ここ通ってないから通らせて
+    if (ui != nullptr) {    
         ui->UIType++;
     }
 }

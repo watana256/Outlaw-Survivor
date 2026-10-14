@@ -17,16 +17,21 @@ UI::UI() :Base(eType_UI)
 }
 void UI::Draw()
 {
-	/*
-	
-	
-	*/
-		for (int i = 0; i < 10; i++) {
+    // 横6列・縦2段の計算
+    int col = UIType % 6; // 列（横の位置：1から6）
+    int row = UIType / 6; // 行（縦の位置：1または2）
 
+    // 1コマの幅と高さ
+    int width = 360;
+    int height = 148;
 
-			//画像の切り抜き
-			m_img.SetRect(UIType * 360, 0, UIType * 360 + 360 , 148);
-			m_img.Draw();
-		}
+    // 切り抜き範囲（left, top, right, bottom）の計算
+    int left = col * width;
+    int top = row * height;
+    int right = left + width;
+    int bottom = top + height;
 
+    // 切り抜いて描画
+    m_img.SetRect(left, top, right, bottom);
+    m_img.Draw();
 }

@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "Player.h"
+#include "EnemySpawner.h"
 
 // アニメーション定義
 static TexAnim Zombie[] = {
@@ -36,7 +37,22 @@ TexAnimData Enemy::_anim_data[] = {
     ANIMDATA(Mutant),
     ANIMDATA(TANK),
 };
-
+struct EnemyParam {
+    int hp;             // HP
+    float speed;        // 移動速度
+    int rad;            // 当たり判定の半径
+    CVector2D size;
+    const char* res_name; // 画像リソース名
+};
+static const EnemyParam g_enemy_params[] = {
+    // HP,   speed, rad,  size  画像名
+    {  30,   2.0f,  16, {14,24}, "Enemy"}, // eZombie
+    {  60,   1.5f,  20, {32,16}, "Robot"}, // eRobot
+    {  15,   4.5f,  12, {32,16}, "Dog"}, // eDog
+    {  40,   3.0f,  18, {14,24}, "Snake"}, // eSnake
+    { 300,   2.5f,  32, {62,49}, "hennizonnbi"}, // eMutant
+    {1000,   1.0f,  48, {14,24}, "Tank"}, // eTank
+};
 Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
     m_pos = pos;
     m_enemy_type = enemy_type;
@@ -44,50 +60,23 @@ Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
     m_flip = false;
 
     // 敵の種類ごとにパラメータ設定
-    switch (m_enemy_type) {
-    case eZombie:
-        m_hp = 30;
-        m_speed = 2.0f;
-        m_rad = 16;
-        m_img = COPY_RESOURCE("Enemy", CImage);
-        break;
-
-    case eRobot:
-        m_hp = 60;
-        m_speed = 1.5f;
-        m_rad = 20;
-        m_img = COPY_RESOURCE("Enemy", CImage);
-        break;
-
-    case eDog:
-        m_hp = 15;
-        m_speed = 4.5f;
-        m_rad = 12;
-        m_img = COPY_RESOURCE("Enemy", CImage);
-        break;
-
-    case eSnake:
-        m_hp = 40;
-        m_speed = 3.0f;
-        m_rad = 18;
-        m_img = COPY_RESOURCE("Enemy", CImage);
-        break;
-
-    case eMutant:
-        m_hp = 300;
-        m_speed = 2.5f;
-        m_rad = 32;
-        m_img = COPY_RESOURCE("Enemy", CImage);
-        break;
-
-    case eTank:
-        m_hp = 1000;
-        m_speed = 1.0f;
-        m_rad = 48;
-        m_img = COPY_RESOURCE("Enemy", CImage);
-        break;
-    }
+    const EnemyParam& param = g_enemy_params[m_enemy_type];
+    m_img.SetSize(param.size);
+    m_img.SetCenter(param.size/2);
+    m_hp = param.hp;
+    m_speed = param.speed;
+    m_rad = param.rad;
+    m_img = COPY_RESOURCE(param.res_name, CImage);
     m_img.ChangeAnimation(0);
+}
+
+Enemy::~Enemy()
+{
+    if (m_enemy_type == eMutant||m_enemy_type == eTank) {
+        EnemySpawner::boss_kill = true;
+    }
+
+
 }
 
 void Enemy::Update() {
@@ -149,7 +138,7 @@ void Enemy::Collision(Base* b) {
         if (Base::CollisionRect(this, b)) {
 
             // ★ 敵自身のHPを10減らす！
-            TakeDamage(1);
+            TakeDamage(100);
 
             // ※もしプレイヤー側のHPも減らしたい場合は、下の行も入れておきます
             // if (Player* p = dynamic_cast<Player*>(b)) {
