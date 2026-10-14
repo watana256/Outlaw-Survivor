@@ -1,13 +1,13 @@
-#include "RocketBullt.h"
-#include "Enemy.h"
+#include "Bullet.h"
+#include "../Enemy.h"
 
 #define  BULLET_SPEED 7.0f
 
-RcoketBullet::RcoketBullet(const CVector2D& pos, const CVector2D& dir, float dist, int damage)
-    :Base(eType_RoketBullet)
+Bullet::Bullet(const CVector2D& pos, const CVector2D& dir,float dist,int damage)
+    :Base(eType_Bullet)
     , m_flying_dist(dist)
-    , m_move_dist(0.0f)
-    , m_damage(damage)
+    ,m_move_dist(0.0f)
+    ,m_damage(damage)
 {
     m_img.Load("Image/Bullet.png");
     m_pos = pos;
@@ -19,7 +19,7 @@ RcoketBullet::RcoketBullet(const CVector2D& pos, const CVector2D& dir, float dis
     m_img.SetAng(atan2f(-m_vec.y, m_vec.x));
 
 }
-void RcoketBullet::Update()
+void Bullet::Update()
 {
     const float move_speed = BULLET_SPEED;
     m_pos += m_vec * move_speed;
@@ -29,13 +29,13 @@ void RcoketBullet::Update()
         SetKill();
     }
 }
-void RcoketBullet::Draw()
+void Bullet::Draw()
 {
     m_img.SetPos(m_pos);
     m_img.Draw();
     Utility::DrawCircle(m_pos, m_rad, CVector4D(0, 5, 0, 0.5));
 }
-void RcoketBullet::Collision(Base* b)
+void Bullet::Collision(Base* b)
 {
     if (b->m_type == eType_Enemy) {
         // 当たり判定（四角形判定）

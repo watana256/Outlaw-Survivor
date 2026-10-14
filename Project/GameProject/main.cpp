@@ -5,7 +5,7 @@
 #include "Game/HP.h"
 #include "Game/Money.h"
 #include"Game/UI.h"
-#include "Game/Bullet.h"
+#include "Game/BulletAll/Bullet.h"
 #include "Game/Score.h"
 #include"Game/Field.h"
 #include "Game/Shop.h"
@@ -20,7 +20,7 @@
 #include"Game/Weapon/Shotgun.h"
 #include"Game/Weapon/Stella.h"
 #include"Game/Medical.h"
-
+#include"Game/BulletAll/RocketBullt.h"
 
 
 
@@ -156,7 +156,7 @@ void Init(void)
 	ADD_RESOURCE("Stella", CImage::CreateImage("Image/Stella.png"));
 	ADD_RESOURCE("Ax", CImage::CreateImage("Image/Ax.png"));
 	ADD_RESOURCE("Flamethrower", CImage::CreateImage("Image/Flamethrower.png"));
-
+	ADD_RESOURCE("RocketBullt", CImage::CreateImage("Image/RocketBullt.png"));
 
 
 

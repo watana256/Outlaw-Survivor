@@ -1,9 +1,9 @@
 #include "Rocket.h"
 #include "../Player.h"
-#include "../Bullet.h"
+#include "../BulletAll/RocketBullt.h"
 
-#define ATTACK_TIME 0.5f
-#define FLYING_DIST 100.0f
+#define ATTACK_TIME 1.0f
+#define FLYING_DIST 500.0f
 Rocket::Rocket()
 	: Base(eType_Rocket)
 	, m_attak_cnt(0)
@@ -36,7 +36,7 @@ void Rocket::Update()
 			if (player != nullptr) {
 				CVector2D pos = player->m_pos;
 				CVector2D dir = player->m_vec;
-				new Bullet(pos, dir, FLYING_DIST, GetDamage());
+				new RcoketBullet(pos, dir, FLYING_DIST, GetDamage());
 			}
 
 		}

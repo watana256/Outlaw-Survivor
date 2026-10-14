@@ -1,6 +1,7 @@
 #pragma once
 #include "../Base/Base.h"
 class Pistol;
+class Rocket;
 
 class Player :public Base
 {
@@ -23,6 +24,7 @@ private:
 	int m_hp;
 	int m_muteki_cnt;
 	Pistol* m_pistol;
+	Rocket* m_rocket;
 
 	enum {
 		eAnim_Walk_right,

@@ -1,6 +1,6 @@
 #include "Stella.h"
 #include "../Player.h"
-#include "../Bullet.h"
+#include "../BulletAll/Bullet.h"
 
 #define ATTACK_TIME 0.5f
 #define FLYING_DIST 100.0f
