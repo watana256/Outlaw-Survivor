@@ -5,6 +5,8 @@ private:
 	CImage m_img;
 	float m_attak_cnt;
 	bool m_is_enable;
+
+	int GetDamage() const;
 public:
 	Flamethrower();
 	void SetEnable(bool enable);
