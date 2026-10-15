@@ -116,8 +116,11 @@ Player::Player(const CVector2D& pos)
 	//Rocket* rocket = new Rocket();
 	//rocket->SetEnable(true);
 
-	Shotgun* shotgun = new Shotgun();
-	shotgun->SetEnable(true);
+	//Shotgun* shotgun = new Shotgun();
+	//shotgun->SetEnable(true);
+
+	Flamethrower* flamethrower = new Flamethrower();
+	flamethrower->SetEnable(true);
 }
 Player::~Player() {
 	ms_instance = nullptr;

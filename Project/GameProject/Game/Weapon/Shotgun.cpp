@@ -3,8 +3,8 @@
 #include "../BulletAll/Bullet.h"
 
 #define ATTACK_TIME 0.5f
-#define FLYING_DIST 100.0f
-#define BULLET_COUNT 10
+#define FLYING_DIST 200.0f
+#define BULLET_COUNT 8
 #define SPREAD_ANGLE 45.0f
 
 Shotgun::Shotgun()
