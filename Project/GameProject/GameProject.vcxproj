@@ -23,6 +23,7 @@
     <ClInclude Include="Game\BulletAll\AxBullet.h" />
     <ClInclude Include="Game\BulletAll\Bullet.h" />
     <ClInclude Include="Game\BulletAll\FlamethrowerBullet.h" />
+    <ClInclude Include="Game\BulletAll\MolotovBullet.h" />
     <ClInclude Include="Game\BulletAll\RocketBullet.h" />
     <ClInclude Include="Game\Enemy.h" />
     <ClInclude Include="Game\EnemySpawner.h" />
@@ -53,6 +54,7 @@
     <ClCompile Include="Game\BulletAll\AxBullet.cpp" />
     <ClCompile Include="Game\BulletAll\Bullet.cpp" />
     <ClCompile Include="Game\BulletAll\FlamethrowerBullt.cpp" />
+    <ClCompile Include="Game\BulletAll\MolotovBullet.cpp" />
     <ClCompile Include="Game\BulletAll\RocketBullet.cpp" />
     <ClCompile Include="Game\Enemy.cpp" />
     <ClCompile Include="Game\EnemySpawner.cpp" />

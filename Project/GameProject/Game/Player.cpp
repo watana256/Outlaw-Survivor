@@ -122,11 +122,11 @@ Player::Player(const CVector2D& pos)
 	//Flamethrower* flamethrower = new Flamethrower();
 	//flamethrower->SetEnable(true);
 
-	Ax* ax = new Ax();
-	ax->SetEnable(true);
+	//Ax* ax = new Ax();
+	//ax->SetEnable(true);
 
-
-
+	Molotov* molotov = new Molotov();
+	molotov->SetEnable(true);
 
 
 
