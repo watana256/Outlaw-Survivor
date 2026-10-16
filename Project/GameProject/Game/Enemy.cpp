@@ -46,12 +46,12 @@ struct EnemyParam {
     const char* res_name; // 画像リソース名
 };
 static const EnemyParam g_enemy_params[] = {
-    // HP,   speed, rad,  size  画像名
+    // HP,   speed, rad, 切り抜き  画像名
     {  30,   2.0f,  16, {14,24}, "Enemy"}, // eZombie
     {  60,   1.5f,  20, {32,16}, "Robot"}, // eRobot
     {  15,   4.5f,  12, {32,16}, "Dog"}, // eDog
     {  40,   3.0f,  18, {14,24}, "Snake"}, // eSnake
-    { 300,   2.5f,  32, {62,49}, "hennizonnbi"}, // eMutant
+    { 300,   2.5f,  32, {61,49}, "hennizonnbi"}, // eMutant
     {1000,   1.0f,  48, {14,24}, "Tank"}, // eTank
 };
 Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
@@ -126,25 +126,17 @@ void Enemy::Draw() {
 }
 
 void Enemy::Collision(Base* b) {
-    // 相手がプレイヤーの場合
-    /*if (b->m_type == eType_Player) {
-        if (Base::CollisionRect(this, b)) {
-            if (Player* p = dynamic_cast<Player*>(b)) {
-                p->TakeDamage(10);
-            }
-        }
-    }*/
     if (b->m_type == eType_Player) {
         // 当たり判定（四角形判定）
         if (Base::CollisionRect(this, b)) {
 
             // ★ 敵自身のHPを10減らす！
-            TakeDamage(100);
+            TakeDamage(10);
 
             // ※もしプレイヤー側のHPも減らしたい場合は、下の行も入れておきます
-            // if (Player* p = dynamic_cast<Player*>(b)) {
-            //     p->TakeDamage(10); // プレイヤーにも10ダメージ
-            // }
+             if (Player* p = dynamic_cast<Player*>(b)) {
+                 p->TakeDamage(10); // プレイヤーにも10ダメージ
+             }
         }
     }
 }

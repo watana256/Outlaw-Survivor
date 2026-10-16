@@ -73,6 +73,9 @@
     <ClInclude Include="Game\BulletAll\FlamethrowerBullet.h">
       <Filter>Game\BulletAll</Filter>
     </ClInclude>
+    <ClInclude Include="Game\BulletAll\AxBullet.h">
+      <Filter>Game\BulletAll</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -143,6 +146,9 @@
       <Filter>Game\BulletAll</Filter>
     </ClCompile>
     <ClCompile Include="Game\BulletAll\FlamethrowerBullt.cpp">
+      <Filter>Game\BulletAll</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\BulletAll\AxBullet.cpp">
       <Filter>Game\BulletAll</Filter>
     </ClCompile>
   </ItemGroup>

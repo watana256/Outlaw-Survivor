@@ -8,7 +8,7 @@
 
 bool EnemySpawner::boss_kill;
 EnemySpawner::EnemySpawner() : Base(eType_System) {
-    m_phase = 1;               // フェイズ1からスタート
+    m_phase = 1;               // フェイズ1dからスタート
     m_spawn_timer = 0.0f;
     m_spawned_count = 0;
     m_max_spawn_count = 3;    // 通常フェイズでの雑魚敵の数（調整OK）
@@ -93,14 +93,39 @@ void EnemySpawner::Update() {
 
 void EnemySpawner::NextPhase()
 {
+    m_phase++;            // フェーズを進める（1 -> 2 -> 3 ...）
+    m_spawned_count = 0;  // 出現数をリセット
+    m_spawn_timer = 0.0f; // タイマーリセット
 
-    m_phase++;            //  フェイズを進める（1 -> 2 -> 3 ...）
-    m_spawned_count = 0;  //  出現数をリセット
-    m_spawn_timer = 0.0f; //  タイマーリセット
-
+    // ★ UIの切り抜き（フェーズ表示）を1進める
     UI* ui = dynamic_cast<UI*>(Base::FindObject(eType_UI));
-    if (ui != nullptr) {    
-        ui->UIType++;
+    if (ui != nullptr) {
+        ui->AddUIType(); // または ui->UIType++;
+    }
+
+    // ★ フェーズごとに出す数を設定
+    switch (m_phase) {
+    case 1:  m_max_spawn_count = 1; break;
+    case 2:  m_max_spawn_count = 2; break;
+    case 3:  m_max_spawn_count = 3; break;
+    case 4:  m_max_spawn_count = 4; break;
+    case 5:  m_max_spawn_count = 5; break;
+
+        // ★ 6はボスフェイズなので飛ばしてOK！
+
+    case 7:  m_max_spawn_count = 7; break; // ボス撃破後のフェイズ7
+    case 8:  m_max_spawn_count = 8; break;
+    case 9:  m_max_spawn_count = 9; break;
+    case 10: m_max_spawn_count = 10; break;
+
+        // ★ 11もラスボスフェイズなので飛ばしてOK！
+
+    default: m_max_spawn_count = 3; break;
+
+    case 12:
+        // ★ ゲームクリア時の処理（クリア画面を呼ぶなど）
+
+        break;
     }
 }
 

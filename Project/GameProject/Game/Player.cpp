@@ -119,8 +119,25 @@ Player::Player(const CVector2D& pos)
 	//Shotgun* shotgun = new Shotgun();
 	//shotgun->SetEnable(true);
 
-	Flamethrower* flamethrower = new Flamethrower();
-	flamethrower->SetEnable(true);
+	//Flamethrower* flamethrower = new Flamethrower();
+	//flamethrower->SetEnable(true);
+
+	Ax* ax = new Ax();
+	ax->SetEnable(true);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 Player::~Player() {
 	ms_instance = nullptr;
