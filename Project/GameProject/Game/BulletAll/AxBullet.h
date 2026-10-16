@@ -8,10 +8,14 @@ public:
     float m_flying_dist;
     float m_move_dist;
     int m_damage;
+
     void Collision(Base* b);
 
 public:
     AxBullet(const CVector2D& pos, const CVector2D& dir, float dist, int damage);
     void Update();
     void Draw();
+
+    static TexAnimData _anim_data[];
+
 };
