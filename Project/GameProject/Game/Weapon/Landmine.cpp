@@ -20,7 +20,7 @@ int Landmine::GetDamage() const
 	int lv = 1;
 	switch (lv)
 	{
-	case 1: return 1;
+	case 1: return 100;
 	case 2: return 2;
 	case 3: return 3;
 	case 4: return 4;
