@@ -8,10 +8,10 @@
 
 bool EnemySpawner::boss_kill;
 EnemySpawner::EnemySpawner() : Base(eType_System) {
-    m_phase = 1;               // フェイズ1dからスタート
+    m_phase = 1;               // フェイズ1からスタート
     m_spawn_timer = 0.0f;
     m_spawned_count = 0;
-    m_max_spawn_count = 3;    // 通常フェイズでの雑魚敵の数（調整OK）
+    m_max_spawn_count = 1;    // フェイズ1の敵の数
     m_boss_spawned = false;
     boss_kill = false;
 }
@@ -72,7 +72,7 @@ void EnemySpawner::Update() {
             if (m_spawn_timer >= 1.0f) {
                 m_spawn_timer = 0.0f;
                 CVector2D spawn_pos = GetRandomSpawnPos(player->m_pos);
-                int enemy_type = rand() % 3; // 雑魚敵
+                int enemy_type = rand() % 3; // 雑魚敵(種類)
                 new Enemy(spawn_pos, enemy_type);
                 m_spawned_count++;
             }
@@ -103,9 +103,8 @@ void EnemySpawner::NextPhase()
         ui->AddUIType(); // または ui->UIType++;
     }
 
-    // ★ フェーズごとに出す数を設定
+    // ★ フェーズごとに出す数を設定 (2から←1は上にある)
     switch (m_phase) {
-    case 1:  m_max_spawn_count = 1; break;
     case 2:  m_max_spawn_count = 2; break;
     case 3:  m_max_spawn_count = 3; break;
     case 4:  m_max_spawn_count = 4; break;
