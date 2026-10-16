@@ -126,25 +126,17 @@ void Enemy::Draw() {
 }
 
 void Enemy::Collision(Base* b) {
-    // 相手がプレイヤーの場合
-    /*if (b->m_type == eType_Player) {
-        if (Base::CollisionRect(this, b)) {
-            if (Player* p = dynamic_cast<Player*>(b)) {
-                p->TakeDamage(10);
-            }
-        }
-    }*/
     if (b->m_type == eType_Player) {
         // 当たり判定（四角形判定）
         if (Base::CollisionRect(this, b)) {
 
             // ★ 敵自身のHPを10減らす！
-            TakeDamage(100);
+            TakeDamage(10);
 
             // ※もしプレイヤー側のHPも減らしたい場合は、下の行も入れておきます
-            // if (Player* p = dynamic_cast<Player*>(b)) {
-            //     p->TakeDamage(10); // プレイヤーにも10ダメージ
-            // }
+             if (Player* p = dynamic_cast<Player*>(b)) {
+                 p->TakeDamage(10); // プレイヤーにも10ダメージ
+             }
         }
     }
 }
