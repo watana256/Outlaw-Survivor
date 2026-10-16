@@ -22,6 +22,7 @@
 #include"Game/Medical.h"
 #include"Game/BulletAll/RocketBullet.h"
 #include"Game/BulletAll/FlamethrowerBullet.h"
+#include"Game/BulletAll/AxBullet.h"
 
 
 
@@ -159,6 +160,7 @@ void Init(void)
 	ADD_RESOURCE("RocketBullt", CImage::CreateImage("Image/RocketBullt.png"));
 	ADD_RESOURCE("Explosion", CImage::CreateImage("Image/Explosion.png", RocketBullet::_anim_data, 64, 64));
 	ADD_RESOURCE("Flameeffects", CImage::CreateImage("Image/FlamethrowerBullet.png", FlamethrowerBullet::_anim_data, 64, 64));
+	ADD_RESOURCE("AxBullet", CImage::CreateImage("Image/AxBullet.png", AxBullet::_anim_data, 100, 100));
 
 
 

@@ -26,7 +26,7 @@ FlamethrowerBullet::FlamethrowerBullet(const CVector2D& pos, const CVector2D& di
     , m_damage(damage)
     ,m_is_flameeffects(false)
 {
-    m_img.Load("Image/FlamethrowerBullet.png",_anim_data, 64, 64);
+    m_img.Load("Image/FlamethrowerBullet.png", _anim_data, 64, 64);
     m_pos = pos;
     m_vec = dir;
     m_rad = 10;
