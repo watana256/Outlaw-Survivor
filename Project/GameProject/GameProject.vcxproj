@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\Base.h" />
+    <ClInclude Include="Game\BulletAll\AxBullet.h" />
     <ClInclude Include="Game\BulletAll\Bullet.h" />
     <ClInclude Include="Game\BulletAll\FlamethrowerBullet.h" />
     <ClInclude Include="Game\BulletAll\RocketBullet.h" />
@@ -49,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Base\Base.cpp" />
+    <ClCompile Include="Game\BulletAll\AxBullet.cpp" />
     <ClCompile Include="Game\BulletAll\Bullet.cpp" />
     <ClCompile Include="Game\BulletAll\FlamethrowerBullt.cpp" />
     <ClCompile Include="Game\BulletAll\RocketBullet.cpp" />

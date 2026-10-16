@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "Player.h"
 #include "EnemySpawner.h"
+#include "Medical.h"
 
 // アニメーション定義
 static TexAnim Zombie[] = {
@@ -75,8 +76,8 @@ Enemy::~Enemy()
     if (m_enemy_type == eMutant||m_enemy_type == eTank) {
         EnemySpawner::boss_kill = true;
     }
-
-
+    new Medical(m_pos,eKit);
+    new Medical(m_pos, eBin);
 }
 
 void Enemy::Update() {
