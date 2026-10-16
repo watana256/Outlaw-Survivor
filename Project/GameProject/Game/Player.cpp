@@ -99,7 +99,7 @@ Player::Player(const CVector2D& pos)
 	, m_speed_cnt(0)
 {
 	ms_instance = this;
-	
+
 	m_vec = CVector2D::right;
 	m_img = COPY_RESOURCE("Player", CImage);
 	m_pos_old = m_pos = pos;
@@ -125,20 +125,30 @@ Player::Player(const CVector2D& pos)
 	Ax* ax = new Ax();
 	ax->SetEnable(true);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+
+	void Player::ClampPosition() {
+		const float margin_x = 30.0f;
+		const float margin_y = 140.0f;
+
+		if (m_pos.x < margin_x) m_pos.x = margin_x;
+		if (m_pos.x > SCREEN_WIDTH - margin_x) m_pos.x = SCREEN_WIDTH - margin_x;
+
+		if (m_pos.y < margin_y) m_pos.y = margin_y;
+		if (m_pos.y > SCREEN_HEIGHT - margin_y) m_pos.y = SCREEN_HEIGHT - margin_y;
+	}
+
+
+
+
+
+
+
+
+
+
+
 Player::~Player() {
 	ms_instance = nullptr;
 }
@@ -176,6 +186,7 @@ void Player::Update()
 		State_Death();
 		break;
 	}
+	ClampPosition();
 }
 void Player::TakeDamage(int damage)
 {
