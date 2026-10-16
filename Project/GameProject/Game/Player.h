@@ -44,6 +44,7 @@ private:
 public:
 	Player(const CVector2D& pos);
 	~Player();
+	void ClampPosition();
 	static Player* Instance();
 	static TexAnimData _anim_data[];
 	void Update();
