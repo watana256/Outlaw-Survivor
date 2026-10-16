@@ -11,7 +11,7 @@ EnemySpawner::EnemySpawner() : Base(eType_System) {
     m_phase = 1;               // フェイズ1からスタート
     m_spawn_timer = 0.0f;
     m_spawned_count = 0;
-    m_max_spawn_count = 1;    // フェイズ1の敵の数
+    m_max_spawn_count = 5;    // フェイズ1の敵の数
     m_boss_spawned = false;
     boss_kill = false;
 }
@@ -105,21 +105,21 @@ void EnemySpawner::NextPhase()
 
     // ★ フェーズごとに出す数を設定 (2から←1は上にある)
     switch (m_phase) {
-    case 2:  m_max_spawn_count = 2; break;
-    case 3:  m_max_spawn_count = 3; break;
-    case 4:  m_max_spawn_count = 4; break;
-    case 5:  m_max_spawn_count = 5; break;
+    case 2:  m_max_spawn_count = 8; break;
+    case 3:  m_max_spawn_count = 12; break;
+    case 4:  m_max_spawn_count = 17; break;
+    case 5:  m_max_spawn_count = 24; break;
 
         // ★ 6はボスフェイズなので飛ばしてOK！
 
-    case 7:  m_max_spawn_count = 7; break; // ボス撃破後のフェイズ7
-    case 8:  m_max_spawn_count = 8; break;
-    case 9:  m_max_spawn_count = 9; break;
-    case 10: m_max_spawn_count = 10; break;
+    case 7:  m_max_spawn_count = 28; break; // ボス撃破後のフェイズ7
+    case 8:  m_max_spawn_count = 32; break;
+    case 9:  m_max_spawn_count = 37; break;
+    case 10: m_max_spawn_count = 45; break;
 
         // ★ 11もラスボスフェイズなので飛ばしてOK！
 
-    default: m_max_spawn_count = 3; break;
+    default: m_max_spawn_count = 1; break;
 
     case 12:
         // ★ ゲームクリア時の処理（クリア画面を呼ぶなど）
