@@ -25,10 +25,10 @@ Medical::Medical(const CVector2D& pos, int Medical_type) :Base(eType_Medical)
 
 	switch (m_Medical_type) {
 	case eKit:
-		m_Medical = 100;
+		m_Medical = 50;//1%
 		break;
 	case eBin:
-		m_Medical = 50;
+		m_Medical = 20;//5%
 		break;
 
 
