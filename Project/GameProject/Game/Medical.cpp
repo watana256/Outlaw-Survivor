@@ -1,5 +1,6 @@
 #include "Medical.h"
 #include "Enemy.h"
+#include "Player.h"
 static TexAnim _eMedical_Kit[] =
 {
 	{1,1}
@@ -30,7 +31,6 @@ Medical::Medical(const CVector2D& pos, int Medical_type) :Base(eType_Medical)
 	case eBin:
 		m_Medical = 20;//5%
 		break;
-
 
 	}
 	m_img.ChangeAnimation(m_Medical_type);
@@ -83,5 +83,15 @@ void Medical::Collision(Base* b) {
 		}
 		break;
 	}
+	if (b->m_type == eType_Player) {
+		// 当たり判定（四角形判定）
+		if (Base::CollisionRect(this, b)) {
+
+			if (Player* p = dynamic_cast<Player*>(b)) {
+				 p->TakeDamage(-10); 
+			}
+		}
+	}
+
 
 }

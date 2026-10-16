@@ -90,7 +90,7 @@ Enemy::~Enemy()
     if (m_enemy_type == eMutant||m_enemy_type == eTank) {
         EnemySpawner::boss_kill = true;
     }
-    int u = rand() % 26;//回復ランダム出現
+    int u = rand() % 31;//回復ランダム出現
         if (u == 2 || u == 3 || u == 4 || u == 5 || u == 6) {
             new Medical(m_pos, eKit);
             int u = 0;
@@ -159,7 +159,7 @@ void Enemy::Collision(Base* b) {
 
             // ※もしプレイヤー側のHPも減らしたい場合は、下の行も入れておきます
              if (Player* p = dynamic_cast<Player*>(b)) {
-                // p->TakeDamage(10); // プレイヤーにも10ダメージ
+                 p->TakeDamage(10); // プレイヤーにも10ダメージ
              }
         }
     }
