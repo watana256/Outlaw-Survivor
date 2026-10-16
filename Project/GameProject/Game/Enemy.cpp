@@ -76,8 +76,18 @@ Enemy::~Enemy()
     if (m_enemy_type == eMutant||m_enemy_type == eTank) {
         EnemySpawner::boss_kill = true;
     }
-    new Medical(m_pos,eKit);
-    new Medical(m_pos, eBin);
+    int u = rand() % 16;
+        if (u == 2 || u == 3 || u == 4) {
+            new Medical(m_pos, eKit);
+            int u = 0;
+        }
+        else if (u == 1) {
+            new Medical(m_pos, eBin);
+            int u = 0;
+        }
+        else {
+            int u = 0;
+    }
 }
 
 void Enemy::Update() {

@@ -29,5 +29,6 @@ public:
 	void Update();
 	void Draw();
 	void Collision(Base* b);
+	void ClampPosition();
 	static TexAnimData _anim_data[];
 };

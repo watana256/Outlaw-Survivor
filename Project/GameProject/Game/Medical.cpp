@@ -18,9 +18,9 @@ Medical::Medical(const CVector2D& pos, int Medical_type) :Base(eType_Medical)
 {
 	m_img = COPY_RESOURCE("Medical", CImage);
 	m_pos = pos;
-	m_rad = 8;
+	m_rad = 10;
 	m_img.SetSize(40, 30);
-	m_img.SetCenter(40, 30);
+	m_img.SetCenter(0, 5);
 	m_Medical_type = Medical_type;
 
 	switch (m_Medical_type) {
@@ -35,6 +35,17 @@ Medical::Medical(const CVector2D& pos, int Medical_type) :Base(eType_Medical)
 	}
 	m_img.ChangeAnimation(m_Medical_type);
 }
+void Medical::ClampPosition() {
+	const float margin_x = 30.0f;
+	const float margin_y = 140.0f;
+
+	if (m_pos.x < margin_x) m_pos.x = margin_x;
+	if (m_pos.x > SCREEN_WIDTH - margin_x) m_pos.x = SCREEN_WIDTH - margin_x;
+
+	if (m_pos.y < margin_y) m_pos.y = margin_y;
+	if (m_pos.y > SCREEN_HEIGHT - margin_y) m_pos.y = SCREEN_HEIGHT - margin_y;
+}
+
 void Medical::Update()
 {
 	m_img.UpdateAnimation();
