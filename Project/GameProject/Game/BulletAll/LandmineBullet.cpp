@@ -26,7 +26,7 @@ LandmineBullet::LandmineBullet(const CVector2D& pos, const CVector2D& dir, float
     , m_damage(damage)
     , m_is_explosion(false)
 {
-    m_img.Load("Image/RocketBullt.png");
+    m_img.Load("Image/LandmineBullet.png");
     m_explosion_img = COPY_RESOURCE("Explosion", CImage);
 
     m_pos = pos;
@@ -34,8 +34,8 @@ LandmineBullet::LandmineBullet(const CVector2D& pos, const CVector2D& dir, float
     m_rad = 10;
     m_rect = CRect(-20, -20, 20, 20);
 
-    m_img.SetSize(20, 20);
-    m_img.SetCenter(10, 10);
+    m_img.SetSize(30, 30);
+    m_img.SetCenter(15, 15);
     m_img.SetAng(atan2f(-m_vec.y, m_vec.x));
 
     m_explosion_img.SetSize(EXP_IMG_SIZE, EXP_IMG_SIZE);

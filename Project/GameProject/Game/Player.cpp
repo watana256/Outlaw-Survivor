@@ -125,10 +125,10 @@ Player::Player(const CVector2D& pos)
 	//Ax* ax = new Ax();
 	//ax->SetEnable(true);
 
-	Molotov* molotov = new Molotov();
-	molotov->SetEnable(true);
-	
-	
+	//Molotov* molotov = new Molotov();
+	//molotov->SetEnable(true);
+	Landmine* landmine = new Landmine();
+	landmine->SetEnable(true);
 }
 
 	void Player::ClampPosition() {
