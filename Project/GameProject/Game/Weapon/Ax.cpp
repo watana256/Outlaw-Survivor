@@ -1,6 +1,6 @@
 #include "Ax.h"
 #include "../Player.h"
-#include "../BulletAll/Bullet.h"
+#include "../BulletAll/AxBullet.h"
 
 #define ATTACK_TIME 0.5f
 #define FLYING_DIST 100.0f
@@ -36,7 +36,7 @@ void Ax::Update()
 			if (player != nullptr) {
 				CVector2D pos = player->m_pos;
 				CVector2D dir = player->m_vec;
-				new Bullet(pos, dir, FLYING_DIST, GetDamage());
+				new AxBullet(pos, dir, FLYING_DIST, GetDamage());
 			}
 
 		}

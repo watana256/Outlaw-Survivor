@@ -32,8 +32,8 @@ FlamethrowerBullet::FlamethrowerBullet(const CVector2D& pos, const CVector2D& di
     m_rad = 10;
     m_rect = CRect(-20, -20, 20, 20);
 
-    m_img.SetSize(200, 200);
-    m_img.SetCenter(100, 100);
+    m_img.SetSize(100, 100);
+    m_img.SetCenter(50, 50);
     m_img.SetAng(atan2f(-m_vec.y, m_vec.x));
 
     m_img.ChangeAnimation(0, true);
@@ -52,6 +52,7 @@ void FlamethrowerBullet::Update()
 void FlamethrowerBullet::Draw()
 {
     m_img.SetPos(m_pos);
+    m_img.SetAng(atan2(-m_vec.x, -m_vec.y));
     m_img.Draw();
     Utility::DrawCircle(m_pos, m_rad, CVector4D(0, 5, 0, 0.5));
 }
@@ -68,4 +69,3 @@ void FlamethrowerBullet::Collision(Base* b)
         }
     }
 }
-//âŒâäÇècÇ©ÇÁâ°Ç…
