@@ -23,7 +23,7 @@
 #include"Game/BulletAll/RocketBullet.h"
 #include"Game/BulletAll/FlamethrowerBullet.h"
 #include"Game/BulletAll/AxBullet.h"
-
+#include"Game/BulletAll/MolotovBullet.h"
 
 
 
@@ -161,6 +161,8 @@ void Init(void)
 	ADD_RESOURCE("Explosion", CImage::CreateImage("Image/Explosion.png", RocketBullet::_anim_data, 64, 64));
 	ADD_RESOURCE("Flameeffects", CImage::CreateImage("Image/FlamethrowerBullet.png", FlamethrowerBullet::_anim_data, 64, 64));
 	ADD_RESOURCE("AxBullet", CImage::CreateImage("Image/AxBullet.png", AxBullet::_anim_data, 100, 100));
+	ADD_RESOURCE("MolotovBullet", CImage::CreateImage("Image/MolotovBullet.png", MolotovBullet::_anim_data, 145, 145));
+	ADD_RESOURCE("FlameEffect", CImage::CreateImage("Image/MolotovBulleteffect.png", MolotovBullet::_anim_data, 64, 64));
 
 
 
