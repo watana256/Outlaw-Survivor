@@ -1,6 +1,6 @@
 #include "Landmine.h"
 #include "../Player.h"
-#include "../BulletAll/Bullet.h"
+#include "../BulletAll/LandmineBullet.h"
 
 #define ATTACK_TIME 0.5f
 #define FLYING_DIST 100.0f
@@ -36,7 +36,7 @@ void Landmine::Update()
 			if (player != nullptr) {
 				CVector2D pos = player->m_pos;
 				CVector2D dir = player->m_vec;
-				new Bullet(pos, dir, FLYING_DIST, GetDamage());
+				new LandmineBullet(pos, dir, FLYING_DIST, GetDamage());
 			}
 
 		}
