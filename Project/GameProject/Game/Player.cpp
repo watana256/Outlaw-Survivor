@@ -125,6 +125,19 @@ Player::Player(const CVector2D& pos)
 	Ax* ax = new Ax();
 	ax->SetEnable(true);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 Player::~Player() {
 	ms_instance = nullptr;
