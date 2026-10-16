@@ -90,8 +90,8 @@ Enemy::~Enemy()
     if (m_enemy_type == eMutant||m_enemy_type == eTank) {
         EnemySpawner::boss_kill = true;
     }
-    int u = rand() % 16;
-        if (u == 2 || u == 3 || u == 4) {
+    int u = rand() % 26;//‰ñ•œƒ‰ƒ“ƒ_ƒ€oŒ»
+        if (u == 2 || u == 3 || u == 4 || u == 5 || u == 6) {
             new Medical(m_pos, eKit);
             int u = 0;
         }
