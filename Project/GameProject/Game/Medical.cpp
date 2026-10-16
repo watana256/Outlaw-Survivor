@@ -20,7 +20,7 @@ Medical::Medical(const CVector2D& pos, int Medical_type) :Base(eType_Medical)
 	m_pos = pos;
 	m_rad = 8;
 	m_img.SetSize(40, 30);
-	m_img.SetCenter(8, 8);
+	m_img.SetCenter(40, 30);
 	m_Medical_type = Medical_type;
 
 	switch (m_Medical_type) {
