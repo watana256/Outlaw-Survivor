@@ -1,11 +1,14 @@
 #include "Molotov.h"
 #include "../Player.h"
-#include "../BulletAll/Bullet.h"
+#include "../BulletAll/MolotovBullet.h"
 
 #define ATTACK_TIME 0.5f
-#define FLYING_DIST 100.0f
+#define FLYING_DIST 200.0f
+#define BULLET_COUNT 3
+#define SPREAD_ANGLE 180.0f
+
 Molotov::Molotov()
-	: Base(eType_Landmine)
+	: Base(eType_Shotgun)
 	, m_attak_cnt(0)
 	, m_is_enable(false)
 {
@@ -14,6 +17,21 @@ Molotov::Molotov()
 void Molotov::SetEnable(bool enable)
 {
 	m_is_enable = enable;
+}
+void Molotov::Shot(const CVector2D& pos, const CVector2D& dir)
+{
+	for (int i = 0; i < BULLET_COUNT; i++) {
+		float per = (float)i / (BULLET_COUNT - 1);
+		float ang = Utility::Lerp(-SPREAD_ANGLE, SPREAD_ANGLE, per);
+		CVector3D shot_dir = CQuaternion::Euler(0.0f, 0.0f, DtoR(ang)) * dir;
+		new MolotovBullet
+		(
+			pos,
+			CVector2D(shot_dir.x, shot_dir.y),
+			FLYING_DIST,
+			GetDamage()
+		);
+	}
 }
 int Molotov::GetDamage() const
 {
@@ -27,6 +45,7 @@ int Molotov::GetDamage() const
 	}
 	return 1;
 }
+
 void Molotov::Update()
 {
 	if (m_is_enable) {
@@ -36,7 +55,7 @@ void Molotov::Update()
 			if (player != nullptr) {
 				CVector2D pos = player->m_pos;
 				CVector2D dir = player->m_vec;
-				new Bullet(pos, dir, FLYING_DIST, GetDamage());
+				Shot(pos, dir);
 			}
 
 		}

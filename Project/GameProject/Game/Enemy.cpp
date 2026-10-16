@@ -41,35 +41,49 @@ TexAnimData Enemy::_anim_data[] = {
 struct EnemyParam {
     int hp;             // HP
     float speed;        // 移動速度
-    int rad;            // 当たり判定の半径
-    CVector2D size;
+    CVector2D size;     //　当たり判定のサイズ
+    CVector2D render_size; // 画面上のサイズ(?)
     const char* res_name; // 画像リソース名
 };
 static const EnemyParam g_enemy_params[] = {
-    // HP,   speed, rad, 切り抜き  画像名
-    {  30,   2.0f,  16, {14,24}, "Enemy"}, // eZombie
-    {  60,   1.5f,  20, {32,16}, "Robot"}, // eRobot
-    {  15,   4.5f,  12, {32,16}, "Dog"}, // eDog
-    {  40,   3.0f,  18, {14,24}, "Snake"}, // eSnake
-    { 300,   2.5f,  32, {61,49}, "hennizonnbi"}, // eMutant
-    {1000,   1.0f,  48, {14,24}, "Tank"}, // eTank
+    // HP,   speed,当たり判定  サイズ     画像名
+    {  30,   2.0f, {14 ,24}, {14,24},"Enemy"}, // eZombie
+    {  60,   1.5f, {32 ,16}, {12,12},"Robot"}, // eRobot
+    {  15,   4.5f, {32 ,16}, {12,12},"Dog"}, // eDog
+    {  40,   3.0f, {14 ,24}, {12,12},"Snake"}, // eSnake
+    { 300,   2.5f, {61 ,49}, {12,12},"hennizonnbi"}, // eMutant
+    {1000,   1.0f, {14 ,24}, {140, 240},"Tank"}, // eTank
 };
 Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
     m_pos = pos;
     m_enemy_type = enemy_type;
-    m_rect = CRect(-15, -25, 15, 25);
     m_flip = false;
 
-    // 敵の種類ごとにパラメータ設定
+    // ★ 1. 敵の種類ごとにパラメータ設定
     const EnemyParam& param = g_enemy_params[m_enemy_type];
-    m_img.SetSize(param.size);
-    m_img.SetCenter(param.size/2);
-    m_hp = param.hp;
-    m_speed = param.speed;
-    m_rad = param.rad;
+
+    // ★ 2. 画像をリソースからコピーしてセットする
     m_img = COPY_RESOURCE(param.res_name, CImage);
+
     m_img.ChangeAnimation(0);
+
+    m_hp = param.hp;       // HPもテーブルからセット
+    m_speed = param.speed; // 速度もテーブルからセット
+
+    // 画像サイズと中心位置の設定
+    m_img.SetSize(param.size);
+    m_img.SetCenter(param.size / 2.0f);
+
+    // =========================================================
+    // ★ 表示サイズ（param.size）に合わせて当たり判定を自動変更！
+    // =========================================================
+    float half_w = param.size.x / 2.0f;
+    float half_h = param.size.y / 2.0f;
+
+    // 中心から上下左右に広がる判定を作成
+    m_rect = CRect(-half_w, -half_h, half_w, half_h);
 }
+
 
 Enemy::~Enemy()
 {

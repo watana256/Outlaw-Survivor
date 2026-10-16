@@ -122,11 +122,14 @@ Player::Player(const CVector2D& pos)
 	//Flamethrower* flamethrower = new Flamethrower();
 	//flamethrower->SetEnable(true);
 
-	Ax* ax = new Ax();
-	ax->SetEnable(true);
+	//Ax* ax = new Ax();
+	//ax->SetEnable(true);
 
+	Molotov* molotov = new Molotov();
+	molotov->SetEnable(true);
+	
+	
 }
-
 
 	void Player::ClampPosition() {
 		const float margin_x = 30.0f;
@@ -138,8 +141,6 @@ Player::Player(const CVector2D& pos)
 		if (m_pos.y < margin_y) m_pos.y = margin_y;
 		if (m_pos.y > SCREEN_HEIGHT - margin_y) m_pos.y = SCREEN_HEIGHT - margin_y;
 	}
-
-
 
 
 

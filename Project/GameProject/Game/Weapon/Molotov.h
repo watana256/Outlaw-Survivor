@@ -6,6 +6,7 @@ private:
 	float m_attak_cnt;
 	bool m_is_enable;
 
+	void Shot(const CVector2D& pos, const CVector2D& dir);
 	int GetDamage() const;
 public:
 	Molotov();

@@ -22,4 +22,4 @@ public:
 
     static TexAnimData _anim_data[];
 
-};
+}; 
