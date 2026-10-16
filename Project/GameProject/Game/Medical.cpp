@@ -1,4 +1,5 @@
 #include "Medical.h"
+#include "Enemy.h"
 static TexAnim _eMedical_Kit[] =
 {
 	{1,1}
