@@ -45,12 +45,12 @@ struct EnemyParam {
     const char* res_name; // ‰æ‘œƒŠƒ\[ƒX–¼
 };
 static const EnemyParam g_enemy_params[] = {
-    // HP,   speed, rad,  size  ‰æ‘œ–¼
+    // HP,   speed, rad, Ø‚è”²‚«  ‰æ‘œ–¼
     {  30,   2.0f,  16, {14,24}, "Enemy"}, // eZombie
     {  60,   1.5f,  20, {32,16}, "Robot"}, // eRobot
     {  15,   4.5f,  12, {32,16}, "Dog"}, // eDog
     {  40,   3.0f,  18, {14,24}, "Snake"}, // eSnake
-    { 300,   2.5f,  32, {62,49}, "hennizonnbi"}, // eMutant
+    { 300,   2.5f,  32, {61,49}, "hennizonnbi"}, // eMutant
     {1000,   1.0f,  48, {14,24}, "Tank"}, // eTank
 };
 Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
