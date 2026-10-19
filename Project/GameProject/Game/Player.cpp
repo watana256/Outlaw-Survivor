@@ -127,14 +127,14 @@ Player::Player(const CVector2D& pos)
 
 	//Molotov* molotov = new Molotov();
 	//molotov->SetEnable(true);
-	Landmine* landmine = new Landmine();
-	landmine->SetEnable(true);
+	//Landmine* landmine = new Landmine();
+	//landmine->SetEnable(true);
 
-	Stella* stella = new Stella();
-	stella->SetEnable(true);
+	//Stella* stella = new Stella();
+	//stella->SetEnable(true);
 
-
-
+	Drone* drone = new Drone();
+	drone->SetEnable(true);
 
 
 }
