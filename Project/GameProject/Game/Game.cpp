@@ -19,6 +19,14 @@
 #include"Game/Weapon/Rocket.h"
 #include"Game/Weapon/Shotgun.h"
 #include"Game/Weapon/Stella.h"
+#include"Game/Medical.h"
+#include"Game/BulletAll/RocketBullet.h"
+#include"Game/BulletAll/FlamethrowerBullet.h"
+#include"Game/BulletAll/AxBullet.h"
+#include"Game/BulletAll/MolotovBullet.h"
+
+
+
 Game::Game() :Base(eType_Scene)
 {
 

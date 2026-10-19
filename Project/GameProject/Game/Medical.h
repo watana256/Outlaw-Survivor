@@ -14,6 +14,8 @@ private:
 		eState_Bin
 	};
 	int m_Medical;
+	int m_Medicalk;
+	int m_Medicalb;
 	CImage m_img;
 	int     m_Medical_type;
 	int s_Medical;
