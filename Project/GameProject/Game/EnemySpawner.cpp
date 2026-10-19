@@ -8,7 +8,7 @@
 
 bool EnemySpawner::boss_kill;
 EnemySpawner::EnemySpawner() : Base(eType_System) {
-    m_phase = 1;               // フェイズ1からスタート
+    m_phase = 6;               // フェイズ1からスタート
     m_spawn_timer = 0.0f;
     m_spawned_count = 0;
     m_max_spawn_count = 5;    // フェイズ1の敵の数
@@ -73,26 +73,26 @@ void EnemySpawner::Update() {
                 m_spawn_timer = 0.0f;
                 CVector2D spawn_pos = GetRandomSpawnPos(player->m_pos);
                 // =========================================================
-                // ここを変更！フェーズ7以降は「4:変位ゾンビ」も出現対象にする
+                // ここを変更！フェーズ7以降は「3:変位ゾンビ」も出現対象にする
                 // =========================================================
                 int enemy_type = 0;
-                int a = 0; //変位ゾンビ確率
                 if (m_phase >= 7) {
-                    // フェーズ7以降：0から4（ゾンビ、ロボ、犬、ヘビ、変位ゾンビ）の5種類から選択
-                    a = rand() % 20;
-                    if (a == 1) {
-                        enemy_type = 4;
-                    }
-                    else {
-                        enemy_type = rand() % 3;
-                    }
+                    enemy_type = rand() % 4; // 0,1,2 (雑魚) + 3 (変位ゾンビ)
                 }
                 else {
-                    // フェーズ1から6：0から3（ゾンビ、ロボ、犬、ヘビ）の4種類から選択
-                    enemy_type = rand() % 3;
+                    enemy_type = rand() % 3; // 0,1,2 (雑魚)
                 }
 
-                new Enemy(spawn_pos, enemy_type);
+                // ★ ここを分岐させて、3番(変位ゾンビ)の時だけポインタで雑魚化！
+                if (enemy_type == 3) {
+                    Enemy* enemy = new Enemy(spawn_pos, 3);
+                    enemy->SetAsMutantMinion(); // ★ エラーが出ていた処理をこの1行に変更！
+                }
+                else {
+                    new Enemy(spawn_pos, enemy_type);
+                }
+
+
                 m_spawned_count++;
             }
         }

@@ -202,6 +202,7 @@ void Player::TakeDamage(int damage)
 	if (m_muteki_cnt > 0) return;
 	//HPå∏è≠ÅBâ∫å¿0
 	m_hp = max(m_hp - damage, 0);
+	m_hp = min(m_hp - damage, Getmaxhp());
 	m_muteki_cnt = MUTEKI;
 	if (m_hp <= 0) {
 		SetKill();
@@ -209,6 +210,7 @@ void Player::TakeDamage(int damage)
 	}
 
 }
+
 void Player::Run()
 {
 	int Animu = eAnim_Walk_down;
