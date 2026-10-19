@@ -26,10 +26,18 @@ Medical::Medical(const CVector2D& pos, int Medical_type) :Base(eType_Medical)
 
 	switch (m_Medical_type) {
 	case eKit:
-		m_Medical = 50;//1%
+		m_Medical = 10;
+		m_Medicalk = 10;
+		if (m_Medicalk >= 11) {
+			m_Medicalk = 10;
+		}
 		break;
 	case eBin:
-		m_Medical = 20;//5%
+		m_Medical = 50;
+		m_Medicalb = 50;
+		if (m_Medicalk >= 51) {
+			m_Medicalk = 50;
+		}
 		break;
 
 	}
@@ -88,7 +96,10 @@ void Medical::Collision(Base* b) {
 		if (Base::CollisionRect(this, b)) {
 
 			if (Player* p = dynamic_cast<Player*>(b)) {
-				 p->TakeDamage(-10); 
+				
+				
+					p->TakeDamage(-m_Medical);
+				
 			}
 		}
 	}
