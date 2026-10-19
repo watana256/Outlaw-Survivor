@@ -82,6 +82,9 @@
     <ClInclude Include="Game\BulletAll\LandmineBullet.h">
       <Filter>Game\BulletAll</Filter>
     </ClInclude>
+    <ClInclude Include="Game\BulletAll\StellaBullet.h">
+      <Filter>Game\BulletAll</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -161,6 +164,9 @@
       <Filter>Game\BulletAll</Filter>
     </ClCompile>
     <ClCompile Include="Game\BulletAll\LandmineBullet.cpp">
+      <Filter>Game\BulletAll</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\BulletAll\StellaBullet.cpp">
       <Filter>Game\BulletAll</Filter>
     </ClCompile>
   </ItemGroup>

@@ -24,7 +24,7 @@
 #include"Game/BulletAll/FlamethrowerBullet.h"
 #include"Game/BulletAll/AxBullet.h"
 #include"Game/BulletAll/MolotovBullet.h"
-
+#include"Game/BulletAll/StellaBullet.h"
 
 
 
@@ -164,7 +164,7 @@ void Init(void)
 	ADD_RESOURCE("MolotovBullet", CImage::CreateImage("Image/MolotovBullet.png", MolotovBullet::_anim_data, 145, 145));
 	ADD_RESOURCE("FlameEffect", CImage::CreateImage("Image/MolotovBulleteffect.png", MolotovBullet::_anim_data, 64, 64));
 	ADD_RESOURCE("LandmineBullet", CImage::CreateImage("Image/LandmineBullet.png"));
-
+	ADD_RESOURCE("StellaBullet", CImage::CreateImage("Image/StellaBullet.png"));
 
 
 
