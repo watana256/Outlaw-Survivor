@@ -3,7 +3,7 @@
 #include "../Player.h"
 #include "../BulletAll/StellaBullet.h"
 
-#define STELLA_RADIUS 150.0f
+#define STELLA_RADIUS 100.0f
 #define STELLA_ATTACK_TIME 0.5f
 
 Stella::Stella()
