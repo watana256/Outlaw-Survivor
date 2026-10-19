@@ -41,18 +41,18 @@ TexAnimData Enemy::_anim_data[] = {
 struct EnemyParam {
     int hp;               // HP
     float speed;          // 移動速度
-    CVector2D size;  //　見た目変更
+    CVector2D size;  //　見た目変更 ←(いります！！！！)
     const char* res_name; // 画像リソース名
 };
 
 static const EnemyParam g_enemy_params[] = {
     // HP,   speed,  見た目変更,  画像名
-    {  30,   2.0f,    {28, 48},          "Enemy"},       // 0: ゾンビ 
-    {  60,   1.5f,    {28, 48},          "Robot"},       // 1: ロボット
-    {  15,   4.5f,    {48, 24},          "Dog"},         // 2: ゾンビ犬 
-    {  40,   3.0f,    {48, 24},          "Snake"},       // 3: ヘビ 
-    { 300,   2.5f,    {124, 98},         "hennizonnbi"}, // 4: 変位ゾンビ 
-    {1000,   1.0f,    {186, 147},        "Tank"},        // 5: 戦車 
+    {  30,   2.0f,    {28, 48}, "Enemy"},       // 0: ゾンビ 
+    {  60,   1.5f,    {28, 48},  "Robot"},       // 1: ロボット
+    {  15,   4.5f,    {48, 24},  "Dog"},         // 2: ゾンビ犬 
+    {  40,   3.0f,    {48, 24},  "Snake"},       // 3: ヘビ 
+    { 300,   2.5f,    {124, 98},  "hennizonnbi"}, // 4: 変位ゾンビ 
+    {1000,   1.0f,    {186, 147},  "Tank"},        // 5: 戦車 
 };
 Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
     m_pos = pos;
