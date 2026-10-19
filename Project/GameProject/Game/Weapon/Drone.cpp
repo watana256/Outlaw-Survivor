@@ -60,6 +60,7 @@ int Drone::GetLevel() const
 
 void Drone::LevelUp()
 {
+
     // 最大レベルは5
     if (m_level < 5)
     {
@@ -212,6 +213,7 @@ void Drone::Draw()
     // スクロールを反映して描画
     m_img.SetPos(m_pos - m_scroll);
     m_img.Draw();
+
 }
 
 void Drone::Collision(Base* b)
