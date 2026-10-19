@@ -8,7 +8,7 @@
 
 bool EnemySpawner::boss_kill;
 EnemySpawner::EnemySpawner() : Base(eType_System) {
-    m_phase = 1;               // フェイズ1からスタート
+    m_phase = 6;               // フェイズ1からスタート
     m_spawn_timer = 0.0f;
     m_spawned_count = 0;
     m_max_spawn_count = 5;    // フェイズ1の敵の数
@@ -72,7 +72,27 @@ void EnemySpawner::Update() {
             if (m_spawn_timer >= 1.0f) {
                 m_spawn_timer = 0.0f;
                 CVector2D spawn_pos = GetRandomSpawnPos(player->m_pos);
-                int enemy_type = rand() % 3; // 雑魚敵(種類)
+                // =========================================================
+                // ここを変更！フェーズ7以降は「4:変位ゾンビ」も出現対象にする
+                // =========================================================
+                int enemy_type = 0;
+                int a = 0;
+                int b = 0;
+                if (m_phase >= 7) {
+                    // フェーズ7以降：0から4（ゾンビ、ロボ、犬、ヘビ、変位ゾンビ）の5種類から選択
+                    a = rand() % 2;
+                    if (a == 1) {
+                        enemy_type = 4;
+                    }
+                    else {
+                        enemy_type = rand() % 3;
+                    }
+                }
+                else {
+                    // フェーズ1から6：0から3（ゾンビ、ロボ、犬、ヘビ）の4種類から選択
+                    enemy_type = rand() % 3;
+                }
+
                 new Enemy(spawn_pos, enemy_type);
                 m_spawned_count++;
             }
@@ -81,13 +101,7 @@ void EnemySpawner::Update() {
         // 2. 規定数出し切り ＆ 画面の敵が全滅 で 次のフェイズへ！
         if (m_spawned_count >= m_max_spawn_count && Base::FindObject(eType_Enemy) == nullptr) {
             NextPhase(); // 関数を呼び出して次のフェイズへ
-
-
-
         }
-    }
-    else {
-        //END地点
     }
 }
 
