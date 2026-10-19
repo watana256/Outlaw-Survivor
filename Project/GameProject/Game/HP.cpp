@@ -16,7 +16,11 @@ HP::HP() :Base(eType_Hp)
 		"hp100"
 	};
 	for (int i = 0; i < 10; i++) {
+		if (i >= 10) {
+			i = 10;
+		}
 		m_img[i] = COPY_RESOURCE(nem[i], CImage);
+		
 	}
 }
 void HP::Draw()
