@@ -26,6 +26,7 @@
     <ClInclude Include="Game\BulletAll\LandmineBullet.h" />
     <ClInclude Include="Game\BulletAll\MolotovBullet.h" />
     <ClInclude Include="Game\BulletAll\RocketBullet.h" />
+    <ClInclude Include="Game\BulletAll\StellaBullet.h" />
     <ClInclude Include="Game\Enemy.h" />
     <ClInclude Include="Game\EnemySpawner.h" />
     <ClInclude Include="Game\Field.h" />
@@ -58,6 +59,7 @@
     <ClCompile Include="Game\BulletAll\LandmineBullet.cpp" />
     <ClCompile Include="Game\BulletAll\MolotovBullet.cpp" />
     <ClCompile Include="Game\BulletAll\RocketBullet.cpp" />
+    <ClCompile Include="Game\BulletAll\StellaBullet.cpp" />
     <ClCompile Include="Game\Enemy.cpp" />
     <ClCompile Include="Game\EnemySpawner.cpp" />
     <ClCompile Include="Game\Field.cpp" />

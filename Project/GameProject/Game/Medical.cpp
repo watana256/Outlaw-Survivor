@@ -99,7 +99,7 @@ void Medical::Collision(Base* b) {
 				
 				
 					p->TakeDamage(-m_Medical);
-				
+					m_Medical=NULL;
 			}
 		}
 	}

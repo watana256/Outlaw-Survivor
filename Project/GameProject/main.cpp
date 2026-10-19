@@ -24,7 +24,7 @@
 #include"Game/BulletAll/FlamethrowerBullet.h"
 #include"Game/BulletAll/AxBullet.h"
 #include"Game/BulletAll/MolotovBullet.h"
-
+#include"Game/BulletAll/StellaBullet.h"
 
 
 
@@ -164,7 +164,7 @@ void Init(void)
 	ADD_RESOURCE("MolotovBullet", CImage::CreateImage("Image/MolotovBullet.png", MolotovBullet::_anim_data, 145, 145));
 	ADD_RESOURCE("FlameEffect", CImage::CreateImage("Image/MolotovBulleteffect.png", MolotovBullet::_anim_data, 64, 64));
 	ADD_RESOURCE("LandmineBullet", CImage::CreateImage("Image/LandmineBullet.png"));
-
+	ADD_RESOURCE("StellaBullet", CImage::CreateImage("Image/StellaBullet.png"));
 
 
 
@@ -196,7 +196,7 @@ void Init(void)
 	//ADD_RESOURCE("1118", CImage::CreateImage("Image/1118.png"));//å„Ç≈âèú
 		//new Title;//å„Ç≈âèú
 	ADD_RESOURCE("Medical", CImage::CreateImage("Image/Medical.png", Medical::_anim_data, 51, 40));
-	new Medical(CVector2D(500, 300), eKit);
+	new Medical(CVector2D(500, 300), eBin);
 
 
 
@@ -224,7 +224,7 @@ void Init(void)
 	ADD_RESOURCE("hennizonnbi2", CImage::CreateImage("Image/hennizonnbi.png", Enemy::_anim_data, 62, 49));
 	ADD_RESOURCE("Robot", CImage::CreateImage("Image/ROB.png", Enemy::_anim_data, 27, 30));
 	//ADD_RESOURCE("Snake", CImage::CreateImage("Image/Snake.png", Enemy::_anim_data, 32, 16));
-	ADD_RESOURCE("Tank", CImage::CreateImage("Image/TANK.png", Enemy::_anim_data, 74, 36));
+	ADD_RESOURCE("Tank", CImage::CreateImage("Image/TANK.png", Enemy::_anim_data, 62, 49));
 
 	new EnemySpawner();
 
