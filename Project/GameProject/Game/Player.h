@@ -50,6 +50,7 @@ public:
 	void Update();
 	void Draw();
 	void TakeDamage(int damage);
+	void TakeHell(int Hell);
 	int Gethp()
 	{
 		return m_hp;

@@ -98,7 +98,7 @@ void Medical::Collision(Base* b) {
 			if (Player* p = dynamic_cast<Player*>(b)) {
 				
 				
-					p->TakeDamage(-m_Medical);
+					p->TakeHell(-m_Medical);
 					m_Medical=NULL;
 			}
 		}
