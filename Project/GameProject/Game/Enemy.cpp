@@ -39,20 +39,20 @@ TexAnimData Enemy::_anim_data[] = {
     ANIMDATA(TANK),
 };
 struct EnemyParam {
-    int hp;             // HP
-    float speed;        // 移動速度
-    CVector2D size;     //　当たり判定のサイズ
-    CVector2D render_size; // 画面上のサイズ(?)
+    int hp;               // HP
+    float speed;          // 移動速度
+    CVector2D size;  //　見た目変更
     const char* res_name; // 画像リソース名
 };
+
 static const EnemyParam g_enemy_params[] = {
-    // HP,   speed,当たり判定  サイズ     画像名
-    {  30,   2.0f, {14 ,24}, {14,24},"Enemy"}, // eZombie
-    {  60,   1.5f, {32 ,16}, {12,12},"Robot"}, // eRobot
-    {  15,   4.5f, {32 ,16}, {12,12},"Dog"}, // eDog
-    {  40,   3.0f, {14 ,24}, {12,12},"Snake"}, // eSnake
-    { 300,   2.5f, {61 ,49}, {12,12},"hennizonnbi"}, // eMutant
-    {1000,   1.0f, {14 ,24}, {140, 240},"Tank"}, // eTank
+    // HP,   speed,  見た目変更,  画像名
+    {  30,   2.0f,    {28, 48},          "Enemy"},       // 0: ゾンビ 
+    {  60,   1.5f,    {28, 48},          "Robot"},       // 1: ロボット
+    {  15,   4.5f,    {48, 24},          "Dog"},         // 2: ゾンビ犬 
+    {  40,   3.0f,    {48, 24},          "Snake"},       // 3: ヘビ 
+    { 300,   2.5f,    {124, 98},         "hennizonnbi"}, // 4: 変位ゾンビ 
+    {1000,   1.0f,    {186, 147},        "Tank"},        // 5: 戦車 
 };
 Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
     m_pos = pos;
@@ -140,8 +140,6 @@ void Enemy::Update() {
 void Enemy::Draw() {
     m_img.SetFlipH(m_flip);
     m_img.SetPos(m_pos);
-    m_img.SetSize(28, 52);
-    m_img.SetCenter(14, 26);
     m_img.Draw();
 
     // ★ 当たり判定の確認用（必要に応じてコメントアウト解除）
