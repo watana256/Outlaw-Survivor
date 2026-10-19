@@ -130,8 +130,8 @@ Player::Player(const CVector2D& pos)
 	Landmine* landmine = new Landmine();
 	landmine->SetEnable(true);
 
-	Stella* stella = new Stella();
-	stella->SetEnable(true);
+	//Stella* stella = new Stella();
+	//stella->SetEnable(true);
 
 
 
