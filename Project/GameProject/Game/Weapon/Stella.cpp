@@ -1,10 +1,3 @@
-#include "Stella.h"
-#include "../Player.h"
-#include "../BulletAll/StellaBullet.h"
-
-#define ATTACK_TIME 0.5f
-#define FLYING_DIST 150.0f
-
 
 #include "Stella.h"
 #include "../Player.h"
@@ -55,7 +48,7 @@ int Stella::GetDamage() const
 
     switch (lv)
     {
-    case 1: return 1;
+    case 1: return 10;
     case 2: return 2;
     case 3: return 3;
     case 4: return 4;
