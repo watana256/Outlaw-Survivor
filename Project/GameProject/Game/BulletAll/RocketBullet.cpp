@@ -1,6 +1,10 @@
 #include "RocketBullet.h"
 #include "../Enemy.h"
 
+#include <cmath>
+#include <cfloat>
+#include <vector>
+
 #define  BULLET_SPEED 7.0f
 #define ANIM_FRAME 2
 #define EXP_RAD 64.0f
@@ -47,21 +51,72 @@ void RocketBullet::Update()
     if (!m_is_explosion)
     {
         const float move_speed = BULLET_SPEED;
+
+        // ìGàÍóóÇéÊìæ
+        std::vector<Base*> enemies =
+            Base::FindObjects(eType_Enemy);
+
+        Enemy* target = nullptr;
+
+        // ç≈Ç‡ãﬂÇ¢ìGÇíTÇ∑
+        float nearest_dist_sq = FLT_MAX;
+
+        for (Base* b : enemies)
+        {
+            Enemy* enemy = dynamic_cast<Enemy*>(b);
+
+            if (enemy == nullptr || enemy->m_kill)
+                continue;
+
+            float dx = enemy->m_pos.x - m_pos.x;
+            float dy = enemy->m_pos.y - m_pos.y;
+
+            float dist_sq = dx * dx + dy * dy;
+
+            if (dist_sq < nearest_dist_sq)
+            {
+                nearest_dist_sq = dist_sq;
+                target = enemy;
+            }
+        }
+
+        // ìGÇ™å©Ç¬Ç©Ç¡ÇΩÇÁÅAÇªÇÃï˚å¸Ç÷å¸Ç´ÇïœÇ¶ÇÈ
+        if (target != nullptr)
+        {
+            float dx = target->m_pos.x - m_pos.x;
+            float dy = target->m_pos.y - m_pos.y;
+
+            float length = sqrtf(dx * dx + dy * dy);
+
+            if (length > 0.001f)
+            {
+                m_vec.x = dx / length;
+                m_vec.y = dy / length;
+            }
+        }
+
+        // ÉçÉPÉbÉgÇÃå¸Ç´ÇâÊëúÇ…Ç‡îΩâf
+        m_img.SetAng(atan2f(-m_vec.y, m_vec.x));
+
+        // åªç›ÇÃï˚å¸Ç÷à⁄ìÆ
         m_pos += m_vec * move_speed;
 
         m_move_dist += move_speed;
-        if (m_move_dist >= m_flying_dist) {
+
+        if (m_move_dist >= m_flying_dist)
+        {
             Explosion();
         }
     }
-    else {
+    else
+    {
         m_explosion_img.UpdateAnimation();
 
-        if (m_explosion_img.CheckAnimationEnd()) {
+        if (m_explosion_img.CheckAnimationEnd())
+        {
             SetKill();
         }
     }
-
 }
 
 void RocketBullet::Draw()

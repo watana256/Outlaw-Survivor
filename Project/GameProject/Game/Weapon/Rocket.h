@@ -1,17 +1,30 @@
+
 #pragma once
 #include "Base/Base.h"
-class Rocket :public Base {
+
+class Rocket : public Base
+{
 private:
-	CImage m_img;
-	float m_attak_cnt;
-	bool m_is_enable;
+    CImage m_img;
+    float m_attak_cnt;
+    bool m_is_enable;
 
-	int GetDamage() const;
+    // •ŠíƒŒƒxƒ‹
+    int m_level;
+
+    int GetDamage() const;
+    float GetFlyingDist() const;
+
 public:
-	Rocket();
-	void SetEnable(bool enable);
-	void Update();
-	void Draw();
-	void Collision(Base* b);
+    Rocket();
 
+    void SetEnable(bool enable);
+
+    void SetLevel(int level);
+    int GetLevel() const;
+    void LevelUp();
+
+    void Update();
+    void Draw();
+    void Collision(Base* b);
 };

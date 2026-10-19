@@ -1,4 +1,5 @@
 
+
 #pragma once
 #include "Base/Base.h"
 
@@ -14,13 +15,27 @@ private:
     float m_offset_x;
     float m_offset_y;
 
+    // レベル
+    int m_level;
+
+    // レベルに応じた性能を取得
     int GetDamage() const;
+    float GetFlyingDist() const;
+    float GetBulletSpeed() const;
+    float GetAttackInterval() const;
 
 public:
     Drone();
 
     void SetEnable(bool enable);
+
+    // レベル操作
+    void SetLevel(int level);
+    int GetLevel() const;
+    void LevelUp();
+
     void Update() override;
     void Draw() override;
     void Collision(Base* b) override;
 };
+
