@@ -40,6 +40,26 @@ StellaBullet::StellaBullet(
     m_img.ChangeAnimation(0, true);
 }
 
+
+void StellaBullet::SetStats(
+    float radius,
+    float attackTime,
+    int damage)
+{
+    m_attack_radius = radius;
+    m_attack_time = attackTime;
+    m_damage = damage;
+
+    // “G‚Æ‚Ì“–‚½‚è”»’è‚Ì”¼Œa‚àXV
+    m_rad = m_attack_radius;
+}
+
+void StellaBullet::SetImageSize(float size)
+{
+    m_img.SetSize(size, size);
+    m_img.SetCenter(size / 2.0f, size / 2.0f);
+}
+
 void StellaBullet::Update()
 {
     Player* player = Player::Instance();

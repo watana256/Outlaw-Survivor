@@ -110,8 +110,8 @@ Player::Player(const CVector2D& pos)
 	m_hp = 100;
 	m_muteki_cnt = 0.0f;
 
-	Pistol* pistol = new Pistol();
-	pistol->SetEnable(true);
+	//Pistol* pistol = new Pistol();
+	//pistol->SetEnable(true);
 
 	//Rocket* rocket = new Rocket();
 	//rocket->SetEnable(true);
@@ -133,8 +133,8 @@ Player::Player(const CVector2D& pos)
 	//Stella* stella = new Stella();
 	//stella->SetEnable(true);
 
-	//Drone* drone = new Drone();
-	//drone->SetEnable(true);
+	Drone* drone = new Drone();
+	drone->SetEnable(true);
 
 
 }

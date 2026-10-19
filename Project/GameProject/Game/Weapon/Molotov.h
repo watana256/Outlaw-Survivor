@@ -1,18 +1,36 @@
+
 #pragma once
 #include "Base/Base.h"
-class Molotov :public Base {
+
+class Molotov : public Base {
 private:
-	CImage m_img;
-	float m_attak_cnt;
-	bool m_is_enable;
+    CImage m_img;
+    float m_attak_cnt;
+    bool m_is_enable;
 
-	void Shot(const CVector2D& pos, const CVector2D& dir);
-	int GetDamage() const;
+    // 現在のレベル
+    int m_level;
+
+    // レベルに応じた性能を取得
+    int GetDamage() const;
+    float GetFlyingDist() const;
+    int GetBulletCount() const;
+    float GetFlameDuration() const;
+
+    // 火炎瓶を投げる
+    void Shot(const CVector2D& pos, const CVector2D& dir);
+
 public:
-	Molotov();
-	void SetEnable(bool enable);
-	void Update();
-	void Draw();
-	void Collision(Base* b);
+    Molotov();
 
+    void SetEnable(bool enable);
+
+    // レベル操作
+    void SetLevel(int level);
+    int GetLevel() const;
+    void LevelUp();
+
+    void Update();
+    void Draw();
+    void Collision(Base* b);
 };

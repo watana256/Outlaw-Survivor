@@ -16,12 +16,15 @@ public:
     float m_attack_radius;
     int m_damage;
 
-    std::unordered_map<Enemy*, float> 
+    std::unordered_map<Enemy*, float>
         m_enemy_attack_timers;
 
 public:
     StellaBullet(float radius, float attackTime, int damage);
 
+    // レベルアップ時に性能を更新する
+    void SetStats(float radius, float attackTime, int damage);
+    void SetImageSize(float size);
     void Update() override;
     void Draw() override;
     void Collision(Base* b) override;

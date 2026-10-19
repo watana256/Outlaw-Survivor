@@ -115,7 +115,7 @@ void Pistol::Update()
         dir,
         GetFlyingDist(),
         GetDamage(),
-        15.0f,
+        15.0f,      // “–‚½‚è”»’è‚Ì”¼Œa‚ð‘å‚«‚­‚·‚é
         GetBulletSpeed()
     );
 

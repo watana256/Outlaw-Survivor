@@ -1,22 +1,23 @@
 
+
 #include "Stella.h"
 #include "../Player.h"
 #include "../BulletAll/StellaBullet.h"
 
-#define STELLA_RADIUS 100.0f        //当たり判定
-#define STELLA_ATTACK_TIME 0.5f     //攻撃速度
+#define STELLA_RADIUS 100.0f
+#define STELLA_ATTACK_TIME 0.5f
 
 Stella::Stella()
     : Base(eType_Stella)
     , m_attak_cnt(0.0f)
     , m_is_enable(false)
     , m_stella_bullet(nullptr)
+    , m_level(1)
 {
 }
 
 void Stella::SetEnable(bool enable)
 {
-    // すでに同じ状態なら何もしない
     if (m_is_enable == enable)
         return;
 
@@ -24,16 +25,14 @@ void Stella::SetEnable(bool enable)
 
     if (m_is_enable)
     {
-        // StellaBulletを1個だけ生成
         m_stella_bullet = new StellaBullet(
-            STELLA_RADIUS,
-            STELLA_ATTACK_TIME,
+            GetAttackRange(),
+            GetAttackInterval(),
             GetDamage()
         );
     }
     else
     {
-        // 武器が無効になったら攻撃範囲を削除
         if (m_stella_bullet != nullptr)
         {
             m_stella_bullet->SetKill();
@@ -42,30 +41,102 @@ void Stella::SetEnable(bool enable)
     }
 }
 
+void Stella::SetLevel(int level)
+{
+    if (level < 1)
+        level = 1;
+
+    if (level > 5)
+        level = 5;
+
+    m_level = level;
+
+    // 生成済みの攻撃範囲にも性能を反映
+    UpdateBulletStats();
+}
+
+int Stella::GetLevel() const
+{
+    return m_level;
+}
+
+void Stella::LevelUp()
+{
+    if (m_level < 5)
+    {
+        m_level++;
+        UpdateBulletStats();
+    }
+}
+
 int Stella::GetDamage() const
 {
-    int lv = 1;
-
-    switch (lv)
+    switch (m_level)
     {
     case 1: return 10;
-    case 2: return 2;
-    case 3: return 3;
-    case 4: return 4;
+    case 2: return 20;
+    case 3: return 30;
+    case 4: return 40;
+    case 5: return 50;
     }
 
-    return 1;
+    return 10;
+}
+
+float Stella::GetAttackRange() const
+{
+    switch (m_level)
+    {
+    case 1: return 100.0f;
+    case 2: return 125.0f;
+    case 3: return 150.0f;
+    case 4: return 175.0f;
+    case 5: return 200.0f;
+    }
+
+    return STELLA_RADIUS;
+}
+//レベルごとに画像サイズ
+float Stella::GetImageSize() const
+{
+    switch (m_level)
+    {
+    case 1: return 180.0f;
+    case 2: return 225.0f;
+    case 3: return 270.0f;
+    case 4: return 315.0f;
+    case 5: return 360.0f;
+    }
+
+    return 180.0f;
+}
+float Stella::GetAttackInterval() const
+{
+    return STELLA_ATTACK_TIME;
+}
+
+void Stella::UpdateBulletStats()
+{
+    if (m_stella_bullet != nullptr)
+    {
+        m_stella_bullet->SetStats(
+            GetAttackRange(),
+            GetAttackInterval(),
+            GetDamage()
+        );
+
+        m_stella_bullet->SetImageSize(GetImageSize());
+    }
 }
 
 void Stella::Update()
 {
-    // StellaBullet自身が攻撃範囲の追従と
-    // ダメージ処理を担当する
+    // 攻撃範囲とダメージ処理は StellaBullet 側で行う
 }
 
 void Stella::Draw()
 {
-    // サークルの描画はStellaBullet側で行う
+    // 攻撃範囲の描画は StellaBullet 側で行う
 }
 
 void Stella::Collision(Base* b)
