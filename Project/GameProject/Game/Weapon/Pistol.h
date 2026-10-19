@@ -1,17 +1,32 @@
+
 #pragma once
 #include "Base/Base.h"
-class Pistol :public Base {
+
+class Pistol : public Base {
 private:
-	CImage m_img;
-	float m_attak_cnt;
-	bool m_is_enable;
+    CImage m_img;
+    float m_attak_cnt;
+    bool m_is_enable;
 
-	int GetDamage() const;
+    // ピストルのレベル
+    int m_level;
+
+    // レベルに応じた性能を取得
+    int GetDamage() const;
+    float GetFlyingDist() const;
+    float GetAttackInterval() const;
+    float GetBulletSpeed() const;
+
 public:
-	Pistol();
-	void SetEnable(bool enable);
-	void Update();
-	void Draw();
-	void Collision(Base* b);
+    Pistol();
 
+    void SetEnable(bool enable);
+
+    // レベルを設定・取得
+    void SetLevel(int level);
+    int GetLevel() const;
+
+    void Update();
+    void Draw();
+    void Collision(Base* b);
 };

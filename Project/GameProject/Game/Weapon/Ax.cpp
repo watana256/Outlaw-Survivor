@@ -4,7 +4,7 @@
 
 #define ATTACK_TIME 0.5f
 #define FLYING_DIST 200.0f
-#define BULLET_COUNT 2
+#define BULLET_COUNT 4
 #define SPREAD_ANGLE 180.0f
 
 Ax::Ax()

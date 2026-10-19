@@ -1,52 +1,64 @@
+
 #include "Bullet.h"
 #include "../Enemy.h"
-
-#define  BULLET_SPEED 7.0f
+#include <cmath>
 
 Bullet::Bullet(
     const CVector2D& pos,
     const CVector2D& dir,
     float dist,
     int damage,
-    float radius)
-    :Base(eType_Bullet)
+    float radius,
+    float speed)
+    : Base(eType_Bullet)
     , m_flying_dist(dist)
-    ,m_move_dist(0.0f)
-    ,m_damage(damage)
+    , m_move_dist(0.0f)
+    , m_move_speed(speed)
+    , m_damage(damage)
 {
     m_img.Load("Image/Bullet.png");
+
     m_pos = pos;
     m_vec = dir;
     m_rad = radius;
+
     m_rect = CRect(-10, -10, 10, 10);
     m_img.SetSize(10, 10);
     m_img.SetCenter(10, 10);
     m_img.SetAng(atan2f(-m_vec.y, m_vec.x));
-
 }
+
 void Bullet::Update()
 {
-    const float move_speed = BULLET_SPEED;
-    m_pos += m_vec * move_speed;
+    // この弾自身に設定された速度で移動
+    m_pos += m_vec * m_move_speed;
 
-    m_move_dist += move_speed;
+    m_move_dist += m_move_speed;
+
+    // 設定された飛距離に達したら消滅
     if (m_move_dist >= m_flying_dist) {
         SetKill();
     }
 }
+
 void Bullet::Draw()
 {
     m_img.SetPos(m_pos);
     m_img.Draw();
-    Utility::DrawCircle(m_pos, m_rad, CVector4D(0, 5, 0, 0.5));
+
+    Utility::DrawCircle(
+        m_pos,
+        m_rad,
+        CVector4D(0, 5, 0, 0.5)
+    );
 }
+
 void Bullet::Collision(Base* b)
 {
     if (b->m_type == eType_Enemy) {
-        // 当たり判定（四角形判定）
         if (Base::CollisionCircle(this, b)) {
             if (Enemy* e = dynamic_cast<Enemy*>(b)) {
-                e->TakeDamage(m_damage); // エネミーにダメージ
+                e->TakeDamage(m_damage);
                 SetKill();
             }
         }
