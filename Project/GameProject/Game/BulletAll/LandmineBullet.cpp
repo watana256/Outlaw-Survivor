@@ -5,6 +5,8 @@
 #define ANIM_FRAME 2
 #define EXP_RAD 64.0f
 #define EXP_IMG_SIZE 128.0f
+#define LANDMINE_TRIGGER_RAD 40.0f  // 地雷の起爆判定
+#define EXP_RAD 64.0f               // 爆発の攻撃範囲
 
 static TexAnim _explosion_anim[] =
 {
@@ -42,26 +44,25 @@ LandmineBullet::LandmineBullet(const CVector2D& pos, const CVector2D& dir, float
     m_explosion_img.SetCenter(EXP_IMG_SIZE * 0.5f, EXP_IMG_SIZE * 0.5f);
 }
 
+
 void LandmineBullet::Update()
 {
     if (!m_is_explosion)
     {
-        const float move_speed = BULLET_SPEED;
-        m_pos += m_vec * move_speed;
-
-        m_move_dist += move_speed;
-        if (m_move_dist >= m_flying_dist) {
-            Explosion();
-        }
+        // 設置中の地雷は移動しない。
+        // Enemyとの衝突はCollision()で判定する。
     }
-    else {
+    else
+    {
+        // 爆発アニメーションを再生
         m_explosion_img.UpdateAnimation();
 
-        if (m_explosion_img.CheckAnimationEnd()) {
+        // アニメーション終了後に削除
+        if (m_explosion_img.CheckAnimationEnd())
+        {
             SetKill();
         }
     }
-
 }
 
 void LandmineBullet::Draw()
@@ -79,29 +80,50 @@ void LandmineBullet::Draw()
     }
 }
 
+
 void LandmineBullet::Collision(Base* b)
 {
-    if (b->m_type == eType_Enemy) {
-        Enemy* e = dynamic_cast<Enemy*>(b);
-        if (e == nullptr) return;
+    if (b->m_type != eType_Enemy)
+        return;
 
-        if (!m_is_explosion) {
-            // 当たり判定（四角形判定）
-            if (Base::CollisionCircle(this, b)) {
-                Explosion();
-            }
-        }
-        else {
-            auto it = std::find(m_hit_enemies.begin(), m_hit_enemies.end(), e);
-            if (it != m_hit_enemies.end()) return;
+    Enemy* e = dynamic_cast<Enemy*>(b);
+    if (e == nullptr)
+        return;
 
-            if (Base::CollisionCircle(this, b)) {
-                e->TakeDamage(m_damage);
-                m_hit_enemies.push_back(e);
-            }
+    // Enemyが地雷に触れたら爆発
+    if (!m_is_explosion)
+    {
+        // Enemyが地雷に近づいたら爆発
+        float dx = b->m_pos.x - m_pos.x;
+        float dy = b->m_pos.y - m_pos.y;
+
+        float distance = sqrtf(dx * dx + dy * dy);
+
+        if (distance <= LANDMINE_TRIGGER_RAD + b->m_rad)
+        {
+            Explosion();
         }
+        return;
+    }
+
+    // 爆発範囲内の敵にダメージを与える
+    // 同じ敵に何度もダメージを与えない
+    auto it = std::find(
+        m_hit_enemies.begin(),
+        m_hit_enemies.end(),
+        e
+    );
+
+    if (it != m_hit_enemies.end())
+        return;
+
+    if (Base::CollisionCircle(this, b))
+    {
+        e->TakeDamage(m_damage);
+        m_hit_enemies.push_back(e);
     }
 }
+
 
 void LandmineBullet::Explosion()
 {

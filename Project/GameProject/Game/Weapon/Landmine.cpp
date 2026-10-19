@@ -2,7 +2,7 @@
 #include "../Player.h"
 #include "../BulletAll/LandmineBullet.h"
 
-#define ATTACK_TIME 0.5f
+#define ATTACK_TIME 3.0f
 #define FLYING_DIST 100.0f
 Landmine::Landmine()
 	: Base(eType_Landmine)
