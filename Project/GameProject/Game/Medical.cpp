@@ -21,15 +21,15 @@ Medical::Medical(const CVector2D& pos, int Medical_type) :Base(eType_Medical)
 	m_pos = pos;
 	m_rad = 10;
 	m_img.SetSize(45, 35);
-	m_img.SetCenter(5, 5);
+	m_img.SetCenter(10, 10);
 	m_Medical_type = Medical_type;
 
 	switch (m_Medical_type) {
 	case eKit:
-		m_Medical = 10;
-		m_Medicalk = 10;
+		m_Medical = 20;
+		m_Medicalk = 20;
 		if (m_Medicalk >= 11) {
-			m_Medicalk = 10;
+			m_Medicalk = 20;
 		}
 		break;
 	case eBin:

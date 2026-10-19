@@ -197,7 +197,6 @@ void Init(void)
 		//new Title;//å„Ç≈âèú
 	ADD_RESOURCE("Medical", CImage::CreateImage("Image/Medical.png", Medical::_anim_data, 51, 40));
 	new Medical(CVector2D(500, 300), eBin);
-	new Medical(CVector2D(510, 300), eBin);
 
 
 
