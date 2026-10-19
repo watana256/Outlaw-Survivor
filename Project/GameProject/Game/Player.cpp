@@ -129,6 +129,14 @@ Player::Player(const CVector2D& pos)
 	//molotov->SetEnable(true);
 	Landmine* landmine = new Landmine();
 	landmine->SetEnable(true);
+
+	Stella* stella = new Stella();
+	stella->SetEnable(true);
+
+
+
+
+
 }
 
 	void Player::ClampPosition() {

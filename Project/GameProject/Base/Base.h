@@ -31,7 +31,7 @@ enum {
     eType_Medical,
     eType_RoketBullet,
     eType_FlamethrowerBullet,
-
+    eType_StellaBullet,
 
 
 
