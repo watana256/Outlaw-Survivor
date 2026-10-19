@@ -157,7 +157,7 @@ void Enemy::Collision(Base* b) {
 
             // ※もしプレイヤー側のHPも減らしたい場合は、下の行も入れておきます
              if (Player* p = dynamic_cast<Player*>(b)) {
-                 p->TakeDamage(10); // プレイヤーにも10ダメージ
+                // p->TakeDamage(10); // プレイヤーにも10ダメージ
              }
         }
     }
