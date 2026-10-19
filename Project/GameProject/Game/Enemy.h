@@ -5,7 +5,6 @@ enum eEnemyType {
     eZombie,       // ゾンビ
     eRobot,        // ロボ
     eDog,          // 犬
-    eSnake,        // 巨大な蛇
     eMutant,       // 変異ゾンビ（中間ボス / 通常）
     eTank          // 戦車（ボス）
 };
@@ -22,6 +21,7 @@ private:
     int m_anim_timer; // コマ切り替え用のカウントタイマー
 
 public:
+    void SetAsMutantMinion(); // 雑魚用変位ゾンビ化関数
     // ★ 修正：main.cpp からアニメーションデータを使えるように宣言を追加
     static TexAnimData _anim_data[];
 

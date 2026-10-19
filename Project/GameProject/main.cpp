@@ -221,6 +221,7 @@ void Init(void)
 	ADD_RESOURCE("Enemy", CImage::CreateImage("Image/zonnbi.png", Enemy::_anim_data, 14, 24));
 	ADD_RESOURCE("Dog", CImage::CreateImage("Image/zonnbikenn.png", Enemy::_anim_data, 32, 16));
 	ADD_RESOURCE("hennizonnbi", CImage::CreateImage("Image/hennizonnbi.png", Enemy::_anim_data, 62, 49));
+	ADD_RESOURCE("hennizonnbi2", CImage::CreateImage("Image/hennizonnbi.png", Enemy::_anim_data, 62, 49));
 	ADD_RESOURCE("Robot", CImage::CreateImage("Image/ROB.png", Enemy::_anim_data, 27, 30));
 	//ADD_RESOURCE("Snake", CImage::CreateImage("Image/Snake.png", Enemy::_anim_data, 32, 16));
 	ADD_RESOURCE("Tank", CImage::CreateImage("Image/TANK.png", Enemy::_anim_data, 74, 36));
