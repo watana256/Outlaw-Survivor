@@ -110,28 +110,28 @@ Player::Player(const CVector2D& pos)
 	m_hp = 100;
 	m_muteki_cnt = 0.0f;
 
-	//Pistol* pistol = new Pistol();
-	//pistol->SetEnable(true);
+	Pistol* pistol = new Pistol();
+	pistol->SetEnable(true);
 
-	//Rocket* rocket = new Rocket();
-	//rocket->SetEnable(true);
+	Rocket* rocket = new Rocket();
+	rocket->SetEnable(true);
 
-	//Shotgun* shotgun = new Shotgun();
-	//shotgun->SetEnable(true);
+	Shotgun* shotgun = new Shotgun();
+	shotgun->SetEnable(true);
 
-	//Flamethrower* flamethrower = new Flamethrower();
-	//flamethrower->SetEnable(true);
+	Flamethrower* flamethrower = new Flamethrower();
+	flamethrower->SetEnable(true);
 
-	//Ax* ax = new Ax();
-	//ax->SetEnable(true);
+	Ax* ax = new Ax();
+	ax->SetEnable(true);
 
-	//Molotov* molotov = new Molotov();
-	//molotov->SetEnable(true);
-	//Landmine* landmine = new Landmine();
-	//landmine->SetEnable(true);
+	Molotov* molotov = new Molotov();
+	molotov->SetEnable(true);
+	Landmine* landmine = new Landmine();
+	landmine->SetEnable(true);
 
-	//Stella* stella = new Stella();
-	//stella->SetEnable(true);
+	Stella* stella = new Stella();
+	stella->SetEnable(true);
 
 	Drone* drone = new Drone();
 	drone->SetEnable(true);
