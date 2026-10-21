@@ -1,12 +1,15 @@
 #include "EnemySpawner.h"
 #include "Game/Enemy.h"    
 #include "Game/Player.h"  
+#include "Game/Game.h"  
 #include "UI.h"
 #include <cmath>
 #include <cstdlib>
 
 
 bool EnemySpawner::boss_kill;
+int EnemySpawner::m_phase = 1;
+
 EnemySpawner::EnemySpawner() : Base(eType_System) {
     m_phase = 1;               // フェイズ1からスタート
     m_spawn_timer = 0.0f;
@@ -17,6 +20,7 @@ EnemySpawner::EnemySpawner() : Base(eType_System) {
 }
 
 void EnemySpawner::Update() {
+    if (Game::GetGamePhase() != EGamePhase::RoundPlaying)return;
     Base* player = Base::FindObject(eType_Player);
     if (!player) return; // プレイヤー死亡時は何もしない
 

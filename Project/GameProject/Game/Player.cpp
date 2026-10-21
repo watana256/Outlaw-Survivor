@@ -113,7 +113,7 @@ Player::Player(const CVector2D& pos)
 	Pistol* pistol = new Pistol();
 	pistol->SetEnable(true);
 
-	Rocket* rocket = new Rocket();
+	/*Rocket* rocket = new Rocket();
 	rocket->SetEnable(true);
 
 	Shotgun* shotgun = new Shotgun();
@@ -136,7 +136,7 @@ Player::Player(const CVector2D& pos)
 	Drone* drone = new Drone();
 	drone->SetEnable(true);
 
-
+	*/
 }
 
 	void Player::ClampPosition() {

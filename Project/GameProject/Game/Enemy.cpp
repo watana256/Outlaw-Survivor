@@ -54,33 +54,34 @@ Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
     m_enemy_type = enemy_type;
     m_flip = false;
 
-    // ★ 1. 敵の種類ごとにパラメータ設定
-    const EnemyParam& param = g_enemy_params[m_enemy_type];
+    // 安全対策（-1の場合はボス変位ゾンビの要素3を参照）
+    int param_idx = (m_enemy_type < 0) ? 3 : m_enemy_type;
+    const EnemyParam& param = g_enemy_params[param_idx];
 
-    // ★ 2. 画像をリソースからコピーしてセットする
     m_img = COPY_RESOURCE(param.res_name, CImage);
-
     m_img.ChangeAnimation(0);
 
-    m_hp = param.hp;       // HPもテーブルからセット
-    m_speed = param.speed; // 速度もテーブルからセット
+    // =========================================================
+    // ★ HPを (基本HP * ラウンド数) に計算！
+    // =========================================================
+    int current_round = EnemySpawner::m_phase; // ※プロジェクトで使っているラウンド（フェーズ）変数名に合わせてください
+    m_hp = param.hp * current_round;           // ★ 基本HP × ラウンド数
+
+    m_speed = param.speed; // 速度はそのまま
 
     // 画像サイズと中心位置の設定
     m_img.SetSize(param.size);
     m_img.SetCenter(param.size / 2.0f);
 
-    // =========================================================
-    // ★ 表示サイズ（param.size）に合わせて当たり判定を自動変更！
-    // =========================================================
+    // 当たり判定の自動設定
     float half_w = param.size.x / 2.0f;
     float half_h = param.size.y / 2.0f;
-
-    // 中心から上下左右に広がる判定を作成
     m_rect = CRect(-half_w, -half_h, half_w, half_h);
 
     if (m_enemy_type == 2) {
-        m_rect = CRect(-24.0f, -24.0f, 24.0f, 24.0f); // 縦幅 24px を 48px に拡大！
+        m_rect = CRect(-24.0f, -24.0f, 24.0f, 24.0f); // 犬の判定補正
     }
+    m_rad = half_w; // 押し戻し計算用の半径をセット
 }
 
 Enemy::~Enemy()
