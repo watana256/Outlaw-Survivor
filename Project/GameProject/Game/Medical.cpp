@@ -82,27 +82,29 @@ void Medical::Draw()
 	//Utility::DrawCircle(m_pos, m_rad, CVector4D(0, 5, 0, 0.5));
 }
 void Medical::Collision(Base* b) {
-	switch (b->m_type) {
-	case eType_Player:
-		if (Base::CollisionRect(this, b))
-		{
-			SetKill();
-			Medical::s_Medical += m_Medical;
-		}
-		break;
-	}
+	// 1. プレイヤーと接触した時の処理（回復して消える）
 	if (b->m_type == eType_Player) {
-		// 当たり判定（四角形判定）
 		if (Base::CollisionRect(this, b)) {
-
 			if (Player* p = dynamic_cast<Player*>(b)) {
-				
-				
-					p->TakeHell(-m_Medical);
-					m_Medical=NULL;
+				p->TakeHell(-m_Medical); // HP回復
+				SetKill();               // 拾ったので消去
 			}
 		}
 	}
 
+	// ★ 2. 回復アイテム同士、または敵と重なった時に押し出す処理！
+	if (b->m_type == eType_Medical || b->m_type == eType_Enemy) {
+		CVector2D v = m_pos - b->m_pos;
+		float len = v.Length();
+		float dist = m_rad + b->m_rad; // お互いの判定半径の合計
 
+		// めり込んでいる場合、外側に押し出す
+		if (len < dist && len > 0.0001f) {
+			CVector2D dir = v.GetNormalize();
+			float push = (dist - len) * 0.5f;
+			m_pos += dir * push;
+
+			ClampPosition(); // 押し出された拍子に画面外へ出ないよう画面内に収める
+		}
+	}
 }
