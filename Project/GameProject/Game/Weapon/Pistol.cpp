@@ -38,7 +38,7 @@ int Pistol::GetLevel() const
 int Pistol::GetDamage() const
 {
     switch (m_level) {
-    case 1: return 1;
+    case 1: return 10;
     case 2: return 2;
     case 3: return 3;
     case 4: return 4;

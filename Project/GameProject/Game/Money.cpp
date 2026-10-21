@@ -18,7 +18,7 @@ Money::Money(const CVector2D& pos,int money_type) :Base(eType_Money)
 {
 	m_img = COPY_RESOURCE("Money", CImage);
 	m_pos = pos;
-	m_rad = 8;
+	m_rad = 20;
 	m_img.SetSize(16, 16);
 	m_img.SetCenter(8, 8);
 	m_money_type = money_type;
@@ -60,7 +60,7 @@ void Money:: Draw()
 {
 	m_img.SetPos(m_pos);
 	m_img.Draw();
-	//Utility::DrawCircle(m_pos, m_rad, CVector4D(0, 5, 0, 0.5));
+	Utility::DrawCircle(m_pos, m_rad, CVector4D(0, 5, 0, 0.5));
 }
 void Money::Collision(Base* b) {
 	switch (b->m_type) {

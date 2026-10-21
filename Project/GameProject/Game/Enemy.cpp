@@ -54,33 +54,34 @@ Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
     m_enemy_type = enemy_type;
     m_flip = false;
 
-    // ★ 1. 敵の種類ごとにパラメータ設定
-    const EnemyParam& param = g_enemy_params[m_enemy_type];
+    // 安全対策（-1の場合はボス変位ゾンビの要素3を参照）
+    int param_idx = (m_enemy_type < 0) ? 3 : m_enemy_type;
+    const EnemyParam& param = g_enemy_params[param_idx];
 
-    // ★ 2. 画像をリソースからコピーしてセットする
     m_img = COPY_RESOURCE(param.res_name, CImage);
-
     m_img.ChangeAnimation(0);
 
-    m_hp = param.hp;       // HPもテーブルからセット
-    m_speed = param.speed; // 速度もテーブルからセット
+    // =========================================================
+    // ★ HPを (基本HP * ラウンド数) に計算！
+    // =========================================================
+    int current_round = EnemySpawner::m_phase; // ※プロジェクトで使っているラウンド（フェーズ）変数名に合わせてください
+    m_hp = param.hp * current_round;           // ★ 基本HP × ラウンド数
+
+    m_speed = param.speed; // 速度はそのまま
 
     // 画像サイズと中心位置の設定
     m_img.SetSize(param.size);
     m_img.SetCenter(param.size / 2.0f);
 
-    // =========================================================
-    // ★ 表示サイズ（param.size）に合わせて当たり判定を自動変更！
-    // =========================================================
+    // 当たり判定の自動設定
     float half_w = param.size.x / 2.0f;
     float half_h = param.size.y / 2.0f;
-
-    // 中心から上下左右に広がる判定を作成
     m_rect = CRect(-half_w, -half_h, half_w, half_h);
 
     if (m_enemy_type == 2) {
-        m_rect = CRect(-24.0f, -24.0f, 24.0f, 24.0f); // 縦幅 24px を 48px に拡大！
+        m_rect = CRect(-24.0f, -24.0f, 24.0f, 24.0f); // 犬の判定補正
     }
+    m_rad = half_w; // 押し戻し計算用の半径をセット
 }
 
 Enemy::~Enemy()
@@ -176,20 +177,31 @@ void Enemy::Draw() {
 }
 
 void Enemy::Collision(Base* b) {
+    // 1. プレイヤーとの判定（今書いているやつ）
     if (b->m_type == eType_Player) {
-        // 当たり判定（四角形判定）
         if (Base::CollisionRect(this, b)) {
+            if (Player* p = dynamic_cast<Player*>(b)) {
+                p->TakeDamage(10);
+            }
+        }
+    }
 
-            // ★ 敵自身のHPを10減らす！
-            // TakeDamage(10);
+    // 2. 敵同士の重なり防止（Base.h を使わずに直接押し戻す！）
+    if (b->m_type == eType_Enemy) {
+        CVector2D v = m_pos - b->m_pos;
+        float len = v.Length();
+        float dist = m_rad + b->m_rad; // お互いの半径の合計
 
-            // ※もしプレイヤー側のHPも減らしたい場合は、下の行も入れておきます
-             if (Player* p = dynamic_cast<Player*>(b)) {
-                 p->TakeDamage(10); // プレイヤーにも10ダメージ
-             }
+        // めり込んでいる場合、半分ずつ押し戻す
+        if (len < dist && len > 0.0001f) {
+            CVector2D dir = v.GetNormalize();
+            float push = (dist - len) * 0.5f;
+            m_pos += dir * push;     // 自分を離す
+            b->m_pos -= dir * push; // 相手を離す
         }
     }
 }
+
 
 void Enemy::TakeDamage(int damage) {
     m_hp -= damage;
