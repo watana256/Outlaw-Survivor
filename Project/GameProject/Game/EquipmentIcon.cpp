@@ -51,3 +51,11 @@ CRect EquipmentIcon::GetRect() const
 {
 	return CRect(m_img.m_pos-m_img.m_center, m_img.m_size);
 }
+// Žw’è‚µ‚½ˆÊ’u‚É•`‰æ‚·‚é(Œ³‚ÌˆÊ’u‚Í•Ï‚¦‚È‚¢)
+void EquipmentIcon::DrawAt(const CVector2D& pos)
+{
+	CVector2D old_pos = m_img.m_pos;
+	m_img.SetPos(pos);
+	m_img.Draw();
+	m_img.SetPos(old_pos);
+}

@@ -15,4 +15,5 @@ public:
 	const CVector2D& GetPos() const;
 	void SetIndex(int index);
 	CRect GetRect() const;
+	void DrawAt(const CVector2D& pos);
 };

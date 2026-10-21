@@ -10,9 +10,14 @@ class Equipment : public Base {
 
 	EquipmentIcon m_icons[9];
 	CImage m_select_img;
+	CImage m_end_img;
+	CImage m_get_img;
 
 	CVector2D CalcIconPos(int index) const;
 	void UpdateSelectIcon();
+	void UpdateEndButton();
+	void UpdateGetButton();
+	void BuyWeapon(int index);
 
 public:
 	Equipment();
