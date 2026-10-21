@@ -8,10 +8,40 @@
 #include "Weapon/Rocket.h"
 #include "Weapon/Shotgun.h"
 #include "Weapon/Stella.h"
+#include "Game/Game.h"
 
+static Base* CreateWeapon(int index)
+{
+	switch (index)
+	{
+	case 0: return new Ax();
+	case 1: return new Pistol();
+	case 2: return new Shotgun();
+	case 3: return new Molotov();
+	case 4: return new Flamethrower();
+	case 5: return new Landmine();
+	case 6: return new Drone();
+	case 7: return new Stella();
+	case 8: return new Rocket();
+	}
+	return nullptr;
+}
 
-
-
+static void SetWeaponEnable(Base* w, int index, bool enable)
+{
+	switch (index)
+	{
+	case 0: ((Ax*)w)->SetEnable(enable); break;
+	case 1: ((Pistol*)w)->SetEnable(enable); break;
+	case 2: ((Shotgun*)w)->SetEnable(enable); break;
+	case 3: ((Molotov*)w)->SetEnable(enable); break;
+	case 4: ((Flamethrower*)w)->SetEnable(enable); break;
+	case 5: ((Landmine*)w)->SetEnable(enable); break;
+	case 6: ((Drone*)w)->SetEnable(enable); break;
+	case 7: ((Stella*)w)->SetEnable(enable); break;
+	case 8: ((Rocket*)w)->SetEnable(enable); break;
+	}
+}
 
 
 
@@ -110,8 +140,8 @@ Player::Player(const CVector2D& pos)
 	m_hp = 100;
 	m_muteki_cnt = 0.0f;
 
-	Pistol* pistol = new Pistol();
-	pistol->SetEnable(true);
+	//Pistol* pistol = new Pistol();
+	//pistol->SetEnable(true);
 
 	/*Rocket* rocket = new Rocket();
 	rocket->SetEnable(true);
@@ -137,6 +167,7 @@ Player::Player(const CVector2D& pos)
 	drone->SetEnable(true);
 
 	*/
+	for (int i = 0; i < 9; i++) m_weapons[i] = nullptr;
 }
 
 	void Player::ClampPosition() {
@@ -167,6 +198,13 @@ Player* Player::Instance() {
 
 void Player::Update()
 {
+	static bool s_playing_prev = false;
+	bool playing = (Game::GetGamePhase() == EGamePhase::RoundPlaying);
+	if (playing && !s_playing_prev) ApplyEquipment();   // 入った瞬間だけ
+	s_playing_prev = playing;
+	if (!playing) return;
+
+	if (Game::GetGamePhase() != EGamePhase::RoundPlaying)return;
 	// ★追加：無敵時間が残っていればタイマーを減らす処理
 	if (m_muteki_cnt > 0.0f) {
 		m_muteki_cnt -= CFPS::GetDeltaTime();
@@ -213,6 +251,21 @@ void Player::TakeDamage(int damage)
 void Player::TakeHell(int Hell) {
 	m_hp = min(m_hp - Hell, Getmaxhp());
 	m_muteki_cnt = MUTEKI;
+}
+void Player::ApplyEquipment()
+{
+	// いったん全部無効化
+	for (int i = 0; i < 9; i++)
+		if (m_weapons[i]) SetWeaponEnable(m_weapons[i], i, false);
+
+	// 装備中の3つだけ有効化(未生成なら作る)
+	for (int s = 0; s < 3; s++)
+	{
+		int w = Game::GetEquippedWeapon(s);
+		if (w < 0) continue;
+		if (!m_weapons[w]) m_weapons[w] = CreateWeapon(w);
+		SetWeaponEnable(m_weapons[w], w, true);
+	}
 }
 void Player::Run()
 {
@@ -294,5 +347,5 @@ void Player::Draw()
 	m_img.Draw();
 	DrawRect();
 	m_img.SetRect(128, 0, 192, 64);
-	Utility::DrawCircle(m_pos, m_rad, CVector4D(0, 0, 1, 0.5));
+	//Utility::DrawCircle(m_pos, m_rad, CVector4D(0, 0, 1, 0.5));
 }

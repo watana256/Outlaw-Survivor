@@ -34,10 +34,13 @@ Game* Game::ms_instanse = nullptr;
 Game::Game() 
 	:Base(eType_Scene)
 	,m_phase(EGamePhase::None)
+	, m_round(1)
+	, m_elapsed_time(0.0f)
 {
 	ms_instanse = this;
 	mp_equip = new Equipment();
 	SetGamePhase(EGamePhase::Start);
+
 }
 Game::~Game() 
 {
@@ -51,15 +54,30 @@ void Game::StartPhase()
 		mp_equip->Show();
 		break;
 	case EGamePhase::RoundIntro:
+		m_elapsed_time = 0.0f;
 		break;
 	case EGamePhase::RoundPlaying:
 		break;
 	case EGamePhase::RoundOutro:
+		m_elapsed_time = 0.0f;      
 		break;
 	case EGamePhase::GameClear:
 		break;
 
 	}
+}
+// ラウンド終了を通知する(EnemySpawnerなどから呼ぶ)
+void Game::EndRound()
+{
+	if (ms_instanse == nullptr) return;
+	// プレイ中のときだけ受け付ける(二重呼び出し防止)
+	if (ms_instanse->m_phase != EGamePhase::RoundPlaying) return;
+	SetGamePhase(EGamePhase::RoundOutro);
+}
+int Game::GetEquippedWeapon(int slot)
+{
+	if (ms_instanse == nullptr || ms_instanse->mp_equip == nullptr) return -1;
+	return ms_instanse->mp_equip->GetEquipped(slot);
 }
 void Game::Update()
 {
@@ -82,6 +100,13 @@ void Game::Update()
 	case EGamePhase::RoundPlaying:
 		break;
 	case EGamePhase::RoundOutro:
+		// 2秒待ってから装備画面へ
+		m_elapsed_time += CFPS::GetDeltaTime();
+		if (m_elapsed_time >= 2.0f)
+		{
+			m_round++;
+			SetGamePhase(EGamePhase::Equipment);
+		}
 		break;
 	case EGamePhase::GameClear:
 		break;
