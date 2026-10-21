@@ -174,20 +174,31 @@ void Enemy::Draw() {
 }
 
 void Enemy::Collision(Base* b) {
+    // 1. プレイヤーとの判定（今書いているやつ）
     if (b->m_type == eType_Player) {
-        // 当たり判定（四角形判定）
         if (Base::CollisionRect(this, b)) {
+            if (Player* p = dynamic_cast<Player*>(b)) {
+                p->TakeDamage(10);
+            }
+        }
+    }
 
-            // ★ 敵自身のHPを10減らす！
-            // TakeDamage(10);
+    // 2. 敵同士の重なり防止（Base.h を使わずに直接押し戻す！）
+    if (b->m_type == eType_Enemy) {
+        CVector2D v = m_pos - b->m_pos;
+        float len = v.Length();
+        float dist = m_rad + b->m_rad; // お互いの半径の合計
 
-            // ※もしプレイヤー側のHPも減らしたい場合は、下の行も入れておきます
-             if (Player* p = dynamic_cast<Player*>(b)) {
-                 p->TakeDamage(10); // プレイヤーにも10ダメージ
-             }
+        // めり込んでいる場合、半分ずつ押し戻す
+        if (len < dist && len > 0.0001f) {
+            CVector2D dir = v.GetNormalize();
+            float push = (dist - len) * 0.5f;
+            m_pos += dir * push;     // 自分を離す
+            b->m_pos -= dir * push; // 相手を離す
         }
     }
 }
+
 
 void Enemy::TakeDamage(int damage) {
     m_hp -= damage;
