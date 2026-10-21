@@ -40,6 +40,7 @@ void EnemySpawner::Update() {
             else if (m_phase == 11) {
                 //  フェイズ11のラストボス（例: eTank）
                 new Enemy(boss_pos, eTank);
+                m_isTankSpawned = true;
             }
 
             m_boss_spawned = true;
@@ -56,13 +57,30 @@ void EnemySpawner::Update() {
         }
 
         // 3. ボス撃破（全滅）検知 で 次のフェイズへ！
-        if (m_boss_spawned && boss_kill) {
+       /*if (m_boss_spawned && boss_kill) {//念のためのコメントアウト
             Base::Kill(1<<eType_Enemy);
             NextPhase();           
             m_boss_spawned = false;
             boss_kill = false;
-        }
+        }*/ 
+        // ボス撃破検知
+        if (m_boss_spawned && boss_kill)
+        {
+            // ラスボスのタンクを撃破した場合
+            if (m_phase == 11)
+            {
+                // ゲームクリア処理はGame側に任せる
+                return;
+            }
 
+            // フェイズ6の中ボスを撃破した場合
+            Base::Kill(1 << eType_Enemy);
+
+            NextPhase();
+
+            m_boss_spawned = false;
+            boss_kill = false;
+        }
     }
     // =============================================================
     //  通常雑魚フェイズ（フェイズ 1-5、7-10）

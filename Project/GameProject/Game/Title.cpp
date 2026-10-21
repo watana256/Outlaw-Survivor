@@ -19,9 +19,9 @@ void Title::Update()
 	//ボタン１でタイトル破棄
 	if (m_cnt++ > 2 && PUSH(CInput::eButton1)) {
 		//全てのオブジェクトを破棄
-		Base::KillAll();
+	SetKill();
 		//ゲームシーンへ
-		//new Game();//後で追加
+		new Game();//後で追加
 	}
 }
 void Title::Draw()
