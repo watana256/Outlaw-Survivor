@@ -24,7 +24,8 @@ class Game
 	EGamePhase m_phase;
 	Equipment* mp_equip;
 	float m_elapsed_time;
-
+	float m_resultTimer = 0.0f;
+	bool m_isTankDefeated = false;
 	void StartPhase();
 public:
 	Game();

@@ -3,7 +3,7 @@
 #include "EnemySpawner.h"
 #include "Medical.h"
 #include "Money.h"
-
+#include"Game.h"
 // アニメーション定義
 static TexAnim Zombie[] = {
     {0,9},
@@ -90,6 +90,9 @@ Enemy::~Enemy()
     // ---------------------------------------------------------
     if (m_enemy_type == eMutant || m_enemy_type == eTank) {
         EnemySpawner::boss_kill = true;
+        if (m_enemy_type = eTank) {
+            m_isTankSpawned = true;
+        }
     }
 
     // ---------------------------------------------------------

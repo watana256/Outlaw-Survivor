@@ -16,7 +16,7 @@ private:
     int     m_hp;         // 体力
     float   m_speed;      // 移動速度
     bool    m_flip;       // 左右反転
-
+    bool m_isTankSpawned = false;
     int m_anim_frame; // 現在のコマ番号（0 または 1）
     int m_anim_timer; // コマ切り替え用のカウントタイマー
 

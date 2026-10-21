@@ -24,6 +24,7 @@
 #include"BulletAll/AxBullet.h"
 #include"BulletAll/MolotovBullet.h"
 #include"Equipment.h"
+#include"Result.h"
 
 Game* Game::ms_instanse = nullptr;
 
@@ -84,6 +85,26 @@ void Game::Update()
 	case EGamePhase::GameClear:
 		break;
 		
+	}
+	// プレイヤーが死亡したらGameOver
+	if (!Base::FindObject(eType_Player))
+	{
+		//Base::KillAll();
+		new Result();
+		return;
+	}
+	
+	// ゴールしたらGameCrear
+	if (m_isTankDefeated)
+	{
+		m_resultTimer += 1.0f / 60.0f; // 60FPSを想定
+
+		if (m_resultTimer >= 1.0f)
+		{
+		//	Base::KillAll();
+			new Result();
+			return;
+		}
 	}
 }
 
