@@ -2,6 +2,7 @@
 #include "Flamethrower.h"
 #include "../Player.h"
 #include "../BulletAll/FlamethrowerBullet.h"
+#include "Game/Game.h"
 
 Flamethrower::Flamethrower()
     : Base(eType_Flamethrower)
@@ -106,6 +107,7 @@ float Flamethrower::GetAttackInterval() const
 
 void Flamethrower::Update()
 {
+    if (Game::GetGamePhase() != EGamePhase::RoundPlaying)return;
     if (!m_is_enable) {
         return;
     }

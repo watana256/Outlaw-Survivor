@@ -3,6 +3,7 @@
 #include "Stella.h"
 #include "../Player.h"
 #include "../BulletAll/StellaBullet.h"
+#include "Game/Game.h"
 
 #define STELLA_RADIUS 100.0f
 #define STELLA_ATTACK_TIME 0.5f
@@ -131,6 +132,7 @@ void Stella::UpdateBulletStats()
 
 void Stella::Update()
 {
+    if (Game::GetGamePhase() != EGamePhase::RoundPlaying)return;
     // 攻撃範囲とダメージ処理は StellaBullet 側で行う
 }
 

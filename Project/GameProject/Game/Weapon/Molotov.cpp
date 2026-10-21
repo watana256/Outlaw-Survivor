@@ -2,6 +2,7 @@
 #include "Molotov.h"
 #include "../Player.h"
 #include "../BulletAll/MolotovBullet.h"
+#include"Game/Game.h"
 
 #define SPREAD_ANGLE 180.0f
 
@@ -126,6 +127,7 @@ void Molotov::Shot(const CVector2D& pos, const CVector2D& dir)
 
 void Molotov::Update()
 {
+    if (Game::GetGamePhase() != EGamePhase::RoundPlaying)return;
     if (!m_is_enable) {
         return;
     }

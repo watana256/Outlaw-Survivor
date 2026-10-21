@@ -2,6 +2,7 @@
 #include "Shotgun.h"
 #include "../Player.h"
 #include "../BulletAll/Bullet.h"
+#include "Game/Game.h"
 
 #define SPREAD_ANGLE 45.0f
 
@@ -143,6 +144,7 @@ void Shotgun::Shot(const CVector2D& pos, const CVector2D& dir)
 // –ˆƒtƒŒ[ƒ€ˆ—
 void Shotgun::Update()
 {
+    if (Game::GetGamePhase() != EGamePhase::RoundPlaying)return;
     if (!m_is_enable) {
         return;
     }

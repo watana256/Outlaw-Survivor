@@ -1,13 +1,16 @@
 #pragma once
 #include "../Base/Base.h"
 
-class Shop : public Base {
+class Equipment : public Base {
 	CImage m_img;
 	CFont* m_font;
-	int m_cnt;
+	bool m_is_show;
+
 
 public:
-	Shop();
+	Equipment();
+	bool IsShow() const;
+	void Show();
 	void Update();
 	void Draw();
 };

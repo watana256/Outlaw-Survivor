@@ -4,6 +4,7 @@
 #include "../BulletAll/Bullet.h"
 #include "../GLLibrary/GLLibrary/CInput.h"
 #include <cmath>
+#include"Game/Game.h"
 
 Pistol::Pistol()
     : Base(eType_Pistil)
@@ -87,6 +88,7 @@ float Pistol::GetBulletSpeed() const
 
 void Pistol::Update()
 {
+    if (Game::GetGamePhase() != EGamePhase::RoundPlaying)return;
     if (!m_is_enable) return;
 
     m_attak_cnt += CFPS::GetDeltaTime();
