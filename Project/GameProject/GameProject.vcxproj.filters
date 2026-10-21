@@ -85,6 +85,9 @@
     <ClInclude Include="Game\BulletAll\StellaBullet.h">
       <Filter>Game\BulletAll</Filter>
     </ClInclude>
+    <ClInclude Include="Game\EquipmentIcon.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -168,6 +171,9 @@
     </ClCompile>
     <ClCompile Include="Game\BulletAll\StellaBullet.cpp">
       <Filter>Game\BulletAll</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\EquipmentIcon.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

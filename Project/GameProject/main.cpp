@@ -166,7 +166,7 @@ void Init(void)
 	ADD_RESOURCE("LandmineBullet", CImage::CreateImage("Image/LandmineBullet.png"));
 	ADD_RESOURCE("StellaBullet", CImage::CreateImage("Image/StellaBullet.png", StellaBullet::_anim_data, 64, 64));
 	ADD_RESOURCE("DroneOBJ", CImage::CreateImage("Image/DroneOBJ.png"));
-
+	ADD_RESOURCE("waku", CImage::CreateImage("Image/waku.png"));
 
 
 
