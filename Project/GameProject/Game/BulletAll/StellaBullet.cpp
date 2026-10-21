@@ -2,6 +2,7 @@
 #include "StellaBullet.h"
 #include "../Player.h"
 #include "../Enemy.h"
+#include "Game/Game.h"
 
 #define ANIM_FRAME 2
 #define STELLA_SIZE 180.0f     // UŒ‚ƒT[ƒNƒ‹‚Ì‘å‚«‚³
@@ -62,6 +63,7 @@ void StellaBullet::SetImageSize(float size)
 
 void StellaBullet::Update()
 {
+    if (Game::GetGamePhase() != EGamePhase::RoundPlaying)return;
     Player* player = Player::Instance();
 
     if (player == nullptr)
