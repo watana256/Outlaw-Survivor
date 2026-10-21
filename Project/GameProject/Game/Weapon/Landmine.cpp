@@ -2,6 +2,7 @@
 #include "Landmine.h"
 #include "../Player.h"
 #include "../BulletAll/LandmineBullet.h"
+#include "Game/Game.h"
 
 #define FLYING_DIST 100.0f
 
@@ -71,6 +72,7 @@ float Landmine::GetAttackInterval() const
 
 void Landmine::Update()
 {
+    if (Game::GetGamePhase() != EGamePhase::RoundPlaying)return;
     if (!m_is_enable) {
         return;
     }

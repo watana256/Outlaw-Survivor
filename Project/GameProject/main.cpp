@@ -8,7 +8,7 @@
 #include "Game/BulletAll/Bullet.h"
 #include "Game/Score.h"
 #include"Game/Field.h"
-#include "Game/Shop.h"
+#include "Game/Equipment.h"
 #include"Game/Title.h"
 #include "Game/Weapon/Pistol.h"
 #include"Game/Weapon/Ax.h"
@@ -25,7 +25,7 @@
 #include"Game/BulletAll/AxBullet.h"
 #include"Game/BulletAll/MolotovBullet.h"
 #include"Game/BulletAll/StellaBullet.h"
-
+#include "Game/Game.h"
 
 
 
@@ -181,7 +181,7 @@ void Init(void)
 
 
 
-
+	new Game();
 
 	new Score();
 	new Player(CVector2D(950, 500));//125,165

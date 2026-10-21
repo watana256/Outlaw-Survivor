@@ -2,6 +2,7 @@
 #include "Ax.h"
 #include "../Player.h"
 #include "../BulletAll/AxBullet.h"
+#include"Game/Game.h"
 
 Ax::Ax()
     : Base(eType_Shotgun)
@@ -139,6 +140,7 @@ void Ax::Shot(const CVector2D& pos, const CVector2D& dir)
 
 void Ax::Update()
 {
+    if (Game::GetGamePhase() != EGamePhase::RoundPlaying)return;
     if (!m_is_enable)
         return;
 

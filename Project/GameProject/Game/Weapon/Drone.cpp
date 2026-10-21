@@ -4,6 +4,7 @@
 #include "../Player.h"
 #include "../Enemy.h"
 #include "../BulletAll/Bullet.h"
+#include "Game/Game.h"
 
 #include <cmath>
 #include <vector>
@@ -126,6 +127,7 @@ float Drone::GetAttackInterval() const
 
 void Drone::Update()
 {
+    if (Game::GetGamePhase() != EGamePhase::RoundPlaying)return;
     if (!m_is_enable)
         return;
 

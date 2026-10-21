@@ -2,6 +2,7 @@
 #include "Rocket.h"
 #include "../Player.h"
 #include "../BulletAll/RocketBullet.h"
+#include "Game/Game.h"
 
 #define ROCKET_ATTACK_TIME 0.5f
 
@@ -69,6 +70,7 @@ float Rocket::GetFlyingDist() const
 
 void Rocket::Update()
 {
+    if (Game::GetGamePhase() != EGamePhase::RoundPlaying)return;
     if (!m_is_enable)
         return;
 
