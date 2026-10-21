@@ -25,6 +25,7 @@
 #include"BulletAll/MolotovBullet.h"
 #include"Equipment.h"
 #include"Result.h"
+#include "EnemySpawner.h"
 
 Game* Game::ms_instanse = nullptr;
 
@@ -86,26 +87,32 @@ void Game::Update()
 		break;
 		
 	}
-	// プレイヤーが死亡したらGameOver
-	if (!Base::FindObject(eType_Player))
-	{
-		//Base::KillAll();
-		new Result();
-		return;
-	}
-	
-	// ゴールしたらGameCrear
-	if (m_isTankDefeated)
-	{
-		m_resultTimer += 1.0f / 60.0f; // 60FPSを想定
-
-		if (m_resultTimer >= 1.0f)
+		// プレイヤーが死亡したらGameOver
+		if (!Base::FindObject(eType_Player))
 		{
-		//	Base::KillAll();
 			new Result();
 			return;
 		}
+
+	// ラスボスのタンクが撃破されたらゲームクリア
+	if (m_isTankDefeated)
+	{
+		m_resultTimer += CFPS::GetDeltaTime();
+
+		// 1秒後にリザルト画面を表示
+		if (m_resultTimer >= 1.0f)
+		{
+			// 二重生成防止
+			if (m_phase != EGamePhase::GameClear)
+			{
+				SetGamePhase(EGamePhase::GameClear);
+				new Result();
+			}
+
+			return;
+		}
 	}
+
 }
 
 void Game::SetGamePhase(EGamePhase phase)

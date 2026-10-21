@@ -91,8 +91,7 @@ Enemy::~Enemy()
     // ---------------------------------------------------------
     if (m_enemy_type == eMutant || m_enemy_type == eTank) {
         EnemySpawner::boss_kill = true;
-        if (m_enemy_type = eTank) {
-            m_isTankSpawned = true;
+        if (m_enemy_type == eTank) {
         }
     }
 
@@ -202,11 +201,31 @@ void Enemy::Collision(Base* b) {
     }
 }
 
+void Enemy::TakeDamage(int damage)
+{
+    // ‚·‚Å‚ÉŒ‚”j‚³‚ê‚Ä‚¢‚é“G‚É‚Íˆ—‚µ‚È‚¢
+    if (m_hp <= 0) return;
 
-void Enemy::TakeDamage(int damage) {
     m_hp -= damage;
-    if (m_hp <= 0) {
-        SetKill(); // Œ‚”j
+
+    if (m_hp <= 0)
+    {
+        m_hp = 0;
+
+        // ƒ‰ƒXƒ{ƒX‚Ìƒ^ƒ“ƒN‚ªŒ‚”j‚³‚ê‚½
+        if (m_enemy_type == eTank)
+        {
+            Game* game = dynamic_cast<Game*>(
+                Base::FindObject(eType_Scene)
+                );
+
+            if (game != nullptr)
+            {
+                game->m_isTankDefeated = true;
+            }
+        }
+
+        SetKill();
     }
 }
 

@@ -8,7 +8,7 @@ private:
     int   m_max_spawn_count;   // 1フェイズあたりの雑魚敵の出現上限数（例: 15体）
 
     bool  m_boss_spawned;      // 現在のフェイズでボスを出したか
-  
+    bool m_isTankSpawned = false;   // タンクが登場したか
 
     // 画面外の安全な位置（プレイヤーの周囲750px）を計算する関数
     CVector2D GetRandomSpawnPos(const CVector2D& player_pos);
