@@ -30,4 +30,5 @@ public:
 	void Draw();
 	void Collision(Base* b);
 	static TexAnimData _anim_data[];
+	void ClampPosition();  
 };

@@ -177,3 +177,14 @@ int Molotov::GetDamageAtLevel(int level)
     }
     return 10;
 }
+float Molotov::GetFlyingDistAtLevel(int level)
+{
+    switch (level) {
+    case 1: return 200.0f;
+    case 2: return 250.0f;
+    case 3: return 300.0f;
+    case 4: return 350.0f;
+    case 5: return 400.0f;
+    }
+    return 200.0f;
+}

@@ -187,3 +187,28 @@ int Ax::GetDamageAtLevel(int level)
     }
     return 1;
 }
+float Ax::GetFlyingDistAtLevel(int level)
+{
+    switch (level)
+    {
+    case 1: return 200.0f;
+    case 2: return 250.0f;
+    case 3: return 300.0f;
+    case 4: return 350.0f;
+    case 5: return 400.0f;
+    }
+    return 200.0f;
+}
+
+float Ax::GetBulletSpeedAtLevel(int level)
+{
+    switch (level)
+    {
+    case 1: return 7.0f;
+    case 2: return 8.0f;
+    case 3: return 9.0f;
+    case 4: return 10.0f;
+    case 5: return 12.0f;
+    }
+    return 7.0f;
+}

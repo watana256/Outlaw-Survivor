@@ -44,6 +44,33 @@ static int GetWeaponDamage(int index, int level)
 	default: return Rocket::GetDamageAtLevel(level);
 	}
 }
+// 飛距離(弾を飛ばさない、または未対応の武器は 0)
+static float GetWeaponFlyDist(int index, int level)
+{
+	switch (index)
+	{
+	case 0: return Ax::GetFlyingDistAtLevel(level);
+	case 2: return Shotgun::GetFlyingDistAtLevel(level);
+	case 3: return Molotov::GetFlyingDistAtLevel(level);
+	case 4: return Flamethrower::GetFlyingDistAtLevel(level);
+	case 6: return Drone::GetFlyingDistAtLevel(level);
+	case 8: return Rocket::GetFlyingDistAtLevel(level);
+	}
+	return 0.0f;
+}
+
+// 弾速(弾速がない、または未対応の武器は 0)
+static float GetWeaponBulletSpeed(int index, int level)
+{
+	switch (index)
+	{
+	case 0: return Ax::GetBulletSpeedAtLevel(level);
+	case 2: return Shotgun::GetBulletSpeedAtLevel(level);
+	case 4: return Flamethrower::GetBulletSpeedAtLevel(level);
+	case 6: return Drone::GetBulletSpeedAtLevel(level);
+	}
+	return 0.0f;
+}
 
 Equipment::Equipment()
 	:Base(eTpe_Equipment)
@@ -342,48 +369,71 @@ void Equipment::Draw()
 		const WeaponData& info = GetWeaponData(m_select_index);
 		float x = 1060.0f;
 		float y = 470.0f;
-		const float line = 36.0f;
+		const float line = 30.0f;
 		CFont* font = FONT_T();
-		font->Draw(x, y, 1, 1, 0, "%s", info.name);   // 名前(黄色)
-		font->Draw(x, y + line * 1, 1, 1, 1, "%s", info.desc1);
-		font->Draw(x, y + line * 2, 1, 1, 1, "%s", info.desc2);
-
-		// 攻撃力(レベルに応じて変わる。強化できるときは次のレベルも表示)
+		int row = 0;
 		int lv = m_level[m_select_index];
+		bool can_up = m_owned[m_select_index] && lv < 5;
+
+		font->Draw(x, y + line * row++, 1, 1, 0, "%s", info.name);   // 名前(黄色)
+		font->Draw(x, y + line * row++, 1, 1, 1, "%s", info.desc1);
+		font->Draw(x, y + line * row++, 1, 1, 1, "%s", info.desc2);
+
+		// 攻撃力(強化できるときは次のレベルも表示)
 		int dmg = GetWeaponDamage(m_select_index, lv);
-		if (m_owned[m_select_index] && lv < 5)
-			font->Draw(x, y + line * 3, 1, 1, 1, "攻撃力: %d → %d",
+		if (can_up)
+			font->Draw(x, y + line * row++, 1, 1, 1, "攻撃力: %d → %d",
 				dmg, GetWeaponDamage(m_select_index, lv + 1));
 		else
-			font->Draw(x, y + line * 3, 1, 1, 1, "攻撃力: %d", dmg);
+			font->Draw(x, y + line * row++, 1, 1, 1, "攻撃力: %d", dmg);
+
+		// 飛距離(0の武器は表示しない)
+		float dist = GetWeaponFlyDist(m_select_index, lv);
+		if (dist > 0.0f)
+		{
+			if (can_up)
+				font->Draw(x, y + line * row++, 1, 1, 1, "飛距離: %d → %d",
+					(int)dist, (int)GetWeaponFlyDist(m_select_index, lv + 1));
+			else
+				font->Draw(x, y + line * row++, 1, 1, 1, "飛距離: %d", (int)dist);
+		}
+
+		// 弾速(0の武器は表示しない)
+		float spd = GetWeaponBulletSpeed(m_select_index, lv);
+		if (spd > 0.0f)
+		{
+			if (can_up)
+				font->Draw(x, y + line * row++, 1, 1, 1, "弾速: %d → %d",
+					(int)spd, (int)GetWeaponBulletSpeed(m_select_index, lv + 1));
+			else
+				font->Draw(x, y + line * row++, 1, 1, 1, "弾速: %d", (int)spd);
+		}
 
 		if (IsFreePick(m_select_index))
-			font->Draw(x, y + line * 4, 0, 1, 0, "価格: 無料(1つだけ)");
+			font->Draw(x, y + line * row++, 0, 1, 0, "価格: 無料(1つだけ)");
 		else
-			font->Draw(x, y + line * 4, 1, 1, 1, "価格: %d", info.price);
+			font->Draw(x, y + line * row++, 1, 1, 1, "価格: %d", info.price);
 
 		// 購入状態の表示
 		if (m_owned[m_select_index])
 		{
-			if (m_level[m_select_index] >= 5)
-				font->Draw(x, y + line * 5, 1, 1, 0, "Lv.5 (最大)");
+			if (lv >= 5)
+				font->Draw(x, y + line * row++, 1, 1, 0, "Lv.5 (最大)");
 			else
 			{
 				int cost = GetUpgradeCost(m_select_index);
 				bool afford = Score::GetScore() >= cost;
-				font->Draw(x, y + line * 5, afford ? 0.0f : 1.0f, afford ? 1.0f : 0.0f, 0,
-					"Lv.%d  強化費用: %d", m_level[m_select_index], cost);
+				font->Draw(x, y + line * row++, afford ? 0.0f : 1.0f, afford ? 1.0f : 0.0f, 0,
+					"Lv.%d  強化費用: %d", lv, cost);
 			}
+
+			if (FindEquipSlot(m_select_index) >= 0)
+				font->Draw(x, y + line * row++, 1, 1, 0, "装備中(右クリックで解除)");
+			else
+				font->Draw(x, y + line * row++, 1, 1, 1, "右クリックで装備");
 		}
 		else if (!IsFreePick(m_select_index) && Score::GetScore() < info.price)
-			font->Draw(x, y + line * 5, 1, 0, 0, "お金が足りません");
-
-		if (m_owned[m_select_index])
-		{
-			if (FindEquipSlot(m_select_index) >= 0)
-				font->Draw(x, y + line * 6, 1, 1, 0, "装備中(右クリックで解除)");
-			else
-				font->Draw(x, y + line * 6, 1, 1, 1, "右クリックで装備");
-		}
+			font->Draw(x, y + line * row++, 1, 0, 0, "お金が足りません");
 	}
 }
+

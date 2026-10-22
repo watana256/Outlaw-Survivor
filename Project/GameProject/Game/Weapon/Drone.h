@@ -40,5 +40,7 @@ public:
     void Draw() override;
     void Collision(Base* b) override;
     static int GetDamageAtLevel(int level);
+    static float GetFlyingDistAtLevel(int level);
+    static float GetBulletSpeedAtLevel(int level);
 };
 

@@ -20,7 +20,9 @@ Medical::Medical(const CVector2D& pos, int Medical_type) :Base(eType_Medical)
 {
 	m_img = COPY_RESOURCE("Medical", CImage);
 	m_pos = pos;
+	ClampPosition();
 	m_rad = 10;
+	m_rect = CRect(-30.0f, -30.0f, 55.0f, 45.0f);
 	m_img.SetSize(45, 35);
 	m_img.SetCenter(10, 10);
 	m_Medical_type = Medical_type;

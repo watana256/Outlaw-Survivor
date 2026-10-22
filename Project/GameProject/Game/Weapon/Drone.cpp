@@ -241,3 +241,28 @@ int Drone::GetDamageAtLevel(int level)
     }
     return 10;
 }
+float Drone::GetFlyingDistAtLevel(int level)
+{
+    switch (level)
+    {
+    case 1: return 500.0f;
+    case 2: return 600.0f;
+    case 3: return 700.0f;
+    case 4: return 800.0f;
+    case 5: return 900.0f;
+    }
+    return 500.0f;
+}
+
+float Drone::GetBulletSpeedAtLevel(int level)
+{
+    switch (level)
+    {
+    case 1: return 7.0f;
+    case 2: return 8.0f;
+    case 3: return 9.0f;
+    case 4: return 10.0f;
+    case 5: return 11.0f;
+    }
+    return 7.0f;
+}
