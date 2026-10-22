@@ -180,7 +180,8 @@ Player* Player::Instance() {
 void Player::Update()
 {
 	static bool s_playing_prev = false;
-	bool playing = (Game::GetGamePhase() == EGamePhase::RoundPlaying);
+	bool playing = (Game::GetGamePhase() == EGamePhase::RoundPlaying
+		|| Game::GetGamePhase() == EGamePhase::RoundOutro);
 	if (playing && !s_playing_prev) ApplyEquipment();   // ì¸Ç¡ÇΩèuä‘ÇæÇØ
 	s_playing_prev = playing;
 	if (!playing) return;
