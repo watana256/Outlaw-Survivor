@@ -2,6 +2,7 @@
 
 #pragma once
 #include "Base/Base.h"
+#include"WeaponData.h"
 
 class Drone : public Base
 {
@@ -26,6 +27,7 @@ private:
 
 public:
     Drone();
+    static const WeaponData& GetData();
 
     void SetEnable(bool enable);
 

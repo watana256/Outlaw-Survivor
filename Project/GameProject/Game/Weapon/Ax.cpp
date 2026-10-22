@@ -5,11 +5,19 @@
 #include"Game/Game.h"
 
 Ax::Ax()
-    : Base(eType_Shotgun)
+    : Base(eType_Ax)
     , m_attak_cnt(0.0f)
     , m_is_enable(false)
     , m_level(1)
 {
+}
+
+const WeaponData& Ax::GetData()
+{
+    static const WeaponData data = {
+        "•€", "•€‚Í“Š‚°‚é•¨", "UŒ‚”ÍˆÍ‚ªL‚¢", 1, 500
+    };
+    return data;
 }
 
 void Ax::SetEnable(bool enable)

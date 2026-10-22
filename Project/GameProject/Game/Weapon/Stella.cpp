@@ -17,6 +17,14 @@ Stella::Stella()
 {
 }
 
+const WeaponData& Stella::GetData()
+{
+    static const WeaponData data = {
+        "ƒXƒeƒ‰",       "“Áê‚È’e‚ğ”­Ë‚·‚é",     "‚‚¢«”\‚ğ‚Â",       40, 1500
+    };
+    return data;
+}
+
 void Stella::SetEnable(bool enable)
 {
     if (m_is_enable == enable)

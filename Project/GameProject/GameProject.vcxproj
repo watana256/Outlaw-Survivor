@@ -50,6 +50,7 @@
     <ClInclude Include="Game\Weapon\Rocket.h" />
     <ClInclude Include="Game\Weapon\Shotgun.h" />
     <ClInclude Include="Game\Weapon\Stella.h" />
+    <ClInclude Include="Game\Weapon\WeaponData.h" />
     <ClInclude Include="Global.h" />
   </ItemGroup>
   <ItemGroup>

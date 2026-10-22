@@ -36,7 +36,13 @@ Drone::Drone()
 
     m_rad = 10.0f;
 }
-
+const WeaponData& Drone::GetData()
+{
+    static const WeaponData data = {
+        "ドローン", "自動で敵を攻撃する", "プレイヤーに追従する", 10, 1200
+    };
+    return data;
+}
 void Drone::SetEnable(bool enable)
 {
     m_is_enable = enable;

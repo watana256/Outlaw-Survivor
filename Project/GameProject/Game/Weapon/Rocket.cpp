@@ -7,11 +7,19 @@
 #define ROCKET_ATTACK_TIME 0.5f
 
 Rocket::Rocket()
-    : Base(eType_RoketBullet)
+    : Base(eType_Rocket)
     , m_attak_cnt(0.0f)
     , m_is_enable(false)
     , m_level(1)
 {
+}
+
+const WeaponData& Rocket::GetData()
+{
+    static const WeaponData data = {
+        "ロケット",     "爆発する弾を発射", "範囲ダメージが大きい", 60, 2000
+    };
+    return data;
 }
 
 void Rocket::SetEnable(bool enable)

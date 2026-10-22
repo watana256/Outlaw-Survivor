@@ -8,7 +8,9 @@ class Equipment : public Base {
 	bool m_is_show;
 	int m_select_index;
 	int m_equipped[3];      // 装備枠(武器番号。-1なら空)
+	int m_level[9];			//武器ごとのレベル(1?5)
 
+	int GetUpgradeCost(int index) const;//次のレベルへの費用
 	int FindEquipSlot(int index) const;
 	void UpdateEquip();          
 	CVector2D CalcSlotPos(int slot) const;
@@ -38,4 +40,5 @@ public:
 	void Draw();
 	bool IsOwned(int index) const;
 	int GetEquipped(int slot) const;
+	int GetLevel(int index) const;	//Playerが参照する用
 };
