@@ -59,3 +59,23 @@ void EquipmentIcon::DrawAt(const CVector2D& pos)
 	m_img.Draw();
 	m_img.SetPos(old_pos);
 }
+
+// c‰¡”ä‚ğ•Û‚Á‚½‚Ü‚Ü max_w ~ max_h ‚Éû‚ß‚ÄA’†S‚ğ pos ‚É‚µ‚Ä•`‚­
+void EquipmentIcon::DrawFit(const CVector2D& pos, float max_w, float max_h)
+{
+	CVector2D old_pos = m_img.m_pos;
+	CVector2D old_size = m_img.m_size;
+	CVector2D old_center = m_img.m_center;
+
+	float s = min(max_w / old_size.x, max_h / old_size.y);
+	CVector2D new_size = old_size * s;
+
+	m_img.SetSize(new_size.x, new_size.y);
+	m_img.SetCenter(new_size * 0.5f);
+	m_img.SetPos(pos);
+	m_img.Draw();
+
+	m_img.SetSize(old_size.x, old_size.y);
+	m_img.SetCenter(old_center);
+	m_img.SetPos(old_pos);
+}

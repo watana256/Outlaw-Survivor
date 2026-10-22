@@ -16,4 +16,5 @@ public:
 	void SetIndex(int index);
 	CRect GetRect() const;
 	void DrawAt(const CVector2D& pos);
+	void DrawFit(const CVector2D& pos, float max_w, float max_h);
 };

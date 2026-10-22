@@ -120,7 +120,7 @@ int Equipment::FindEquipSlot(int index) const
 // 右下の装備枠の位置(中心座標)
 CVector2D Equipment::CalcSlotPos(int slot) const
 {
-	return CVector2D(1450.0f + 140.0f * slot, 960.0f);
+	return CVector2D(1500.0f + 140.0f * slot, 965.0f);
 }
 
 int Equipment::GetEquipped(int slot) const
@@ -219,20 +219,32 @@ void Equipment::UpgradeWeapon(int index)
 void Equipment::BuyWeapon(int index)
 {
 	if (m_owned[index]) return;                  // 購入済みは買えない
+
 	// 無料枠: スコアは減らさず、枠を使い切る
 	if (IsFreePick(index))
 	{
 		m_owned[index] = true;
 		m_free_available = false;
-		return;
 	}
-	int price = GetWeaponData(index).price;
-	if (Score::GetScore() < price) return;       // スコア不足
+	else
+	{
+		int price = GetWeaponData(index).price;
+		if (Score::GetScore() < price) return;   // スコア不足
 
-	Score::AddScore(-price);                     // スコアを減らす
-	m_owned[index] = true;                       // 購入済みにする
+		Score::AddScore(-price);                 // スコアを減らす
+		m_owned[index] = true;                   // 購入済みにする
+	}
+
+	// 装備枠に空きがあれば、自動で装備する
+	for (int i = 0; i < 3; i++)
+	{
+		if (m_equipped[i] < 0)
+		{
+			m_equipped[i] = index;
+			break;
+		}
+	}
 }
-
 bool Equipment::IsOwned(int index) const
 {
 	return m_owned[index];
@@ -253,11 +265,24 @@ void Equipment::Draw()
 	if (!m_is_show)return;
 	m_img.Draw();
 
+	CFont* font_e = FONT_T();
 	for (int i = 0; i < 9; i++) {
 		EquipmentIcon& icon = m_icons[i];
 		CVector2D pos = CalcIconPos(i);
 		icon.SetPos(pos);
 		icon.Draw();
+
+		CFont* font_e = FONT_T();
+		for (int i = 0; i < 9; i++) {
+			EquipmentIcon& icon = m_icons[i];
+			CVector2D pos = CalcIconPos(i);
+			icon.SetPos(pos);
+			icon.Draw();
+
+			// 装備中の武器は、マスの右下の隅に緑の「E」を表示
+			if (FindEquipSlot(i) >= 0)
+				font_e->Draw(pos.x + 70.0f, pos.y + 55.0f, 0, 1, 0, "E");
+		}
 	}
 
 	// 選択枠と、右の枠の上部のプレビュー
@@ -280,7 +305,11 @@ void Equipment::Draw()
 	for (int i = 0; i < 3; i++)
 	{
 		if (m_equipped[i] >= 0)
-			m_icons[m_equipped[i]].DrawAt(CalcSlotPos(i));
+		{
+			CVector2D slot_pos = CalcSlotPos(i);
+			m_icons[m_equipped[i]].DrawFit(slot_pos, 120.0f, 80.0f);
+			font_e->Draw(slot_pos.x + 44.0f, slot_pos.y + 18.0f, 0, 1, 0, "E");
+		}
 	}
 
 	m_end_img.Draw();
