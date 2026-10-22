@@ -1,4 +1,5 @@
 #include "Equipment.h"
+#include "Game.h"
 Equipment::Equipment() 
 	:Base(eTpe_Equipment)
 	,m_is_show(false)

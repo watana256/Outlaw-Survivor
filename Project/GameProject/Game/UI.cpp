@@ -1,7 +1,7 @@
 #include "UI.h"
 #include "Player.h"
 #include "Enemy.h"
-
+#include "Game.h"
 UI::UI() :Base(eType_UI)
 {
 	m_img = COPY_RESOURCE("UI",CImage);

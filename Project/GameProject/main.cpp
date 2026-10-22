@@ -141,13 +141,13 @@ void Init(void)
 	ADD_RESOURCE("hp80", CImage::CreateImage("Image/hp80.png"));
 	ADD_RESOURCE("hp90", CImage::CreateImage("Image/hp90.png"));
 	ADD_RESOURCE("hp100", CImage::CreateImage("Image/hp100.png"));
-	new HP();
+	//new HP();
 	ADD_RESOURCE("Money", CImage::CreateImage("Image/koinn.png",Money::_anim_data,20,20));
-	new Money(CVector2D(900, 400),eGold);
+	//new Money(CVector2D(900, 400),eGold);
 	ADD_RESOURCE("Bullet", CImage::CreateImage("Image/Bullet.png"));
 	ADD_RESOURCE("Score", CImage::CreateImage("Image/Score.png"));
 	ADD_RESOURCE("SHOP", CImage::CreateImage("Image/SHOP.png"));
-	//new Shop();
+	////new Shop();
 	ADD_RESOURCE("Pistol", CImage::CreateImage("Image/Pistol.png"));
 	ADD_RESOURCE("Drone", CImage::CreateImage("Image/Drone.png"));
 	ADD_RESOURCE("Landmine", CImage::CreateImage("Image/Landmine.png"));
@@ -181,23 +181,23 @@ void Init(void)
 
 
 
-	new Game();
+	//new Game();
 
-	new Score();
-	new Player(CVector2D(950, 500));//125,165
+	//new Score();
+	//new Player(CVector2D(950, 500));//125,165
 //-----------------------------------------------------
 					//ãTà‰
 //-----------------------------------------------------
 	ADD_RESOURCE("UI", CImage::CreateImage("Image/UI.png"));
 	ADD_RESOURCE("Field", CImage::CreateImage("Image/Field.png"));
-	new UI;
-	new Field;
+	//new UI;
+	//new Field;
 	ADD_RESOURCE("1117", CImage::CreateImage("Image/1117.png"));//å„Ç≈âèú
 	ADD_RESOURCE("1118", CImage::CreateImage("Image/1118.png"));//å„Ç≈âèú
 	ADD_RESOURCE("1119", CImage::CreateImage("Image/1119.png"));
 		new Title;//å„Ç≈âèú
 	ADD_RESOURCE("Medical", CImage::CreateImage("Image/Medical.png", Medical::_anim_data, 51, 40));
-	new Medical(CVector2D(500, 300), eBin);
+	//new Medical(CVector2D(500, 300), eBin);
 
 
 
@@ -227,7 +227,7 @@ void Init(void)
 
 
 
-	new EnemySpawner();
+	//new EnemySpawner();
 
 
 
