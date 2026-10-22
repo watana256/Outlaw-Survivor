@@ -1,10 +1,19 @@
-
-#include "Shotgun.h"
+ï»¿#include "Shotgun.h"
 #include "../Player.h"
 #include "../BulletAll/Bullet.h"
 #include "Game/Game.h"
 
 #define SPREAD_ANGLE 45.0f
+
+// ---------------------------------------------------------
+// ãƒ¬ãƒ™ãƒ«ã”ã¨ã®æ€§èƒ½è¡¨(Lv1ã€œLv10)ã€‚å€¤ã‚’å¤‰ãˆãŸã„ã¨ãã¯ã“ã“ã ã‘ç›´ã™
+// ---------------------------------------------------------
+static const int   SHOTGUN_DAMAGE[MAX_WEAPON_LEVEL] = { 10, 15, 20, 25, 30, 35, 40, 45, 50, 55 };
+static const float SHOTGUN_DIST[MAX_WEAPON_LEVEL] = { 200, 250, 300, 350, 400, 450, 500, 550, 600, 650 };
+static const float SHOTGUN_SPEED[MAX_WEAPON_LEVEL] = { 7, 8, 9, 10, 12, 13, 14, 15, 16, 17 };
+static const int   SHOTGUN_COUNT[MAX_WEAPON_LEVEL] = { 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 };
+static const float SHOTGUN_INTERVAL[MAX_WEAPON_LEVEL] = { 0.50f, 0.45f, 0.40f, 0.35f, 0.30f,
+                                                          0.27f, 0.24f, 0.21f, 0.18f, 0.15f };
 
 Shotgun::Shotgun()
     : Base(eType_Shotgun)
@@ -17,113 +26,93 @@ Shotgun::Shotgun()
 const WeaponData& Shotgun::GetData()
 {
     static const WeaponData data = {
-        "ƒVƒ‡ƒbƒgƒKƒ“", "‹ß‹——£‚Å‚ˆĞ—Í",         "U’e‚Å•¡”‚É“–‚½‚é",   25,  100
+        "ã‚·ãƒ§ãƒƒãƒˆã‚¬ãƒ³", "è¿‘è·é›¢ã§é«˜å¨åŠ›",         "æ•£å¼¾ã§è¤‡æ•°ã«å½“ãŸã‚‹",   25,  100
     };
     return data;
 }
 
-// g—pó‘Ô‚ÌØ‚è‘Ö‚¦
+// ä½¿ç”¨çŠ¶æ…‹ã®åˆ‡ã‚Šæ›¿ãˆ
 void Shotgun::SetEnable(bool enable)
 {
     m_is_enable = enable;
 }
 
-// ƒŒƒxƒ‹‚ğİ’èiLv.1`Lv.5j
+// ãƒ¬ãƒ™ãƒ«ã‚’è¨­å®šï¼ˆLv.1ã€œLv.10ï¼‰
 void Shotgun::SetLevel(int level)
 {
-    if (level < 1) level = 1;
-    if (level > 5) level = 5;
-
-    m_level = level;
+    m_level = ClampWeaponLevel(level);
 }
 
-// Œ»İ‚ÌƒŒƒxƒ‹‚ğæ“¾
+// ç¾åœ¨ã®ãƒ¬ãƒ™ãƒ«ã‚’å–å¾—
 int Shotgun::GetLevel() const
 {
     return m_level;
 }
 
-// ƒŒƒxƒ‹ƒAƒbƒv
+// ãƒ¬ãƒ™ãƒ«ã‚¢ãƒƒãƒ—
 void Shotgun::LevelUp()
 {
-    if (m_level < 5) {
+    if (m_level < MAX_WEAPON_LEVEL) {
         m_level++;
     }
 }
 
-// ƒ_ƒ[ƒW
+// ---------------------------------------------------------
+// è¡¨ç¤ºç”¨(Equipmentã®è©³ç´°æ¬„ãŒä½¿ã†)
+// ---------------------------------------------------------
+int Shotgun::GetDamageAtLevel(int level)
+{
+    return SHOTGUN_DAMAGE[ClampWeaponLevel(level) - 1];
+}
+
+float Shotgun::GetFlyingDistAtLevel(int level)
+{
+    return SHOTGUN_DIST[ClampWeaponLevel(level) - 1];
+}
+
+float Shotgun::GetBulletSpeedAtLevel(int level)
+{
+    return SHOTGUN_SPEED[ClampWeaponLevel(level) - 1];
+}
+
+// ---------------------------------------------------------
+// æ’ƒã¤ã¨ãã«ä½¿ã†å€¤(è¡¨ã¨åŒã˜ã‚‚ã®ã‚’è¿”ã™)
+// ---------------------------------------------------------
 int Shotgun::GetDamage() const
 {
-    switch (m_level) {
-    case 1: return 10;
-    case 2: return 15;
-    case 3: return 20;
-    case 4: return 25;
-    case 5: return 30;
-    }
-    return 1;
+    return GetDamageAtLevel(m_level);
 }
 
-// ”ò‹——£
 float Shotgun::GetFlyingDist() const
 {
-    switch (m_level) {
-    case 1: return 200.0f;
-    case 2: return 250.0f;
-    case 3: return 300.0f;
-    case 4: return 350.0f;
-    case 5: return 400.0f;
-    }
-    return 200.0f;
+    return GetFlyingDistAtLevel(m_level);
 }
 
-// ’e‘¬
 float Shotgun::GetBulletSpeed() const
 {
-    switch (m_level) {
-    case 1: return 7.0f;
-    case 2: return 8.0f;
-    case 3: return 9.0f;
-    case 4: return 10.0f;
-    case 5: return 12.0f;
-    }
-    return 7.0f;
+    return GetBulletSpeedAtLevel(m_level);
 }
 
-// 1‰ñ‚É”­Ë‚·‚é’e”
+// 1å›ã«ç™ºå°„ã™ã‚‹å¼¾æ•°
 int Shotgun::GetBulletCount() const
 {
-    switch (m_level) {
-    case 1: return 5;
-    case 2: return 7;
-    case 3: return 9;
-    case 4: return 11;
-    case 5: return 13;
-    }
-    return 5;
+    return SHOTGUN_COUNT[ClampWeaponLevel(m_level) - 1];
 }
 
-// ”­ËŠÔŠui•bj
+// ç™ºå°„é–“éš”ï¼ˆç§’ï¼‰
 float Shotgun::GetAttackInterval() const
 {
-    switch (m_level) {
-    case 1: return 0.50f;
-    case 2: return 0.45f;
-    case 3: return 0.40f;
-    case 4: return 0.35f;
-    case 5: return 0.30f;
-    }
-    return 0.50f;
+    return SHOTGUN_INTERVAL[ClampWeaponLevel(m_level) - 1];
 }
 
-// ’e‚ğ”­Ë‚·‚é
+// å¼¾ã‚’ç™ºå°„ã™ã‚‹
 void Shotgun::Shot(const CVector2D& pos, const CVector2D& dir)
 {
     int bulletCount = GetBulletCount();
 
     for (int i = 0; i < bulletCount; i++) {
 
-        // ’e‚ğîó‚É”z’u‚·‚é
+        // å¼¾ã‚’æ‰‡çŠ¶ã«é…ç½®ã™ã‚‹
         float per = (bulletCount > 1)
             ? (float)i / (bulletCount - 1)
             : 0.5f;
@@ -137,7 +126,7 @@ void Shotgun::Shot(const CVector2D& pos, const CVector2D& dir)
         CVector3D shot_dir =
             CQuaternion::Euler(0.0f, 0.0f, DtoR(ang)) * dir;
 
-        // ’e‚ğ¶¬
+        // å¼¾ã‚’ç”Ÿæˆ
         new Bullet(
             pos,
             CVector2D(shot_dir.x, shot_dir.y),
@@ -149,7 +138,7 @@ void Shotgun::Shot(const CVector2D& pos, const CVector2D& dir)
     }
 }
 
-// –ˆƒtƒŒ[ƒ€ˆ—
+// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†
 void Shotgun::Update()
 {
     if (Game::GetGamePhase() != EGamePhase::RoundPlaying)return;
@@ -179,40 +168,4 @@ void Shotgun::Draw()
 
 void Shotgun::Collision(Base* b)
 {
-}
-
-int Shotgun::GetDamageAtLevel(int level)
-{
-    switch (level)
-    {
-    case 1: return 10;
-    case 2: return 20;
-    case 3: return 30;
-    case 4: return 40;
-    case 5: return 50;
-    }
-    return 10;
-}
-float Shotgun::GetFlyingDistAtLevel(int level)
-{
-    switch (level) {
-    case 1: return 200.0f;
-    case 2: return 250.0f;
-    case 3: return 300.0f;
-    case 4: return 350.0f;
-    case 5: return 400.0f;
-    }
-    return 200.0f;
-}
-
-float Shotgun::GetBulletSpeedAtLevel(int level)
-{
-    switch (level) {
-    case 1: return 7.0f;
-    case 2: return 8.0f;
-    case 3: return 9.0f;
-    case 4: return 10.0f;
-    case 5: return 12.0f;
-    }
-    return 7.0f;
 }

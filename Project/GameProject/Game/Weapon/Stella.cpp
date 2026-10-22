@@ -1,5 +1,3 @@
-
-
 #include "Stella.h"
 #include "../Player.h"
 #include "../BulletAll/StellaBullet.h"
@@ -7,6 +5,14 @@
 
 #define STELLA_RADIUS 100.0f
 #define STELLA_ATTACK_TIME 0.5f
+
+// ---------------------------------------------------------
+// レベルごとの性能表(Lv1?Lv10)。値を変えたいときはここだけ直す
+// 画像サイズは攻撃範囲の1.8倍(Lv1?5と同じ比率)
+// ---------------------------------------------------------
+static const int   STELLA_DAMAGE[MAX_WEAPON_LEVEL] = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+static const float STELLA_RANGE[MAX_WEAPON_LEVEL] = { 100, 125, 150, 175, 200, 225, 250, 275, 300, 325 };
+static const float STELLA_IMAGE[MAX_WEAPON_LEVEL] = { 180, 225, 270, 315, 360, 405, 450, 495, 540, 585 };
 
 Stella::Stella()
     : Base(eType_Stella)
@@ -39,6 +45,9 @@ void Stella::SetEnable(bool enable)
             GetAttackInterval(),
             GetDamage()
         );
+
+        // 生成時のレベルに合わせて画像の大きさも設定する
+        m_stella_bullet->SetImageSize(GetImageSize());
     }
     else
     {
@@ -52,13 +61,7 @@ void Stella::SetEnable(bool enable)
 
 void Stella::SetLevel(int level)
 {
-    if (level < 1)
-        level = 1;
-
-    if (level > 5)
-        level = 5;
-
-    m_level = level;
+    m_level = ClampWeaponLevel(level);
 
     // 生成済みの攻撃範囲にも性能を反映
     UpdateBulletStats();
@@ -71,54 +74,36 @@ int Stella::GetLevel() const
 
 void Stella::LevelUp()
 {
-    if (m_level < 5)
+    if (m_level < MAX_WEAPON_LEVEL)
     {
         m_level++;
         UpdateBulletStats();
     }
 }
 
+// 表示用(Equipmentの詳細欄が使う)
+int Stella::GetDamageAtLevel(int level)
+{
+    return STELLA_DAMAGE[ClampWeaponLevel(level) - 1];
+}
+
+// 撃つときに使う値(表と同じものを返す)
 int Stella::GetDamage() const
 {
-    switch (m_level)
-    {
-    case 1: return 10;
-    case 2: return 20;
-    case 3: return 30;
-    case 4: return 40;
-    case 5: return 50;
-    }
-
-    return 10;
+    return GetDamageAtLevel(m_level);
 }
 
 float Stella::GetAttackRange() const
 {
-    switch (m_level)
-    {
-    case 1: return 100.0f;
-    case 2: return 125.0f;
-    case 3: return 150.0f;
-    case 4: return 175.0f;
-    case 5: return 200.0f;
-    }
-
-    return STELLA_RADIUS;
+    return STELLA_RANGE[ClampWeaponLevel(m_level) - 1];
 }
+
 //レベルごとに画像サイズ
 float Stella::GetImageSize() const
 {
-    switch (m_level)
-    {
-    case 1: return 180.0f;
-    case 2: return 225.0f;
-    case 3: return 270.0f;
-    case 4: return 315.0f;
-    case 5: return 360.0f;
-    }
-
-    return 180.0f;
+    return STELLA_IMAGE[ClampWeaponLevel(m_level) - 1];
 }
+
 float Stella::GetAttackInterval() const
 {
     return STELLA_ATTACK_TIME;
@@ -152,17 +137,4 @@ void Stella::Draw()
 void Stella::Collision(Base* b)
 {
     // Stella本体では衝突判定を行わない
-}
-
-int Stella::GetDamageAtLevel(int level)
-{
-    switch (level)
-    {
-    case 1: return 10;
-    case 2: return 20;
-    case 3: return 30;
-    case 4: return 40;
-    case 5: return 50;
-    }
-    return 10;
 }

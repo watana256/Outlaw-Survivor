@@ -1,10 +1,18 @@
-
-#include "Molotov.h"
+ï»¿#include "Molotov.h"
 #include "../Player.h"
 #include "../BulletAll/MolotovBullet.h"
 #include"Game/Game.h"
 
 #define SPREAD_ANGLE 180.0f
+
+// ---------------------------------------------------------
+// ãƒ¬ãƒ™ãƒ«ã”ã¨ã®æ€§èƒ½è¡¨(Lv1ã€œLv10)ã€‚å€¤ã‚’å¤‰ãˆãŸã„ã¨ãã¯ã“ã“ã ã‘ç›´ã™
+// ---------------------------------------------------------
+static const int   MOLOTOV_DAMAGE[MAX_WEAPON_LEVEL] = { 5, 10, 15, 20, 25, 30, 35, 40, 45, 50 };
+static const float MOLOTOV_DIST[MAX_WEAPON_LEVEL] = { 200, 250, 300, 350, 400, 450, 500, 550, 600, 650 };
+static const int   MOLOTOV_COUNT[MAX_WEAPON_LEVEL] = { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+static const float MOLOTOV_FLAME[MAX_WEAPON_LEVEL] = { 3.0f, 3.5f, 4.0f, 4.5f, 5.0f,
+                                                          5.5f, 6.0f, 6.5f, 7.0f, 7.5f };
 
 Molotov::Molotov()
     : Base(eType_Molotov)
@@ -17,7 +25,7 @@ Molotov::Molotov()
 const WeaponData& Molotov::GetData()
 {
     static const WeaponData data = {
-       "‰Î‰Š•r","’…’e’n“_‚ğ”R‚â‚·","Œp‘±ƒ_ƒ[ƒW‚ğ—^‚¦‚é", 15,  600
+       "ç«ç‚ç“¶","ç€å¼¾åœ°ç‚¹ã‚’ç‡ƒã‚„ã™","ç¶™ç¶šãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’ä¸ãˆã‚‹", 15,  600
     };
     return data;
 }
@@ -27,82 +35,65 @@ void Molotov::SetEnable(bool enable)
     m_is_enable = enable;
 }
 
-// ƒŒƒxƒ‹‚ğİ’èiLv.1`Lv.5j
+// ãƒ¬ãƒ™ãƒ«ã‚’è¨­å®šï¼ˆLv.1ã€œLv.10ï¼‰
 void Molotov::SetLevel(int level)
 {
-    if (level < 1) level = 1;
-    if (level > 5) level = 5;
-
-    m_level = level;
+    m_level = ClampWeaponLevel(level);
 }
 
-// Œ»İ‚ÌƒŒƒxƒ‹‚ğæ“¾
+// ç¾åœ¨ã®ãƒ¬ãƒ™ãƒ«ã‚’å–å¾—
 int Molotov::GetLevel() const
 {
     return m_level;
 }
 
-// ƒŒƒxƒ‹ƒAƒbƒv
+// ãƒ¬ãƒ™ãƒ«ã‚¢ãƒƒãƒ—
 void Molotov::LevelUp()
 {
-    if (m_level < 5) {
+    if (m_level < MAX_WEAPON_LEVEL) {
         m_level++;
     }
 }
 
-// ƒ_ƒ[ƒW
+// ---------------------------------------------------------
+// è¡¨ç¤ºç”¨(Equipmentã®è©³ç´°æ¬„ãŒä½¿ã†)
+// ---------------------------------------------------------
+int Molotov::GetDamageAtLevel(int level)
+{
+    return MOLOTOV_DAMAGE[ClampWeaponLevel(level) - 1];
+}
+
+float Molotov::GetFlyingDistAtLevel(int level)
+{
+    return MOLOTOV_DIST[ClampWeaponLevel(level) - 1];
+}
+
+// ---------------------------------------------------------
+// æ’ƒã¤ã¨ãã«ä½¿ã†å€¤(è¡¨ã¨åŒã˜ã‚‚ã®ã‚’è¿”ã™)
+// ---------------------------------------------------------
 int Molotov::GetDamage() const
 {
-    switch (m_level) {
-    case 1: return 5;
-    case 2: return 10;
-    case 3: return 15;
-    case 4: return 20;
-    case 5: return 25;
-    }
-    return 5;
+    return GetDamageAtLevel(m_level);
 }
 
-// ”ò‹——£
 float Molotov::GetFlyingDist() const
 {
-    switch (m_level) {
-    case 1: return 200.0f;
-    case 2: return 250.0f;
-    case 3: return 300.0f;
-    case 4: return 350.0f;
-    case 5: return 400.0f;
-    }
-    return 200.0f;
+    return GetFlyingDistAtLevel(m_level);
 }
 
-// 1‰ñ‚É“Š‚°‚é‰Î‰Š•r‚Ì–{”
+// 1å›ã«æŠ•ã’ã‚‹ç«ç‚ç“¶ã®æœ¬æ•°
 int Molotov::GetBulletCount() const
 {
-    switch (m_level) {
-    case 1: return 2;
-    case 2: return 3;
-    case 3: return 4;
-    case 4: return 5;
-    case 5: return 6;
-    }
-    return 2;
+    return MOLOTOV_COUNT[ClampWeaponLevel(m_level) - 1];
 }
 
-// ’…’eŒã‚Ì‰Š‚Ì‘±ŠÔi•bj
+// ç€å¼¾å¾Œã®ç‚ã®æŒç¶šæ™‚é–“ï¼ˆç§’ï¼‰
 float Molotov::GetFlameDuration() const
 {
-    switch (m_level) {
-    case 1: return 3.0f;
-    case 2: return 3.5f;
-    case 3: return 4.0f;
-    case 4: return 4.5f;
-    case 5: return 5.0f;
-    }
-    return 3.0f;
+    return MOLOTOV_FLAME[ClampWeaponLevel(m_level) - 1];
 }
 
-// ‰Î‰Š•r‚ğ“Š‚°‚é
+// ç«ç‚ç“¶ã‚’æŠ•ã’ã‚‹
 void Molotov::Shot(const CVector2D& pos, const CVector2D& dir)
 {
     int bulletCount = GetBulletCount();
@@ -122,7 +113,7 @@ void Molotov::Shot(const CVector2D& pos, const CVector2D& dir)
         CVector3D shot_dir =
             CQuaternion::Euler(0.0f, 0.0f, DtoR(ang)) * dir;
 
-        // ”ò‹——£Eƒ_ƒ[ƒWE‰Š‚Ì‘±ŠÔ‚ğ“n‚·
+        // é£›è·é›¢ãƒ»ãƒ€ãƒ¡ãƒ¼ã‚¸ãƒ»ç‚ã®æŒç¶šæ™‚é–“ã‚’æ¸¡ã™
         new MolotovBullet(
             pos,
             CVector2D(shot_dir.x, shot_dir.y),
@@ -142,7 +133,7 @@ void Molotov::Update()
 
     m_attak_cnt += CFPS::GetDeltaTime();
 
-    // ”­ËŠÔŠu‚ÍŒ»ó0.5•b
+    // ç™ºå°„é–“éš”ã¯ç¾çŠ¶0.5ç§’
     if (m_attak_cnt >= 0.5f) {
         m_attak_cnt = 0.0f;
 
@@ -163,28 +154,4 @@ void Molotov::Draw()
 
 void Molotov::Collision(Base* b)
 {
-}
-
-int Molotov::GetDamageAtLevel(int level)
-{
-    switch (level)
-    {
-    case 1: return 10;
-    case 2: return 20;
-    case 3: return 30;
-    case 4: return 40;
-    case 5: return 50;
-    }
-    return 10;
-}
-float Molotov::GetFlyingDistAtLevel(int level)
-{
-    switch (level) {
-    case 1: return 200.0f;
-    case 2: return 250.0f;
-    case 3: return 300.0f;
-    case 4: return 350.0f;
-    case 5: return 400.0f;
-    }
-    return 200.0f;
 }

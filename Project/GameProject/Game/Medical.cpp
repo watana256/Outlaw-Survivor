@@ -22,7 +22,7 @@ Medical::Medical(const CVector2D& pos, int Medical_type) :Base(eType_Medical)
 	m_pos = pos;
 	ClampPosition();
 	m_rad = 10;
-	m_rect = CRect(-30.0f, -30.0f, 55.0f, 45.0f);
+	
 	m_img.SetSize(45, 35);
 	m_img.SetCenter(10, 10);
 	m_Medical_type = Medical_type;
@@ -31,6 +31,7 @@ Medical::Medical(const CVector2D& pos, int Medical_type) :Base(eType_Medical)
 	case eKit:
 		m_Medical = 20;
 		m_Medicalk = 20;
+		m_rect = CRect(-20.0f, -20.0f, 20.0f, 20.0f);
 		if (m_Medicalk >= 11) {
 			m_Medicalk = 20;
 		}
@@ -38,6 +39,7 @@ Medical::Medical(const CVector2D& pos, int Medical_type) :Base(eType_Medical)
 	case eBin:
 		m_Medical = 50;
 		m_Medicalb = 50;
+		m_rect = CRect(-30.0f, -30.0f, 55.0f, 45.0f);
 		if (m_Medicalk >= 51) {
 			m_Medicalk = 50;
 		}

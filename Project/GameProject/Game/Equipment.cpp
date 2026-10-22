@@ -50,6 +50,7 @@ static float GetWeaponFlyDist(int index, int level)
 	switch (index)
 	{
 	case 0: return Ax::GetFlyingDistAtLevel(level);
+	case 1: return Pistol::GetFlyingDistAtLevel(level);
 	case 2: return Shotgun::GetFlyingDistAtLevel(level);
 	case 3: return Molotov::GetFlyingDistAtLevel(level);
 	case 4: return Flamethrower::GetFlyingDistAtLevel(level);
@@ -65,6 +66,7 @@ static float GetWeaponBulletSpeed(int index, int level)
 	switch (index)
 	{
 	case 0: return Ax::GetBulletSpeedAtLevel(level);
+	case 1: return Pistol::GetBulletSpeedAtLevel(level);
 	case 2: return Shotgun::GetBulletSpeedAtLevel(level);
 	case 4: return Flamethrower::GetBulletSpeedAtLevel(level);
 	case 6: return Drone::GetBulletSpeedAtLevel(level);
@@ -129,12 +131,12 @@ void Equipment::Show()
 	m_show_count++;
 }
 
-// 次のレベルに上げる費用(レベルが上がるほど高くなる)
-// Lv1→2: 価格の50%, Lv2→3: 100%, Lv3→4: 150%, Lv4→5: 200%
+// 次のレベルに上げる費用 = 価格 × 現在のレベル × 2
+// 例(価格500): Lv1→2 が1000, Lv2→3 が2000, Lv3→4 が3000 ...
 int Equipment::GetUpgradeCost(int index) const
 {
 	int base = GetWeaponData(index).price;
-	return base / 2 * m_level[index];
+	return base * m_level[index] * 2;
 }
 
 int Equipment::GetLevel(int index) const
@@ -210,15 +212,18 @@ void Equipment::UpdateSelectIcon()
 }
 void Equipment::UpdateEndButton()
 {
+	if (!HasEquipment()) return;   // 装備がなければ終了できない
+
 	if (PUSH(CInput::eMouseL))
 	{
 		CVector2D pos = CInput::GetMousePoint();
 		CRect rect(m_end_img.m_pos, m_end_img.m_size);
 		if (CCollision::CollisionRectPoint(rect, pos)) {
-			m_is_show = false;   // Gameが検知してRoundIntroへ進む
+			m_is_show = false;   // Gameが検知してラウンドへ進む
 		}
 	}
 }
+
 void Equipment::UpdateGetButton()
 {
 	if (m_select_index < 0) return;   // 武器を選んでいない間は押せない
@@ -240,7 +245,7 @@ void Equipment::UpdateGetButton()
 void Equipment::UpgradeWeapon(int index)
 {
 	if (!m_owned[index]) return;
-	if (m_level[index] >= 5) return;               // 最大レベル
+	if (m_level[index] >= MAX_WEAPON_LEVEL) return;               // 最大レベル
 
 	int cost = GetUpgradeCost(index);
 	if (Score::GetScore() < cost) return;          // スコア不足
@@ -254,13 +259,20 @@ bool Equipment::CanAct(int index) const
 {
 	if (m_owned[index])
 	{
-		if (m_level[index] >= 5) return false;             // 最大レベル
+		if (m_level[index] >= MAX_WEAPON_LEVEL) return false;           // 最大レベル
 		return Score::GetScore() >= GetUpgradeCost(index);
 	}
 	if (IsFreePick(index)) return true;                    // 無料枠
 	return Score::GetScore() >= GetWeaponData(index).price;
 }
 
+// 装備枠に武器が1つでも入っているか
+bool Equipment::HasEquipment() const
+{
+	for (int i = 0; i < 3; i++)
+		if (m_equipped[i] >= 0) return true;
+	return false;
+}
 void Equipment::BuyWeapon(int index)
 {
 	if (m_owned[index]) return;                  // 購入済みは買えない
@@ -361,7 +373,18 @@ void Equipment::Draw()
 		}
 	}
 
-	m_end_img.Draw();
+	// Endボタン(装備がないときは暗くして、理由を表示)
+	if (!HasEquipment())
+	{
+		m_end_img.SetColor(0.4f, 0.4f, 0.4f, 1.0f);
+		m_end_img.Draw();
+		m_end_img.SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+		font_e->Draw(20.0f, 880.0f, 1, 0, 0, "装備を1つ以上つけてください");
+	}
+	else
+	{
+		m_end_img.Draw();
+	}
 
 	// ⑤ アイコンの下に詳細を表示
 	if (m_select_index >= 0)
@@ -373,7 +396,7 @@ void Equipment::Draw()
 		CFont* font = FONT_T();
 		int row = 0;
 		int lv = m_level[m_select_index];
-		bool can_up = m_owned[m_select_index] && lv < 5;
+		bool can_up = m_owned[m_select_index] && lv < MAX_WEAPON_LEVEL;
 
 		font->Draw(x, y + line * row++, 1, 1, 0, "%s", info.name);   // 名前(黄色)
 		font->Draw(x, y + line * row++, 1, 1, 1, "%s", info.desc1);
@@ -417,8 +440,8 @@ void Equipment::Draw()
 		// 購入状態の表示
 		if (m_owned[m_select_index])
 		{
-			if (lv >= 5)
-				font->Draw(x, y + line * row++, 1, 1, 0, "Lv.5 (最大)");
+			if (lv >= MAX_WEAPON_LEVEL)
+				font->Draw(x, y + line * row++, 1, 1, 0, "Lv.%d (最大)", lv);
 			else
 			{
 				int cost = GetUpgradeCost(m_select_index);

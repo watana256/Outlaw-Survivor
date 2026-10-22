@@ -1,10 +1,18 @@
-
-#include "Pistol.h"
+ï»¿#include "Pistol.h"
 #include "../Player.h"
 #include "../BulletAll/Bullet.h"
 #include "../GLLibrary/GLLibrary/CInput.h"
 #include <cmath>
 #include"Game/Game.h"
+
+// ---------------------------------------------------------
+// ãƒ¬ãƒ™ãƒ«ã”ã¨ã®æ€§èƒ½è¡¨(Lv1ã€œLv10)ã€‚å€¤ã‚’å¤‰ãˆãŸã„ã¨ãã¯ã“ã“ã ã‘ç›´ã™
+// ---------------------------------------------------------
+static const int   PISTOL_DAMAGE[MAX_WEAPON_LEVEL] = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+static const float PISTOL_DIST[MAX_WEAPON_LEVEL] = { 500, 600, 700, 800, 1000, 1100, 1200, 1300, 1400, 1500 };
+static const float PISTOL_SPEED[MAX_WEAPON_LEVEL] = { 7, 8, 9, 10, 12, 13, 14, 15, 16, 17 };
+static const float PISTOL_INTERVAL[MAX_WEAPON_LEVEL] = { 0.50f, 0.45f, 0.40f, 0.35f, 0.30f,
+                                                         0.27f, 0.24f, 0.21f, 0.18f, 0.15f };
 
 Pistol::Pistol()
     : Base(eType_Pistil)
@@ -17,7 +25,7 @@ Pistol::Pistol()
 const WeaponData& Pistol::GetData()
 {
     static const WeaponData data = {
-         "ƒsƒXƒgƒ‹",     "ˆµ‚¢‚â‚·‚¢Šî–{‚Ìe",     "˜AË‘¬“x‚Í•’Ê",       10,  100
+         "ãƒ”ã‚¹ãƒˆãƒ«",     "æ‰±ã„ã‚„ã™ã„åŸºæœ¬ã®éŠƒ",     "é€£å°„é€Ÿåº¦ã¯æ™®é€š",       10,  100
     };
     return data;
 }
@@ -27,71 +35,60 @@ void Pistol::SetEnable(bool enable)
     m_is_enable = enable;
 }
 
-// ƒŒƒxƒ‹‚ğİ’è‚·‚é
+// ãƒ¬ãƒ™ãƒ«ã‚’è¨­å®šã™ã‚‹(Lv.1ã€œLv.10)
 void Pistol::SetLevel(int level)
 {
-    if (level < 1) level = 1;
-    if (level > 5) level = 5;
-
-    m_level = level;
+    m_level = ClampWeaponLevel(level);
 }
 
-// Œ»İ‚ÌƒŒƒxƒ‹‚ğæ“¾‚·‚é
+// ç¾åœ¨ã®ãƒ¬ãƒ™ãƒ«ã‚’å–å¾—ã™ã‚‹
 int Pistol::GetLevel() const
 {
     return m_level;
 }
 
-// ƒ_ƒ[ƒW
+// ---------------------------------------------------------
+// è¡¨ç¤ºç”¨(Equipmentã®è©³ç´°æ¬„ãŒä½¿ã†)
+// ---------------------------------------------------------
+int Pistol::GetDamageAtLevel(int level)
+{
+    return PISTOL_DAMAGE[ClampWeaponLevel(level) - 1];
+}
+
+float Pistol::GetFlyingDistAtLevel(int level)
+{
+    return PISTOL_DIST[ClampWeaponLevel(level) - 1];
+}
+
+float Pistol::GetBulletSpeedAtLevel(int level)
+{
+    return PISTOL_SPEED[ClampWeaponLevel(level) - 1];
+}
+
+// ---------------------------------------------------------
+// æ’ƒã¤ã¨ãã«ä½¿ã†å€¤(è¡¨ã¨åŒã˜ã‚‚ã®ã‚’è¿”ã™)
+// ---------------------------------------------------------
 int Pistol::GetDamage() const
 {
-    switch (m_level) {
-    case 1: return 10;
-    case 2: return 2;
-    case 3: return 3;
-    case 4: return 4;
-    case 5: return 5;
-    default: return 1;
-    }
+    return GetDamageAtLevel(m_level);
 }
 
-// ’e‚Ì”ò‹——£
+// å¼¾ã®é£›è·é›¢
 float Pistol::GetFlyingDist() const
 {
-    switch (m_level) {
-    case 1: return 500.0f;
-    case 2: return 600.0f;
-    case 3: return 700.0f;
-    case 4: return 800.0f;
-    case 5: return 1000.0f;
-    default: return 500.0f;
-    }
+    return GetFlyingDistAtLevel(m_level);
 }
 
-// UŒ‚ŠÔŠui•bj
+// æ”»æ’ƒé–“éš”ï¼ˆç§’ï¼‰
 float Pistol::GetAttackInterval() const
 {
-    switch (m_level) {
-    case 1: return 0.50f;
-    case 2: return 0.45f;
-    case 3: return 0.40f;
-    case 4: return 0.35f;
-    case 5: return 0.30f;
-    default: return 0.50f;
-    }
+    return PISTOL_INTERVAL[ClampWeaponLevel(m_level) - 1];
 }
 
-// ’e‚ÌˆÚ“®‘¬“x
+// å¼¾ã®ç§»å‹•é€Ÿåº¦
 float Pistol::GetBulletSpeed() const
 {
-    switch (m_level) {
-    case 1: return 7.0f;
-    case 2: return 8.0f;
-    case 3: return 9.0f;
-    case 4: return 10.0f;
-    case 5: return 12.0f;
-    default: return 7.0f;
-    }
+    return GetBulletSpeedAtLevel(m_level);
 }
 
 void Pistol::Update()
@@ -101,7 +98,7 @@ void Pistol::Update()
 
     m_attak_cnt += CFPS::GetDeltaTime();
 
-    // ƒŒƒxƒ‹‚É‰‚¶‚½UŒ‚ŠÔŠu
+    // ãƒ¬ãƒ™ãƒ«ã«å¿œã˜ãŸæ”»æ’ƒé–“éš”
     if (m_attak_cnt < GetAttackInterval()) return;
 
     Player* player = Player::Instance();
@@ -119,13 +116,13 @@ void Pistol::Update()
 
     CVector2D dir(dx / length, dy / length);
 
-    // ’e‘¬E”ò‹——£Eƒ_ƒ[ƒW‚ğƒŒƒxƒ‹‚É‰‚¶‚Äİ’è
+    // å¼¾é€Ÿãƒ»é£›è·é›¢ãƒ»ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’ãƒ¬ãƒ™ãƒ«ã«å¿œã˜ã¦è¨­å®š
     new Bullet(
         pos,
         dir,
         GetFlyingDist(),
         GetDamage(),
-        15.0f,      // “–‚½‚è”»’è‚Ì”¼Œa‚ğ‘å‚«‚­‚·‚é
+        15.0f,      // å½“ãŸã‚Šåˆ¤å®šã®åŠå¾„ã‚’å¤§ããã™ã‚‹
         GetBulletSpeed()
     );
 
@@ -138,17 +135,4 @@ void Pistol::Draw()
 
 void Pistol::Collision(Base* b)
 {
-}
-
-int Pistol::GetDamageAtLevel(int level)
-{
-    switch (level)
-    {
-    case 1: return 10;
-    case 2: return 20;
-    case 3: return 30;
-    case 4: return 40;
-    case 5: return 50;
-    }
-    return 10;
 }

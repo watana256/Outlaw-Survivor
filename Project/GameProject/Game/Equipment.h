@@ -32,6 +32,7 @@ class Equipment : public Base {
 	void BuyWeapon(int index);
 	void UpgradeWeapon(int index);
 	bool CanAct(int index) const;
+	bool HasEquipment() const;   //‘•”õ‚ª1‚Â‚Å‚à‚ ‚é‚©
 	bool m_owned[9];
 
 public:

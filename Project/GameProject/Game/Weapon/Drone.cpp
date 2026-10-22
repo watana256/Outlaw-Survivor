@@ -1,6 +1,4 @@
-
-
-#include "Drone.h"
+ï»¿#include "Drone.h"
 #include "../Player.h"
 #include "../Enemy.h"
 #include "../BulletAll/Bullet.h"
@@ -13,6 +11,15 @@
 #define DRONE_RANGE 300.0f
 #define DRONE_BULLET_RADIUS 25.0f
 
+// ---------------------------------------------------------
+// ãƒ¬ãƒ™ãƒ«ã”ã¨ã®æ€§èƒ½è¡¨(Lv1ã€œLv10)ã€‚å€¤ã‚’å¤‰ãˆãŸã„ã¨ãã¯ã“ã“ã ã‘ç›´ã™
+// ---------------------------------------------------------
+static const int   DRONE_DAMAGE[MAX_WEAPON_LEVEL] = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+static const float DRONE_DIST[MAX_WEAPON_LEVEL] = { 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400 };
+static const float DRONE_SPEED[MAX_WEAPON_LEVEL] = { 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+static const float DRONE_INTERVAL[MAX_WEAPON_LEVEL] = { 0.50f, 0.45f, 0.40f, 0.35f, 0.30f,
+                                                        0.27f, 0.24f, 0.21f, 0.18f, 0.15f };
+
 Drone::Drone()
     : Base(eType_Drone)
     , m_attak_cnt(0.0f)
@@ -22,13 +29,13 @@ Drone::Drone()
     , m_offset_y(-20.0f)
     , m_level(1)
 {
-    // ƒhƒ[ƒ“‰æ‘œ‚ğ“Ç‚İ‚Ş
+    // ãƒ‰ãƒ­ãƒ¼ãƒ³ç”»åƒã‚’èª­ã¿è¾¼ã‚€
     m_img.Load("Image/DroneOBJ.png");
 
-    // ƒhƒ[ƒ“‰æ‘œ‚Ì•\¦ƒTƒCƒY
+    // ãƒ‰ãƒ­ãƒ¼ãƒ³ç”»åƒã®è¡¨ç¤ºã‚µã‚¤ã‚º
     m_img.SetSize(DRONE_SIZE, DRONE_SIZE);
 
-    // ‰æ‘œ‚Ì’†S‚ğİ’è
+    // ç”»åƒã®ä¸­å¿ƒã‚’è¨­å®š
     m_img.SetCenter(
         DRONE_SIZE / 2.0f,
         DRONE_SIZE / 2.0f
@@ -39,7 +46,7 @@ Drone::Drone()
 const WeaponData& Drone::GetData()
 {
     static const WeaponData data = {
-        "ƒhƒ[ƒ“", "©“®‚Å“G‚ğUŒ‚‚·‚é", "ƒvƒŒƒCƒ„[‚É’Ç]‚·‚é", 10, 1200
+        "ãƒ‰ãƒ­ãƒ¼ãƒ³", "è‡ªå‹•ã§æ•µã‚’æ”»æ’ƒã™ã‚‹", "ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«è¿½å¾“ã™ã‚‹", 10, 1200
     };
     return data;
 }
@@ -50,14 +57,8 @@ void Drone::SetEnable(bool enable)
 
 void Drone::SetLevel(int level)
 {
-    // ƒŒƒxƒ‹‚ğ1`5‚Ì”ÍˆÍ‚É§ŒÀ
-    if (level < 1)
-        level = 1;
-
-    if (level > 5)
-        level = 5;
-
-    m_level = level;
+    // ãƒ¬ãƒ™ãƒ«ã‚’1ã€œæœ€å¤§ã®ç¯„å›²ã«åˆ¶é™
+    m_level = ClampWeaponLevel(level);
 }
 
 int Drone::GetLevel() const
@@ -67,68 +68,52 @@ int Drone::GetLevel() const
 
 void Drone::LevelUp()
 {
-
-    // Å‘åƒŒƒxƒ‹‚Í5
-    if (m_level < 5)
+    // æœ€å¤§ãƒ¬ãƒ™ãƒ«ã¾ã§
+    if (m_level < MAX_WEAPON_LEVEL)
     {
         m_level++;
     }
 }
 
+// ---------------------------------------------------------
+// è¡¨ç¤ºç”¨(Equipmentã®è©³ç´°æ¬„ãŒä½¿ã†)
+// ---------------------------------------------------------
+int Drone::GetDamageAtLevel(int level)
+{
+    return DRONE_DAMAGE[ClampWeaponLevel(level) - 1];
+}
+
+float Drone::GetFlyingDistAtLevel(int level)
+{
+    return DRONE_DIST[ClampWeaponLevel(level) - 1];
+}
+
+float Drone::GetBulletSpeedAtLevel(int level)
+{
+    return DRONE_SPEED[ClampWeaponLevel(level) - 1];
+}
+
+// ---------------------------------------------------------
+// æ’ƒã¤ã¨ãã«ä½¿ã†å€¤(è¡¨ã¨åŒã˜ã‚‚ã®ã‚’è¿”ã™)
+// ---------------------------------------------------------
 int Drone::GetDamage() const
 {
-    switch (m_level)
-    {
-    case 1: return 10;
-    case 2: return 20;
-    case 3: return 30;
-    case 4: return 40;
-    case 5: return 50;
-    }
-
-    return 10;
+    return GetDamageAtLevel(m_level);
 }
 
 float Drone::GetFlyingDist() const
 {
-    switch (m_level)
-    {
-    case 1: return 500.0f;
-    case 2: return 600.0f;
-    case 3: return 700.0f;
-    case 4: return 800.0f;
-    case 5: return 900.0f;
-    }
-
-    return 500.0f;
+    return GetFlyingDistAtLevel(m_level);
 }
 
 float Drone::GetBulletSpeed() const
 {
-    switch (m_level)
-    {
-    case 1: return 7.0f;
-    case 2: return 8.0f;
-    case 3: return 9.0f;
-    case 4: return 10.0f;
-    case 5: return 11.0f;
-    }
-
-    return 7.0f;
+    return GetBulletSpeedAtLevel(m_level);
 }
 
 float Drone::GetAttackInterval() const
 {
-    switch (m_level)
-    {
-    case 1: return 0.50f;
-    case 2: return 0.45f;
-    case 3: return 0.40f;
-    case 4: return 0.35f;
-    case 5: return 0.30f;
-    }
-
-    return 0.50f;
+    return DRONE_INTERVAL[ClampWeaponLevel(m_level) - 1];
 }
 
 void Drone::Update()
@@ -142,17 +127,17 @@ void Drone::Update()
     if (player == nullptr)
         return;
 
-    // Player‚Ì‰¡‚Éƒhƒ[ƒ“‚ğ”z’u
+    // Playerã®æ¨ªã«ãƒ‰ãƒ­ãƒ¼ãƒ³ã‚’é…ç½®
     m_pos.x = player->m_pos.x + m_offset_x;
     m_pos.y = player->m_pos.y + m_offset_y;
 
-    // ”­ËŠÔŠu‚ğŒv‘ª
+    // ç™ºå°„é–“éš”ã‚’è¨ˆæ¸¬
     m_attak_cnt += CFPS::GetDeltaTime();
 
     if (m_attak_cnt < GetAttackInterval())
         return;
 
-    // Enemyˆê——‚ğæ“¾
+    // Enemyä¸€è¦§ã‚’å–å¾—
     std::vector<Base*> enemies =
         Base::FindObjects(eType_Enemy);
 
@@ -161,7 +146,7 @@ void Drone::Update()
     float nearest_dist_sq =
         m_attack_range * m_attack_range;
 
-    // Ë’ö“à‚ÅÅ‚à‹ß‚¢Enemy‚ğ’T‚·
+    // å°„ç¨‹å†…ã§æœ€ã‚‚è¿‘ã„Enemyã‚’æ¢ã™
     for (Base* b : enemies)
     {
         Enemy* enemy = dynamic_cast<Enemy*>(b);
@@ -181,11 +166,11 @@ void Drone::Update()
         }
     }
 
-    // Ë’ö“à‚ÉEnemy‚ª‚¢‚È‚¯‚ê‚ÎŒ‚‚½‚È‚¢
+    // å°„ç¨‹å†…ã«EnemyãŒã„ãªã‘ã‚Œã°æ’ƒãŸãªã„
     if (target == nullptr)
         return;
 
-    // ƒhƒ[ƒ“‚©‚çEnemy‚ÖŒü‚©‚¤•ûŒü‚ğŒvZ
+    // ãƒ‰ãƒ­ãƒ¼ãƒ³ã‹ã‚‰Enemyã¸å‘ã‹ã†æ–¹å‘ã‚’è¨ˆç®—
     float dx = target->m_pos.x - m_pos.x;
     float dy = target->m_pos.y - m_pos.y;
 
@@ -199,7 +184,7 @@ void Drone::Update()
         dy / length
     );
 
-    // Œ»İ‚ÌƒŒƒxƒ‹‚É‰‚¶‚½«”\‚Å’e‚ğ”­Ë
+    // ç¾åœ¨ã®ãƒ¬ãƒ™ãƒ«ã«å¿œã˜ãŸæ€§èƒ½ã§å¼¾ã‚’ç™ºå°„
     new Bullet(
         m_pos,
         dir,
@@ -209,7 +194,7 @@ void Drone::Update()
         GetBulletSpeed()
     );
 
-    // ”­Ë‚µ‚½‚Ì‚Åƒ^ƒCƒ}[‚ğƒŠƒZƒbƒg
+    // ç™ºå°„ã—ãŸã®ã§ã‚¿ã‚¤ãƒãƒ¼ã‚’ãƒªã‚»ãƒƒãƒˆ
     m_attak_cnt = 0.0f;
 }
 
@@ -218,7 +203,7 @@ void Drone::Draw()
     if (!m_is_enable)
         return;
 
-    // ƒXƒNƒ[ƒ‹‚ğ”½‰f‚µ‚Ä•`‰æ
+    // ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã‚’åæ˜ ã—ã¦æç”»
     m_img.SetPos(m_pos - m_scroll);
     m_img.Draw();
 
@@ -226,43 +211,5 @@ void Drone::Draw()
 
 void Drone::Collision(Base* b)
 {
-    // ƒhƒ[ƒ“–{‘Ì‚É‚Í“–‚½‚è”»’è‚ğİ‚¯‚È‚¢
-}
-
-int Drone::GetDamageAtLevel(int level)
-{
-    switch (level)
-    {
-    case 1: return 10;
-    case 2: return 20;
-    case 3: return 30;
-    case 4: return 40;
-    case 5: return 50;
-    }
-    return 10;
-}
-float Drone::GetFlyingDistAtLevel(int level)
-{
-    switch (level)
-    {
-    case 1: return 500.0f;
-    case 2: return 600.0f;
-    case 3: return 700.0f;
-    case 4: return 800.0f;
-    case 5: return 900.0f;
-    }
-    return 500.0f;
-}
-
-float Drone::GetBulletSpeedAtLevel(int level)
-{
-    switch (level)
-    {
-    case 1: return 7.0f;
-    case 2: return 8.0f;
-    case 3: return 9.0f;
-    case 4: return 10.0f;
-    case 5: return 11.0f;
-    }
-    return 7.0f;
+    // ãƒ‰ãƒ­ãƒ¼ãƒ³æœ¬ä½“ã«ã¯å½“ãŸã‚Šåˆ¤å®šã‚’è¨­ã‘ãªã„
 }

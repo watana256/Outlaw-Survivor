@@ -1,8 +1,17 @@
-
 #include "Flamethrower.h"
 #include "../Player.h"
 #include "../BulletAll/FlamethrowerBullet.h"
 #include "Game/Game.h"
+
+// ---------------------------------------------------------
+// レベルごとの性能表(Lv1?Lv10)。値を変えたいときはここだけ直す
+// ---------------------------------------------------------
+static const int   FLAME_DAMAGE[MAX_WEAPON_LEVEL] = { 5, 10, 15, 20, 25, 30, 35, 40, 45, 50 };
+static const float FLAME_DIST[MAX_WEAPON_LEVEL] = { 100, 125, 150, 175, 200, 225, 250, 275, 300, 325 };
+static const float FLAME_SPEED[MAX_WEAPON_LEVEL] = { 7, 8, 9, 10, 12, 13, 14, 15, 16, 17 };
+static const float FLAME_RANGE[MAX_WEAPON_LEVEL] = { 30, 35, 40, 45, 50, 55, 60, 65, 70, 75 };
+static const float FLAME_INTERVAL[MAX_WEAPON_LEVEL] = { 0.50f, 0.45f, 0.40f, 0.35f, 0.30f,
+                                                        0.27f, 0.24f, 0.21f, 0.18f, 0.15f };
 
 Flamethrower::Flamethrower()
     : Base(eType_Flamethrower)
@@ -15,7 +24,7 @@ Flamethrower::Flamethrower()
 const WeaponData& Flamethrower::GetData()
 {
     static const WeaponData data = {
-        "火炎放射器","前方に炎を放射する","敵を貫通する",  20, 1200 
+        "火炎放射器","前方に炎を放射する","敵を貫通する",  20, 1200
     };
     return data;
 }
@@ -26,13 +35,10 @@ void Flamethrower::SetEnable(bool enable)
     m_is_enable = enable;
 }
 
-// レベル設定（Lv.1～Lv.5）
+// レベル設定（Lv.1?Lv.10）
 void Flamethrower::SetLevel(int level)
 {
-    if (level < 1) level = 1;
-    if (level > 5) level = 5;
-
-    m_level = level;
+    m_level = ClampWeaponLevel(level);
 }
 
 // 現在のレベルを取得
@@ -44,74 +50,57 @@ int Flamethrower::GetLevel() const
 // レベルアップ
 void Flamethrower::LevelUp()
 {
-    if (m_level < 5) {
+    if (m_level < MAX_WEAPON_LEVEL) {
         m_level++;
     }
 }
 
-// ダメージ
+// ---------------------------------------------------------
+// 表示用(Equipmentの詳細欄が使う)
+// ---------------------------------------------------------
+int Flamethrower::GetDamageAtLevel(int level)
+{
+    return FLAME_DAMAGE[ClampWeaponLevel(level) - 1];
+}
+
+float Flamethrower::GetFlyingDistAtLevel(int level)
+{
+    return FLAME_DIST[ClampWeaponLevel(level) - 1];
+}
+
+float Flamethrower::GetBulletSpeedAtLevel(int level)
+{
+    return FLAME_SPEED[ClampWeaponLevel(level) - 1];
+}
+
+// ---------------------------------------------------------
+// 撃つときに使う値(表と同じものを返す)
+// ---------------------------------------------------------
 int Flamethrower::GetDamage() const
 {
-    switch (m_level) {
-    case 1: return 5;
-    case 2: return 10;
-    case 3: return 15;
-    case 4: return 20;
-    case 5: return 25;
-    }
-    return 5;
+    return GetDamageAtLevel(m_level);
 }
 
-// 飛距離
 float Flamethrower::GetFlyingDist() const
 {
-    switch (m_level) {
-    case 1: return 100.0f;
-    case 2: return 125.0f;
-    case 3: return 150.0f;
-    case 4: return 175.0f;
-    case 5: return 200.0f;
-    }
-    return 100.0f;
+    return GetFlyingDistAtLevel(m_level);
 }
 
-// 弾速
 float Flamethrower::GetBulletSpeed() const
 {
-    switch (m_level) {
-    case 1: return 7.0f;
-    case 2: return 8.0f;
-    case 3: return 9.0f;
-    case 4: return 10.0f;
-    case 5: return 12.0f;
-    }
-    return 7.0f;
+    return GetBulletSpeedAtLevel(m_level);
 }
 
 // 攻撃範囲（当たり判定の半径として使用）
 float Flamethrower::GetAttackRange() const
 {
-    switch (m_level) {
-    case 1: return 30.0f;
-    case 2: return 35.0f;
-    case 3: return 40.0f;
-    case 4: return 45.0f;
-    case 5: return 50.0f;
-    }
-    return 30.0f;
+    return FLAME_RANGE[ClampWeaponLevel(m_level) - 1];
 }
 
 // 発射間隔（秒）
 float Flamethrower::GetAttackInterval() const
 {
-    switch (m_level) {
-    case 1: return 0.50f;
-    case 2: return 0.45f;
-    case 3: return 0.40f;
-    case 4: return 0.35f;
-    case 5: return 0.30f;
-    }
-    return 0.50f;
+    return FLAME_INTERVAL[ClampWeaponLevel(m_level) - 1];
 }
 
 void Flamethrower::Update()
@@ -150,40 +139,4 @@ void Flamethrower::Draw()
 
 void Flamethrower::Collision(Base* b)
 {
-}
-
-int Flamethrower::GetDamageAtLevel(int level)
-{
-    switch (level)
-    {
-    case 1: return 10;
-    case 2: return 20;
-    case 3: return 30;
-    case 4: return 40;
-    case 5: return 50;
-    }
-    return 10;
-}
-float Flamethrower::GetFlyingDistAtLevel(int level)
-{
-    switch (level) {
-    case 1: return 100.0f;
-    case 2: return 125.0f;
-    case 3: return 150.0f;
-    case 4: return 175.0f;
-    case 5: return 200.0f;
-    }
-    return 100.0f;
-}
-
-float Flamethrower::GetBulletSpeedAtLevel(int level)
-{
-    switch (level) {
-    case 1: return 7.0f;
-    case 2: return 8.0f;
-    case 3: return 9.0f;
-    case 4: return 10.0f;
-    case 5: return 12.0f;
-    }
-    return 7.0f;
 }

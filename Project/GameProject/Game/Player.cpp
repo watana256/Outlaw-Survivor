@@ -302,7 +302,6 @@ void Player::Draw()
 {
 	m_img.SetPos(m_pos);
 	m_img.Draw();
-	DrawRect();
 	m_img.SetRect(128, 0, 192, 64);
 	//Utility::DrawCircle(m_pos, m_rad, CVector4D(0, 0, 1, 0.5));
 }

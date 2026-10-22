@@ -1,10 +1,16 @@
-
-#include "Landmine.h"
+ï»¿#include "Landmine.h"
 #include "../Player.h"
 #include "../BulletAll/LandmineBullet.h"
 #include "Game/Game.h"
 
 #define FLYING_DIST 100.0f
+
+// ---------------------------------------------------------
+// ãƒ¬ãƒ™ãƒ«ã”ã¨ã®æ€§èƒ½è¡¨(Lv1ã€œLv10)ã€‚å€¤ã‚’å¤‰ãˆãŸã„ã¨ãã¯ã“ã“ã ã‘ç›´ã™
+// ---------------------------------------------------------
+static const int   MINE_DAMAGE[MAX_WEAPON_LEVEL] = { 20, 30, 40, 50, 60, 70, 80, 90, 100, 110 };
+static const float MINE_INTERVAL[MAX_WEAPON_LEVEL] = { 3.0f, 2.5f, 2.0f, 1.5f, 1.0f,
+                                                       0.9f, 0.8f, 0.7f, 0.6f, 0.5f };
 
 Landmine::Landmine()
     : Base(eType_Landmine)
@@ -17,7 +23,7 @@ Landmine::Landmine()
 const WeaponData& Landmine::GetData()
 {
     static const WeaponData data = {
-         "’n—‹",         "İ’u‚µ‚Ä“G‚ğ‘Ò‚¿•š‚¹",   "“¥‚Ş‚Æ”š”­‚·‚é",       50,  700
+         "åœ°é›·",         "è¨­ç½®ã—ã¦æ•µã‚’å¾…ã¡ä¼ã›",   "è¸ã‚€ã¨çˆ†ç™ºã™ã‚‹",       50,  700
     };
     return data;
 }
@@ -27,55 +33,42 @@ void Landmine::SetEnable(bool enable)
     m_is_enable = enable;
 }
 
-// ƒŒƒxƒ‹‚ğİ’èiLv.1`Lv.5j
+// ãƒ¬ãƒ™ãƒ«ã‚’è¨­å®šï¼ˆLv.1ã€œLv.10ï¼‰
 void Landmine::SetLevel(int level)
 {
-    if (level < 1) level = 1;
-    if (level > 5) level = 5;
-
-    m_level = level;
+    m_level = ClampWeaponLevel(level);
 }
 
-// Œ»İ‚ÌƒŒƒxƒ‹‚ğæ“¾
+// ç¾åœ¨ã®ãƒ¬ãƒ™ãƒ«ã‚’å–å¾—
 int Landmine::GetLevel() const
 {
     return m_level;
 }
 
-// ƒŒƒxƒ‹ƒAƒbƒv
+// ãƒ¬ãƒ™ãƒ«ã‚¢ãƒƒãƒ—
 void Landmine::LevelUp()
 {
-    if (m_level < 5) {
+    if (m_level < MAX_WEAPON_LEVEL) {
         m_level++;
     }
 }
 
-// ƒ_ƒ[ƒW
-int Landmine::GetDamage() const
+// è¡¨ç¤ºç”¨(Equipmentã®è©³ç´°æ¬„ãŒä½¿ã†)
+int Landmine::GetDamageAtLevel(int level)
 {
-    switch (m_level) {
-    case 1: return 20;
-    case 2: return 30;
-    case 3: return 40;
-    case 4: return 50;
-    case 5: return 60;
-    }
-
-    return 10;
+    return MINE_DAMAGE[ClampWeaponLevel(level) - 1];
 }
 
-// İ’uŠÔŠui•bj
+// ãƒ€ãƒ¡ãƒ¼ã‚¸(è¡¨ã¨åŒã˜å€¤)
+int Landmine::GetDamage() const
+{
+    return GetDamageAtLevel(m_level);
+}
+
+// è¨­ç½®é–“éš”ï¼ˆç§’ï¼‰
 float Landmine::GetAttackInterval() const
 {
-    switch (m_level) {
-    case 1: return 3.0f;
-    case 2: return 2.5f;
-    case 3: return 2.0f;
-    case 4: return 1.5f;
-    case 5: return 1.0f;
-    }
-
-    return 3.0f;
+    return MINE_INTERVAL[ClampWeaponLevel(m_level) - 1];
 }
 
 void Landmine::Update()
@@ -85,10 +78,10 @@ void Landmine::Update()
         return;
     }
 
-    // Œo‰ßŠÔ‚ğ‰ÁZ
+    // çµŒéæ™‚é–“ã‚’åŠ ç®—
     m_attak_cnt += CFPS::GetDeltaTime();
 
-    // ƒŒƒxƒ‹‚É‰‚¶‚½ŠÔ‚ªŒo‰ß‚µ‚½‚ç’n—‹‚ğİ’u
+    // ãƒ¬ãƒ™ãƒ«ã«å¿œã˜ãŸæ™‚é–“ãŒçµŒéã—ãŸã‚‰åœ°é›·ã‚’è¨­ç½®
     if (m_attak_cnt >= GetAttackInterval()) {
         m_attak_cnt = 0.0f;
 
@@ -114,17 +107,4 @@ void Landmine::Draw()
 
 void Landmine::Collision(Base* b)
 {
-}
-
-int Landmine::GetDamageAtLevel(int level)
-{
-    switch (level)
-    {
-    case 1: return 10;
-    case 2: return 20;
-    case 3: return 30;
-    case 4: return 40;
-    case 5: return 50;
-    }
-    return 10;
 }

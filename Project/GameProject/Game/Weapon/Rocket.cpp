@@ -1,10 +1,15 @@
-
-#include "Rocket.h"
+ï»¿#include "Rocket.h"
 #include "../Player.h"
 #include "../BulletAll/RocketBullet.h"
 #include "Game/Game.h"
 
 #define ROCKET_ATTACK_TIME 0.5f
+
+// ---------------------------------------------------------
+// ãƒ¬ãƒ™ãƒ«ã”ã¨ã®æ€§èƒ½è¡¨(Lv1ã€œLv10)ã€‚å€¤ã‚’å¤‰ãˆãŸã„ã¨ãã¯ã“ã“ã ã‘ç›´ã™
+// ---------------------------------------------------------
+static const int   ROCKET_DAMAGE[MAX_WEAPON_LEVEL] = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
+static const float ROCKET_DIST[MAX_WEAPON_LEVEL] = { 200, 250, 300, 350, 400, 450, 500, 550, 600, 650 };
 
 Rocket::Rocket()
     : Base(eType_Rocket)
@@ -17,7 +22,7 @@ Rocket::Rocket()
 const WeaponData& Rocket::GetData()
 {
     static const WeaponData data = {
-        "ƒƒPƒbƒg",     "”š”­‚·‚é’e‚ğ”­Ë", "”ÍˆÍƒ_ƒ[ƒW‚ª‘å‚«‚¢", 60, 2000
+        "ãƒ­ã‚±ãƒƒãƒˆ",     "çˆ†ç™ºã™ã‚‹å¼¾ã‚’ç™ºå°„", "ç¯„å›²ãƒ€ãƒ¡ãƒ¼ã‚¸ãŒå¤§ãã„", 60, 2000
     };
     return data;
 }
@@ -29,10 +34,7 @@ void Rocket::SetEnable(bool enable)
 
 void Rocket::SetLevel(int level)
 {
-    if (level < 1) level = 1;
-    if (level > 5) level = 5;
-
-    m_level = level;
+    m_level = ClampWeaponLevel(level);
 }
 
 int Rocket::GetLevel() const
@@ -42,38 +44,36 @@ int Rocket::GetLevel() const
 
 void Rocket::LevelUp()
 {
-    if (m_level < 5)
+    if (m_level < MAX_WEAPON_LEVEL)
     {
         m_level++;
     }
 }
 
+// ---------------------------------------------------------
+// è¡¨ç¤ºç”¨(Equipmentã®è©³ç´°æ¬„ãŒä½¿ã†)
+// ---------------------------------------------------------
+int Rocket::GetDamageAtLevel(int level)
+{
+    return ROCKET_DAMAGE[ClampWeaponLevel(level) - 1];
+}
+
+float Rocket::GetFlyingDistAtLevel(int level)
+{
+    return ROCKET_DIST[ClampWeaponLevel(level) - 1];
+}
+
+// ---------------------------------------------------------
+// æ’ƒã¤ã¨ãã«ä½¿ã†å€¤(è¡¨ã¨åŒã˜ã‚‚ã®ã‚’è¿”ã™)
+// ---------------------------------------------------------
 int Rocket::GetDamage() const
 {
-    switch (m_level)
-    {
-    case 1: return 10;
-    case 2: return 20;
-    case 3: return 30;
-    case 4: return 40;
-    case 5: return 50;
-    }
-
-    return 10;
+    return GetDamageAtLevel(m_level);
 }
 
 float Rocket::GetFlyingDist() const
 {
-    switch (m_level)
-    {
-    case 1: return 200.0f;
-    case 2: return 250.0f;
-    case 3: return 300.0f;
-    case 4: return 350.0f;
-    case 5: return 400.0f;
-    }
-
-    return 200.0f;
+    return GetFlyingDistAtLevel(m_level);
 }
 
 void Rocket::Update()
@@ -96,7 +96,7 @@ void Rocket::Update()
         CVector2D pos = player->m_pos;
         CVector2D dir = player->m_vec;
 
-        // ƒvƒŒƒCƒ„[‚ª’â~‚µ‚Ä‚¢‚éê‡‚Í‰EŒü‚«‚É‚·‚é
+        // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒåœæ­¢ã—ã¦ã„ã‚‹å ´åˆã¯å³å‘ãã«ã™ã‚‹
         float length = sqrtf(dir.x * dir.x + dir.y * dir.y);
 
         if (length > 0.001f)
@@ -110,7 +110,7 @@ void Rocket::Update()
             dir.y = 0.0f;
         }
 
-        // ƒŒƒxƒ‹‚É‰‚¶‚½”ò‹——£‚Æƒ_ƒ[ƒW‚Å”­Ë
+        // ãƒ¬ãƒ™ãƒ«ã«å¿œã˜ãŸé£›è·é›¢ã¨ãƒ€ãƒ¡ãƒ¼ã‚¸ã§ç™ºå°„
         new RocketBullet(
             pos,
             dir,
@@ -126,29 +126,4 @@ void Rocket::Draw()
 
 void Rocket::Collision(Base* b)
 {
-}
-
-int Rocket::GetDamageAtLevel(int level)
-{
-    switch (level)
-    {
-    case 1: return 10;
-    case 2: return 20;
-    case 3: return 30;
-    case 4: return 40;
-    case 5: return 50;
-    }
-    return 10;
-}
-float Rocket::GetFlyingDistAtLevel(int level)
-{
-    switch (level)
-    {
-    case 1: return 200.0f;
-    case 2: return 250.0f;
-    case 3: return 300.0f;
-    case 4: return 350.0f;
-    case 5: return 400.0f;
-    }
-    return 200.0f;
 }

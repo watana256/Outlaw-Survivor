@@ -1,8 +1,17 @@
-
-#include "Ax.h"
+ï»¿#include "Ax.h"
 #include "../Player.h"
 #include "../BulletAll/AxBullet.h"
 #include"Game/Game.h"
+
+// ---------------------------------------------------------
+// ãƒ¬ãƒ™ãƒ«ã”ã¨ã®æ€§èƒ½è¡¨(Lv1ã€œLv10)ã€‚å€¤ã‚’å¤‰ãˆãŸã„ã¨ãã¯ã“ã“ã ã‘ç›´ã™
+// ---------------------------------------------------------
+static const int   AX_DAMAGE[MAX_WEAPON_LEVEL] = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };//æ”»æ’ƒåŠ›
+static const float AX_DIST[MAX_WEAPON_LEVEL] = { 200, 250, 300, 350, 400, 450, 500, 550, 600, 650 };//é£›è·é›¢
+static const float AX_SPEED[MAX_WEAPON_LEVEL] = { 7, 8, 9, 10, 12, 13, 14, 15, 16, 17 };//å¼¾é€Ÿ
+static const int   AX_COUNT[MAX_WEAPON_LEVEL] = { 2, 3, 5, 8, 12, 16, 20, 24, 28, 32 };//å¼¾æ•°
+static const float AX_INTERVAL[MAX_WEAPON_LEVEL] = { 0.50f, 0.45f, 0.40f, 0.35f, 0.30f,
+                                                     0.27f, 0.24f, 0.21f, 0.18f, 0.15f };//ç™ºå°„é–“éš”
 
 Ax::Ax()
     : Base(eType_Ax)
@@ -15,7 +24,7 @@ Ax::Ax()
 const WeaponData& Ax::GetData()
 {
     static const WeaponData data = {
-        "•€", "•€‚Í“Š‚°‚é•¨", "UŒ‚”ÍˆÍ‚ªL‚¢", 1, 500
+        "æ–§", "æ–§ã¯æŠ•ã’ã‚‹ç‰©", "æ”»æ’ƒç¯„å›²ãŒåºƒã„", 1, 100
     };
     return data;
 }
@@ -25,13 +34,10 @@ void Ax::SetEnable(bool enable)
     m_is_enable = enable;
 }
 
-// ƒŒƒxƒ‹İ’èFLv.1`Lv.5
+// ãƒ¬ãƒ™ãƒ«è¨­å®šï¼šLv.1ã€œLv.10
 void Ax::SetLevel(int level)
 {
-    if (level < 1) level = 1;
-    if (level > 5) level = 5;
-
-    m_level = level;
+    m_level = ClampWeaponLevel(level);
 }
 
 int Ax::GetLevel() const
@@ -41,101 +47,79 @@ int Ax::GetLevel() const
 
 void Ax::LevelUp()
 {
-    if (m_level < 5)
+    if (m_level < MAX_WEAPON_LEVEL)
     {
         m_level++;
     }
 }
 
-// ƒ_ƒ[ƒW
+// ---------------------------------------------------------
+// è¡¨ç¤ºç”¨(Equipmentã®è©³ç´°æ¬„ãŒä½¿ã†)
+// ---------------------------------------------------------
+int Ax::GetDamageAtLevel(int level)
+{
+    return AX_DAMAGE[ClampWeaponLevel(level) - 1];
+}
+
+float Ax::GetFlyingDistAtLevel(int level)
+{
+    return AX_DIST[ClampWeaponLevel(level) - 1];
+}
+
+float Ax::GetBulletSpeedAtLevel(int level)
+{
+    return AX_SPEED[ClampWeaponLevel(level) - 1];
+}
+
+// ---------------------------------------------------------
+// æ’ƒã¤ã¨ãã«ä½¿ã†å€¤(è¡¨ã¨åŒã˜ã‚‚ã®ã‚’è¿”ã™)
+// ---------------------------------------------------------
 int Ax::GetDamage() const
 {
-    switch (m_level)
-    {
-    case 1: return 1;
-    case 2: return 2;
-    case 3: return 3;
-    case 4: return 4;
-    case 5: return 5;
-    default: return 1;
-    }
+    return GetDamageAtLevel(m_level);
 }
 
-// ”ò‹——£
 float Ax::GetFlyingDist() const
 {
-    switch (m_level)
-    {
-    case 1: return 200.0f;
-    case 2: return 250.0f;
-    case 3: return 300.0f;
-    case 4: return 350.0f;
-    case 5: return 400.0f;
-    default: return 200.0f;
-    }
+    return GetFlyingDistAtLevel(m_level);
 }
 
-// ’e‘¬
 float Ax::GetBulletSpeed() const
 {
-    switch (m_level)
-    {
-    case 1: return 7.0f;
-    case 2: return 8.0f;
-    case 3: return 9.0f;
-    case 4: return 10.0f;
-    case 5: return 12.0f;
-    default: return 7.0f;
-    }
+    return GetBulletSpeedAtLevel(m_level);
 }
 
-// ’e”
+// å¼¾æ•°
 int Ax::GetBulletCount() const
 {
-    switch (m_level)
-    {
-    case 1: return 4;
-    case 2: return 5;
-    case 3: return 6;
-    case 4: return 7;
-    case 5: return 8;
-    default: return 4;
-    }
+    return AX_COUNT[ClampWeaponLevel(m_level) - 1];
 }
 
-// ”­ËŠÔŠui•bj
+// ç™ºå°„é–“éš”ï¼ˆç§’ï¼‰
 float Ax::GetAttackInterval() const
 {
-    switch (m_level)
-    {
-    case 1: return 0.50f;
-    case 2: return 0.45f;
-    case 3: return 0.40f;
-    case 4: return 0.35f;
-    case 5: return 0.30f;
-    default: return 0.50f;
-    }
+    return AX_INTERVAL[ClampWeaponLevel(m_level) - 1];
 }
 
-// •€‚ğ”­Ë‚·‚é
+// æ–§ã‚’ç™ºå°„ã™ã‚‹
 void Ax::Shot(const CVector2D& pos, const CVector2D& dir)
 {
     int bulletCount = GetBulletCount();
 
     for (int i = 0; i < bulletCount; i++)
     {
-        // ’e‚ª1”­‚Ìê‡‚Í³–Ê‚Ö”­Ë
+        // å¼¾ãŒ1ç™ºã®å ´åˆã¯æ­£é¢ã¸ç™ºå°„
         float per = (bulletCount > 1)
             ? (float)i / (bulletCount - 1)
             : 0.5f;
 
-        // ’e‚ğ¶‰E‚ÉL‚°‚é
+        // å¼¾ã‚’å·¦å³ã«åºƒã’ã‚‹
         float ang = Utility::Lerp(-180.0f, 180.0f, per);
 
         CVector3D shot_dir =
             CQuaternion::Euler(0.0f, 0.0f, DtoR(ang)) * dir;
 
-        // Œ»İ‚ÌAxBullet‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğg—p
+        // ç¾åœ¨ã®AxBulletã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’ä½¿ç”¨
         new AxBullet(
             pos,
             CVector2D(shot_dir.x, shot_dir.y),
@@ -173,42 +157,4 @@ void Ax::Draw()
 
 void Ax::Collision(Base* b)
 {
-}
-
-int Ax::GetDamageAtLevel(int level)
-{
-    switch (level)
-    {
-    case 1: return 1;
-    case 2: return 2;
-    case 3: return 3;
-    case 4: return 4;
-    case 5: return 5;
-    }
-    return 1;
-}
-float Ax::GetFlyingDistAtLevel(int level)
-{
-    switch (level)
-    {
-    case 1: return 200.0f;
-    case 2: return 250.0f;
-    case 3: return 300.0f;
-    case 4: return 350.0f;
-    case 5: return 400.0f;
-    }
-    return 200.0f;
-}
-
-float Ax::GetBulletSpeedAtLevel(int level)
-{
-    switch (level)
-    {
-    case 1: return 7.0f;
-    case 2: return 8.0f;
-    case 3: return 9.0f;
-    case 4: return 10.0f;
-    case 5: return 12.0f;
-    }
-    return 7.0f;
 }

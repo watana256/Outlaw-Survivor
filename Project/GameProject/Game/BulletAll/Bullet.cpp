@@ -45,12 +45,6 @@ void Bullet::Draw()
 {
     m_img.SetPos(m_pos);
     m_img.Draw();
-
-    Utility::DrawCircle(
-        m_pos,
-        m_rad,
-        CVector4D(0, 5, 0, 0.5)
-    );
 }
 
 void Bullet::Collision(Base* b)
