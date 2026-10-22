@@ -82,6 +82,10 @@ void StellaBullet::Update()
 
 void StellaBullet::Draw()
 {
+    // ラウンド中だけ表示する(ラウンド終了後・装備画面では消す)
+    if (Game::GetGamePhase() != EGamePhase::RoundPlaying)
+        return;
+
     // プレイヤーと同じ座標系を使用
     m_img.SetPos(m_pos - m_scroll);
     m_img.Draw();

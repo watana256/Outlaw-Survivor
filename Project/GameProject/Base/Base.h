@@ -4,6 +4,7 @@ enum {
     eType_Map,
     eType_Door, 
     eType_AreaChange,
+    eType_StellaBullet,
     eType_Player, 
     eType_Pistil,
     eType_Enemy,
@@ -30,7 +31,6 @@ enum {
     eType_Medical,
     eType_RoketBullet,
     eType_FlamethrowerBullet,
-    eType_StellaBullet,
     eTpe_Equipment,
     eTpe_EquipmentIcon,
 
