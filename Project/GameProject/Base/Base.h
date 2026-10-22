@@ -32,7 +32,7 @@ enum {
     eType_RoketBullet,
     eType_FlamethrowerBullet,
     eType_StellaBullet,
-
+    eTpe_EquipmentIcon,
 
 
 

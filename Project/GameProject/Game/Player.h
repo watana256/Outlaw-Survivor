@@ -21,7 +21,7 @@ private:
 	int m_speed_cnt;
 	int m_hp;
 	int m_muteki_cnt;
-	
+	Base* m_weapons[9];//¶¬Ï‚İ‚Ì•Ší(index‡)
 
 	enum {
 		eAnim_Walk_right,
@@ -40,6 +40,7 @@ private:
 	void State_Walk_down();
 	void State_Death();
 	void Run();
+	void ApplyEquipment();     // ’Ç‰Á
 
 public:
 	Player(const CVector2D& pos);
@@ -60,4 +61,6 @@ public:
 	{
 		return 100;
 	}
+	
+	
 };

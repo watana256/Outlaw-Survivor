@@ -6,7 +6,6 @@
 #include <cmath>
 #include <cstdlib>
 
-
 bool EnemySpawner::boss_kill;
 int EnemySpawner::m_phase = 1;
 
@@ -77,6 +76,7 @@ void EnemySpawner::Update() {
             Base::Kill(1 << eType_Enemy);
 
             NextPhase();
+            Game::EndRound();
 
             m_boss_spawned = false;
             boss_kill = false;
@@ -122,6 +122,7 @@ void EnemySpawner::Update() {
         // 2. 規定数出し切り ＆ 画面の敵が全滅 で 次のフェイズへ！
         if (m_spawned_count >= m_max_spawn_count && Base::FindObject(eType_Enemy) == nullptr) {
             NextPhase(); // 関数を呼び出して次のフェイズへ
+            Game::EndRound();
         }
     }
 }

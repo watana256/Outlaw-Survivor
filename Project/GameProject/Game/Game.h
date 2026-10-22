@@ -18,20 +18,23 @@ enum class EGamePhase
 
 class Equipment;
 
-class Game 
+class Game
 	:public Base {
 	static Game* ms_instanse;
 	EGamePhase m_phase;
 	Equipment* mp_equip;
+	int m_round;
 	float m_elapsed_time;
 	float m_resultTimer = 0.0f;
 	void StartPhase();
+
 public:
 	Game();
 	~Game();
 	void Update();
 	static void SetGamePhase(EGamePhase phase);
 	static EGamePhase GetGamePhase();
+	static void EndRound();     // public‚ÉˆÚ“®
 	bool m_isTankDefeated = false;
-
+	static int GetEquippedWeapon(int slot);
 };
