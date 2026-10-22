@@ -25,36 +25,31 @@
 #include"BulletAll/MolotovBullet.h"
 #include"Equipment.h"
 #include"Result.h"
-
 #include "EnemySpawner.h"
 
 Game* Game::ms_instanse = nullptr;
 
 
 
-Game::Game() 
+Game::Game()
 	:Base(eType_Scene)
-	,m_phase(EGamePhase::None)
+	, m_phase(EGamePhase::None)
 	, m_round(1)
 	, m_elapsed_time(0.0f)
 {
 	ms_instanse = this;
 	mp_equip = new Equipment();
 	SetGamePhase(EGamePhase::Start);
-<<<<<<< HEAD
 	new HP();
 	new Money(CVector2D(900, 400), eGold);
 	new Score();
-	new Player(CVector2D(950, 500));//125,165
+	new Player(CVector2D(950, 500));
 	new UI;
 	new Field;
 	new Medical(CVector2D(500, 300), eBin);
 	new EnemySpawner();
-=======
-
->>>>>>> af7ba514e6715645ab87f5d6d8ab1c9ec7c5e8f4
 }
-Game::~Game() 
+Game::~Game()
 {
 	ms_instanse = nullptr;
 }
@@ -71,7 +66,7 @@ void Game::StartPhase()
 	case EGamePhase::RoundPlaying:
 		break;
 	case EGamePhase::RoundOutro:
-		m_elapsed_time = 0.0f;      
+		m_elapsed_time = 0.0f;
 		break;
 	case EGamePhase::GameClear:
 		break;
@@ -91,19 +86,24 @@ int Game::GetEquippedWeapon(int slot)
 	if (ms_instanse == nullptr || ms_instanse->mp_equip == nullptr) return -1;
 	return ms_instanse->mp_equip->GetEquipped(slot);
 }
+int Game::GetWeaponLevel(int index)
+{
+	if (ms_instanse == nullptr || ms_instanse->mp_equip == nullptr) return 1;
+	return ms_instanse->mp_equip->GetLevel(index);
+}
 void Game::Update()
 {
-	switch (m_phase) 
+	switch (m_phase)
 	{
 	case EGamePhase::Equipment:
-		if (!mp_equip->IsShow()) 
+		if (!mp_equip->IsShow())
 		{
 			SetGamePhase(EGamePhase::RoundIntro);
 		}
 
 		break;
 	case EGamePhase::RoundIntro:
-		if (m_elapsed_time >= 3.0f) 
+		if (m_elapsed_time >= 3.0f)
 		{
 			SetGamePhase(EGamePhase::RoundPlaying);
 		}
@@ -122,14 +122,14 @@ void Game::Update()
 		break;
 	case EGamePhase::GameClear:
 		break;
-		
+
 	}
-		// プレイヤーが死亡したらGameOver
-		if (!Base::FindObject(eType_Player))
-		{
-			new Result();
-			return;
-		}
+	// プレイヤーが死亡したらGameOver
+	if (!Base::FindObject(eType_Player))
+	{
+		new Result();
+		return;
+	}
 
 	// ラスボスのタンクが撃破されたらゲームクリア
 	if (m_isTankDefeated)

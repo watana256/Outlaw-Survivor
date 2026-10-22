@@ -31,4 +31,5 @@ public:
     void Update();
     void Draw();
     void Collision(Base* b);
+    static int GetDamageAtLevel(int level);
 };

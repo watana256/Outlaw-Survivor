@@ -1,8 +1,5 @@
 #include "Equipment.h"
-<<<<<<< HEAD
 #include "Game.h"
-Equipment::Equipment() 
-=======
 #include "Score.h"
 #include "Weapon/Ax.h"
 #include "Weapon/Pistol.h"
@@ -14,16 +11,6 @@ Equipment::Equipment()
 #include "Weapon/Stella.h"
 #include "Weapon/Rocket.h"
 
-
-
-// 武器の詳細データ(並びは EquipmentIcon::SetIndex の番号と同じ)
-struct WeaponInfo {
-	const char* name;
-	const char* desc1;
-	const char* desc2;
-	int damage;
-	int price;
-};
 // 番号(EquipmentIcon::SetIndex と同じ並び)から武器のデータを取得
 static const WeaponData& GetWeaponData(int index)
 {
@@ -41,11 +28,27 @@ static const WeaponData& GetWeaponData(int index)
 	}
 }
 
+// 武器番号とレベルから、そのレベルの攻撃力を取得
+static int GetWeaponDamage(int index, int level)
+{
+	switch (index)
+	{
+	case 0: return Ax::GetDamageAtLevel(level);
+	case 1: return Pistol::GetDamageAtLevel(level);
+	case 2: return Shotgun::GetDamageAtLevel(level);
+	case 3: return Molotov::GetDamageAtLevel(level);
+	case 4: return Flamethrower::GetDamageAtLevel(level);
+	case 5: return Landmine::GetDamageAtLevel(level);
+	case 6: return Drone::GetDamageAtLevel(level);
+	case 7: return Stella::GetDamageAtLevel(level);
+	default: return Rocket::GetDamageAtLevel(level);
+	}
+}
+
 Equipment::Equipment()
->>>>>>> af7ba514e6715645ab87f5d6d8ab1c9ec7c5e8f4
 	:Base(eTpe_Equipment)
-	,m_is_show(false)
-	,m_select_index(-1)
+	, m_is_show(false)
+	, m_select_index(-1)
 	, m_show_count(0)
 	, m_free_available(false)
 {
@@ -57,7 +60,7 @@ Equipment::Equipment()
 		icon.SetIndex(i);
 	}
 
-		// 左下のEndボタン
+	// 左下のEndボタン
 	m_end_img = COPY_RESOURCE("End", CImage);
 	m_end_img.SetPos(CVector2D(20.0f, 900.0f));
 
@@ -160,7 +163,7 @@ CVector2D Equipment::CalcIconPos(int index) const
 }
 void Equipment::UpdateSelectIcon()
 {
-	if (PUSH(CInput::eMouseL)) 
+	if (PUSH(CInput::eMouseL))
 	{
 		CVector2D pos = CInput::GetMousePoint();
 		for (int i = 0; i < 9; i++) {
@@ -192,7 +195,7 @@ void Equipment::UpdateGetButton()
 		CVector2D pos = CInput::GetMousePoint();
 		// 表示中のボタン(未購入ならGet、購入済みならUPG)で判定する
 		CImage& btn = m_owned[m_select_index] ? m_upg_img : m_get_img;
-		CRect rect(m_get_img.m_pos - m_get_img.m_center, m_get_img.m_size);
+		CRect rect(btn.m_pos - btn.m_center, btn.m_size);
 		if (CCollision::CollisionRectPoint(rect, pos)) {
 			if (m_owned[m_select_index])
 				UpgradeWeapon(m_select_index);
@@ -237,10 +240,6 @@ bool Equipment::IsOwned(int index) const
 void Equipment::Update()
 {
 	if (!m_is_show)return;
-	/*if (PUSH(CInput::eButton5))
-	{
-		m_is_show = false;
-	}*/
 
 	UpdateEndButton();
 	if (!m_is_show) return;   // Endを押したフレームは以降の処理を飛ばす
@@ -248,7 +247,6 @@ void Equipment::Update()
 	UpdateGetButton();
 	UpdateSelectIcon();
 	UpdateEquip();
-
 }
 void Equipment::Draw()
 {
@@ -261,6 +259,8 @@ void Equipment::Draw()
 		icon.SetPos(pos);
 		icon.Draw();
 	}
+
+	// 選択枠と、右の枠の上部のプレビュー
 	if (m_select_index >= 0)
 	{
 		m_select_img.SetPos(CalcIconPos(m_select_index));
@@ -268,10 +268,8 @@ void Equipment::Draw()
 
 		const CVector2D preview_pos(1235.0f, 345.0f);
 		m_icons[m_select_index].DrawAt(preview_pos);
-	}
 
-	if (m_select_index >= 0)
-	{
+		// Get / UPG ボタン
 		if (m_owned[m_select_index])
 			m_upg_img.Draw();
 		else
@@ -286,16 +284,10 @@ void Equipment::Draw()
 	}
 
 	m_end_img.Draw();
+
+	// アイコンの下に詳細を表示
 	if (m_select_index >= 0)
 	{
-		m_select_img.SetPos(CalcIconPos(m_select_index));
-		m_select_img.Draw();
-
-		// 右の枠の上部に、選択した武器を表示
-		const CVector2D preview_pos(1235.0f, 345.0f);
-		m_icons[m_select_index].DrawAt(preview_pos);
-
-		// アイコンの下に詳細を表示
 		const WeaponData& info = GetWeaponData(m_select_index);
 		float x = 1060.0f;
 		float y = 470.0f;
@@ -304,11 +296,21 @@ void Equipment::Draw()
 		font->Draw(x, y, 1, 1, 0, "%s", info.name);   // 名前(黄色)
 		font->Draw(x, y + line * 1, 1, 1, 1, "%s", info.desc1);
 		font->Draw(x, y + line * 2, 1, 1, 1, "%s", info.desc2);
-		font->Draw(x, y + line * 3, 1, 1, 1, "攻撃力: %d", info.damage);
+
+		// 攻撃力(レベルに応じて変わる。強化できるときは次のレベルも表示)
+		int lv = m_level[m_select_index];
+		int dmg = GetWeaponDamage(m_select_index, lv);
+		if (m_owned[m_select_index] && lv < 5)
+			font->Draw(x, y + line * 3, 1, 1, 1, "攻撃力: %d → %d",
+				dmg, GetWeaponDamage(m_select_index, lv + 1));
+		else
+			font->Draw(x, y + line * 3, 1, 1, 1, "攻撃力: %d", dmg);
+
 		if (IsFreePick(m_select_index))
 			font->Draw(x, y + line * 4, 0, 1, 0, "価格: 無料(1つだけ)");
 		else
 			font->Draw(x, y + line * 4, 1, 1, 1, "価格: %d", info.price);
+
 		// 購入状態の表示
 		if (m_owned[m_select_index])
 		{
@@ -324,6 +326,7 @@ void Equipment::Draw()
 		}
 		else if (!IsFreePick(m_select_index) && Score::GetScore() < info.price)
 			font->Draw(x, y + line * 5, 1, 0, 0, "お金が足りません");
+
 		if (m_owned[m_select_index])
 		{
 			if (FindEquipSlot(m_select_index) >= 0)
@@ -332,5 +335,4 @@ void Equipment::Draw()
 				font->Draw(x, y + line * 6, 1, 1, 1, "右クリックで装備");
 		}
 	}
-	//m_font->Draw(64, 256, 0, 0, 0, "Title");
 }

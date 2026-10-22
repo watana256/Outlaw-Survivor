@@ -39,5 +39,6 @@ public:
     void Update() override;
     void Draw() override;
     void Collision(Base* b) override;
+    static int GetDamageAtLevel(int level);
 };
 

@@ -115,3 +115,16 @@ void Landmine::Draw()
 void Landmine::Collision(Base* b)
 {
 }
+
+int Landmine::GetDamageAtLevel(int level)
+{
+    switch (level)
+    {
+    case 1: return 10;
+    case 2: return 20;
+    case 3: return 30;
+    case 4: return 40;
+    case 5: return 50;
+    }
+    return 10;
+}

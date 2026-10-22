@@ -8,10 +8,7 @@
 #include "Weapon/Rocket.h"
 #include "Weapon/Shotgun.h"
 #include "Weapon/Stella.h"
-<<<<<<< HEAD
 #include "Game.h"
-=======
-#include "Game/Game.h"
 
 static Base* CreateWeapon(int index)
 {
@@ -29,7 +26,6 @@ static Base* CreateWeapon(int index)
 	}
 	return nullptr;
 }
->>>>>>> af7ba514e6715645ab87f5d6d8ab1c9ec7c5e8f4
 
 static void SetWeaponEnable(Base* w, int index, bool enable)
 {
@@ -44,6 +40,22 @@ static void SetWeaponEnable(Base* w, int index, bool enable)
 	case 6: ((Drone*)w)->SetEnable(enable); break;
 	case 7: ((Stella*)w)->SetEnable(enable); break;
 	case 8: ((Rocket*)w)->SetEnable(enable); break;
+	}
+}
+
+static void SetWeaponLevel(Base* w, int index, int level)
+{
+	switch (index)
+	{
+	case 0: ((Ax*)w)->SetLevel(level); break;
+	case 1: ((Pistol*)w)->SetLevel(level); break;
+	case 2: ((Shotgun*)w)->SetLevel(level); break;
+	case 3: ((Molotov*)w)->SetLevel(level); break;
+	case 4: ((Flamethrower*)w)->SetLevel(level); break;
+	case 5: ((Landmine*)w)->SetLevel(level); break;
+	case 6: ((Drone*)w)->SetLevel(level); break;
+	case 7: ((Stella*)w)->SetLevel(level); break;
+	case 8: ((Rocket*)w)->SetLevel(level); break;
 	}
 }
 
@@ -144,54 +156,19 @@ Player::Player(const CVector2D& pos)
 	m_hp = 100;
 	m_muteki_cnt = 0.0f;
 
-	//Pistol* pistol = new Pistol();
-	//pistol->SetEnable(true);
-
-	/*Rocket* rocket = new Rocket();
-	rocket->SetEnable(true);
-
-	Shotgun* shotgun = new Shotgun();
-	shotgun->SetEnable(true);
-
-	Flamethrower* flamethrower = new Flamethrower();
-	flamethrower->SetEnable(true);
-
-	Ax* ax = new Ax();
-	ax->SetEnable(true);
-
-	Molotov* molotov = new Molotov();
-	molotov->SetEnable(true);
-	Landmine* landmine = new Landmine();
-	landmine->SetEnable(true);
-
-	Stella* stella = new Stella();
-	stella->SetEnable(true);
-
-	Drone* drone = new Drone();
-	drone->SetEnable(true);
-
-	*/
 	for (int i = 0; i < 9; i++) m_weapons[i] = nullptr;
 }
 
-	void Player::ClampPosition() {
-		const float margin_x = 30.0f;
-		const float margin_y = 140.0f;
+void Player::ClampPosition() {
+	const float margin_x = 30.0f;
+	const float margin_y = 140.0f;
 
-		if (m_pos.x < margin_x) m_pos.x = margin_x;
-		if (m_pos.x > SCREEN_WIDTH - margin_x) m_pos.x = SCREEN_WIDTH - margin_x;
+	if (m_pos.x < margin_x) m_pos.x = margin_x;
+	if (m_pos.x > SCREEN_WIDTH - margin_x) m_pos.x = SCREEN_WIDTH - margin_x;
 
-		if (m_pos.y < margin_y) m_pos.y = margin_y;
-		if (m_pos.y > SCREEN_HEIGHT - margin_y) m_pos.y = SCREEN_HEIGHT - margin_y;
-	}
-
-
-
-
-
-
-
-
+	if (m_pos.y < margin_y) m_pos.y = margin_y;
+	if (m_pos.y > SCREEN_HEIGHT - margin_y) m_pos.y = SCREEN_HEIGHT - margin_y;
+}
 
 Player::~Player() {
 	ms_instance = nullptr;
@@ -208,7 +185,6 @@ void Player::Update()
 	s_playing_prev = playing;
 	if (!playing) return;
 
-	if (Game::GetGamePhase() != EGamePhase::RoundPlaying)return;
 	// ★追加：無敵時間が残っていればタイマーを減らす処理
 	if (m_muteki_cnt > 0.0f) {
 		m_muteki_cnt -= CFPS::GetDeltaTime();
@@ -244,7 +220,7 @@ void Player::TakeDamage(int damage)
 	if (m_muteki_cnt > 0) return;
 	//HP減少。下限0
 	m_hp = max(m_hp - damage, 0);
-	
+
 	m_muteki_cnt = MUTEKI;
 	if (m_hp <= 0) {
 		SetKill();
@@ -268,6 +244,7 @@ void Player::ApplyEquipment()
 		int w = Game::GetEquippedWeapon(s);
 		if (w < 0) continue;
 		if (!m_weapons[w]) m_weapons[w] = CreateWeapon(w);
+		SetWeaponLevel(m_weapons[w], w, Game::GetWeaponLevel(w));
 		SetWeaponEnable(m_weapons[w], w, true);
 	}
 }
@@ -275,8 +252,6 @@ void Player::Run()
 {
 	int Animu = eAnim_Walk_down;
 	const int move_Speed = SPEED;
-
-	
 
 	if (HOLD(CInput::eUp))
 	{
@@ -307,43 +282,18 @@ void Player::Run()
 }
 void Player::State_Walk_up()
 {
-	/*m_img.ChangeAnimation(eAnim_Walk_up, false);
-	if (m_img.CheckAnimationEnd()) {
-		m_img.ChangeAnimation(eAnim_Walk_up, false);
-		m_state = eState_Walk_down;
-	}*/
 }
 void Player::State_Walk_down()
 {
-	/*m_img.ChangeAnimation(eAnim_Walk_down, false);
-	if (m_img.CheckAnimationEnd()) {
-		m_img.ChangeAnimation(eAnim_Walk_down, false);
-		m_state = eState_Walk_down;
-	}*/
 }
 void Player::State_Walk_left()
 {
-	/*m_img.ChangeAnimation(eAnim_Walk_left, false);
-	if (m_img.CheckAnimationEnd()) {
-		m_img.ChangeAnimation(eAnim_Walk_left, false);
-		m_state = eState_Walk_down;
-	}*/
 }
 void Player::State_Walk_right()
 {
-	/*m_img.ChangeAnimation(eAnim_Walk_right, false);
-	if (m_img.CheckAnimationEnd()) {
-		m_img.ChangeAnimation(eAnim_Walk_right, false);
-		m_state = eState_Walk_down;
-	}*/
 }
 void Player::State_Death()
 {
-	/*m_img.ChangeAnimation(eAnim_Death, false);
-	if (m_img.CheckAnimationEnd()) {
-		m_img.ChangeAnimation(eAnim_Death, false);
-		m_state = eState_Walk_down;
-	}*/
 }
 void Player::Draw()
 {

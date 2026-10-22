@@ -35,6 +35,7 @@ public:
 	static void SetGamePhase(EGamePhase phase);
 	static EGamePhase GetGamePhase();
 	static void EndRound();     // public‚ÉˆÚ“®
-	bool m_isTankDefeated = false;
 	static int GetEquippedWeapon(int slot);
+	static int GetWeaponLevel(int index);
+	bool m_isTankDefeated = false;
 };
