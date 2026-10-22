@@ -12,7 +12,7 @@ class Equipment : public Base {
 
 	int GetUpgradeCost(int index) const;//Ÿ‚ÌƒŒƒxƒ‹‚Ö‚Ì”ï—p
 	int FindEquipSlot(int index) const;
-	void UpdateEquip();          
+	void UpdateEquip();
 	CVector2D CalcSlotPos(int slot) const;
 
 	EquipmentIcon m_icons[9];
@@ -20,6 +20,7 @@ class Equipment : public Base {
 	CImage m_end_img;
 	CImage m_get_img;
 	CImage m_upg_img;
+	CImage m_ki_img;
 	int m_show_count;          //  Show‚ªŒÄ‚Î‚ê‚½‰ñ”
 	bool m_free_available;     //  –³—¿˜g‚ªc‚Á‚Ä‚¢‚é‚©
 	bool IsFreePick(int index) const;
@@ -30,6 +31,7 @@ class Equipment : public Base {
 	void UpdateGetButton();
 	void BuyWeapon(int index);
 	void UpgradeWeapon(int index);
+	bool CanAct(int index) const;
 	bool m_owned[9];
 
 public:

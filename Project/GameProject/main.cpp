@@ -170,7 +170,7 @@ void Init(void)
 	ADD_RESOURCE("End", CImage::CreateImage("Image/End.png"));
 	ADD_RESOURCE("UPG", CImage::CreateImage("Image/UPG.png"));
 	ADD_RESOURCE("Get", CImage::CreateImage("Image/Get.png"));
-
+	ADD_RESOURCE("Ki", CImage::CreateImage("Image/ki.png"));
 
 
 

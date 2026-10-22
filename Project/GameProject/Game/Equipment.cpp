@@ -80,6 +80,12 @@ Equipment::Equipment()
 	m_upg_img.SetCenter(m_upg_img.GetSize() * 0.5f);
 	m_upg_img.SetPos(CVector2D(1235.0f, 800.0f));
 
+	// 「Ki」(買えない・強化できないときにボタンの真ん中へ表示)
+	m_ki_img = COPY_RESOURCE("Ki", CImage);
+	m_ki_img.SetSize(100.0f, 100.0f);
+	m_ki_img.SetCenter(m_ki_img.GetSize() * 0.5f);
+	m_ki_img.SetPos(CVector2D(1235.0f, 800.0f));
+
 	for (int i = 0; i < 9; i++) m_owned[i] = false;
 	for (int i = 0; i < 3; i++) m_equipped[i] = -1;
 	for (int i = 0; i < 9; i++) m_level[i] = 1;
@@ -216,6 +222,18 @@ void Equipment::UpgradeWeapon(int index)
 	m_level[index]++;
 }
 
+// 選択中の武器を、いま購入または強化できるか
+bool Equipment::CanAct(int index) const
+{
+	if (m_owned[index])
+	{
+		if (m_level[index] >= 5) return false;             // 最大レベル
+		return Score::GetScore() >= GetUpgradeCost(index);
+	}
+	if (IsFreePick(index)) return true;                    // 無料枠
+	return Score::GetScore() >= GetWeaponData(index).price;
+}
+
 void Equipment::BuyWeapon(int index)
 {
 	if (m_owned[index]) return;                  // 購入済みは買えない
@@ -265,27 +283,25 @@ void Equipment::Draw()
 	if (!m_is_show)return;
 	m_img.Draw();
 
+	// ① 武器アイコン一覧
 	CFont* font_e = FONT_T();
 	for (int i = 0; i < 9; i++) {
 		EquipmentIcon& icon = m_icons[i];
 		CVector2D pos = CalcIconPos(i);
 		icon.SetPos(pos);
+
+		// 買えない・強化できないときは暗くする(Kiは出さない)
+		bool can = CanAct(i);
+		if (!can) icon.SetColor(0.4f, 0.4f, 0.4f, 1.0f);
 		icon.Draw();
+		icon.SetColor(1.0f, 1.0f, 1.0f, 1.0f);              // 元の色に戻す
 
-		CFont* font_e = FONT_T();
-		for (int i = 0; i < 9; i++) {
-			EquipmentIcon& icon = m_icons[i];
-			CVector2D pos = CalcIconPos(i);
-			icon.SetPos(pos);
-			icon.Draw();
-
-			// 装備中の武器は、マスの右下の隅に緑の「E」を表示
-			if (FindEquipSlot(i) >= 0)
-				font_e->Draw(pos.x + 70.0f, pos.y + 55.0f, 0, 1, 0, "E");
-		}
+		// 装備中の武器は、マスの右下の隅に緑の「E」を表示
+		if (FindEquipSlot(i) >= 0)
+			font_e->Draw(pos.x + 70.0f, pos.y + 55.0f, 0, 1, 0, "E");
 	}
 
-	// 選択枠と、右の枠の上部のプレビュー
+	// ② 選択枠と、右の枠の上部のプレビュー
 	if (m_select_index >= 0)
 	{
 		m_select_img.SetPos(CalcIconPos(m_select_index));
@@ -294,14 +310,20 @@ void Equipment::Draw()
 		const CVector2D preview_pos(1235.0f, 345.0f);
 		m_icons[m_select_index].DrawAt(preview_pos);
 
-		// Get / UPG ボタン
-		if (m_owned[m_select_index])
-			m_upg_img.Draw();
-		else
-			m_get_img.Draw();
+		// ③ Get / UPG ボタン(できないときは暗くして「Ki」を重ねる)
+		CImage& btn = m_owned[m_select_index] ? m_upg_img : m_get_img;
+		bool ok = CanAct(m_select_index);
+		if (!ok) btn.SetColor(0.4f, 0.4f, 0.4f, 1.0f);
+		btn.Draw();
+		btn.SetColor(1.0f, 1.0f, 1.0f, 1.0f);
+		if (!ok)
+		{
+			m_ki_img.SetPos(CVector2D(1235.0f, 800.0f));
+			m_ki_img.Draw();
+		}
 	}
 
-	// 右下の装備枠3つ
+	// ④ 右下の装備枠3つ
 	for (int i = 0; i < 3; i++)
 	{
 		if (m_equipped[i] >= 0)
@@ -314,7 +336,7 @@ void Equipment::Draw()
 
 	m_end_img.Draw();
 
-	// アイコンの下に詳細を表示
+	// ⑤ アイコンの下に詳細を表示
 	if (m_select_index >= 0)
 	{
 		const WeaponData& info = GetWeaponData(m_select_index);
@@ -348,8 +370,8 @@ void Equipment::Draw()
 			else
 			{
 				int cost = GetUpgradeCost(m_select_index);
-				bool ok = Score::GetScore() >= cost;
-				font->Draw(x, y + line * 5, ok ? 0.0f : 1.0f, ok ? 1.0f : 0.0f, 0,
+				bool afford = Score::GetScore() >= cost;
+				font->Draw(x, y + line * 5, afford ? 0.0f : 1.0f, afford ? 1.0f : 0.0f, 0,
 					"Lv.%d  強化費用: %d", m_level[m_select_index], cost);
 			}
 		}

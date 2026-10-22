@@ -79,3 +79,7 @@ void EquipmentIcon::DrawFit(const CVector2D& pos, float max_w, float max_h)
 	m_img.SetCenter(old_center);
 	m_img.SetPos(old_pos);
 }
+void EquipmentIcon::SetColor(float r, float g, float b, float a)
+{
+	m_img.SetColor(r, g, b, a);
+}

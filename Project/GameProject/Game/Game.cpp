@@ -98,7 +98,7 @@ void Game::Update()
 	case EGamePhase::Equipment:
 		if (!mp_equip->IsShow())
 		{
-			SetGamePhase(EGamePhase::RoundIntro);
+			SetGamePhase(EGamePhase::RoundPlaying);   // ‚·‚®ƒ‰ƒEƒ“ƒhŠJŽn
 		}
 
 		break;
@@ -112,9 +112,9 @@ void Game::Update()
 	case EGamePhase::RoundPlaying:
 		break;
 	case EGamePhase::RoundOutro:
-		// 2•b‘Ò‚Á‚Ä‚©‚ç‘•”õ‰æ–Ê‚Ö
+		// 3•b‘Ò‚Á‚Ä‚©‚ç‘•”õ‰æ–Ê‚Ö
 		m_elapsed_time += CFPS::GetDeltaTime();
-		if (m_elapsed_time >= 2.0f)
+		if (m_elapsed_time >= 3.0f)
 		{
 			m_round++;
 			SetGamePhase(EGamePhase::Equipment);

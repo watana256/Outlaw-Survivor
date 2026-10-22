@@ -180,11 +180,13 @@ Player* Player::Instance() {
 void Player::Update()
 {
 	static bool s_playing_prev = false;
-	bool playing = (Game::GetGamePhase() == EGamePhase::RoundPlaying
-		|| Game::GetGamePhase() == EGamePhase::RoundOutro);
-	if (playing && !s_playing_prev) ApplyEquipment();   // 入った瞬間だけ
+	EGamePhase phase = Game::GetGamePhase();
+	bool playing = (phase == EGamePhase::RoundPlaying);
+	if (playing && !s_playing_prev) ApplyEquipment();   // RoundPlayingに入った瞬間だけ
 	s_playing_prev = playing;
-	if (!playing) return;
+
+	// ラウンド中と、ラウンド終了後の3秒間は動ける
+	if (!playing && phase != EGamePhase::RoundOutro) return;
 
 	// ★追加：無敵時間が残っていればタイマーを減らす処理
 	if (m_muteki_cnt > 0.0f) {
