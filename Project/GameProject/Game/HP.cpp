@@ -1,6 +1,7 @@
 #include "HP.h"
 #include "Player.h"
 #include "Medical.h"
+#include "Game.h"
 HP::HP() :Base(eType_Hp)
 {
 	char* nem[10] = {

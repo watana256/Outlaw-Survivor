@@ -25,6 +25,7 @@
 #include"BulletAll/MolotovBullet.h"
 #include"Equipment.h"
 #include"Result.h"
+
 #include "EnemySpawner.h"
 
 Game* Game::ms_instanse = nullptr;
@@ -40,7 +41,18 @@ Game::Game()
 	ms_instanse = this;
 	mp_equip = new Equipment();
 	SetGamePhase(EGamePhase::Start);
+<<<<<<< HEAD
+	new HP();
+	new Money(CVector2D(900, 400), eGold);
+	new Score();
+	new Player(CVector2D(950, 500));//125,165
+	new UI;
+	new Field;
+	new Medical(CVector2D(500, 300), eBin);
+	new EnemySpawner();
+=======
 
+>>>>>>> af7ba514e6715645ab87f5d6d8ab1c9ec7c5e8f4
 }
 Game::~Game() 
 {

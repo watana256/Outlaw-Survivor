@@ -1,4 +1,8 @@
 #include "Equipment.h"
+<<<<<<< HEAD
+#include "Game.h"
+Equipment::Equipment() 
+=======
 #include "Score.h"
 #include "Weapon/Ax.h"
 #include "Weapon/Pistol.h"
@@ -38,6 +42,7 @@ static const WeaponData& GetWeaponData(int index)
 }
 
 Equipment::Equipment()
+>>>>>>> af7ba514e6715645ab87f5d6d8ab1c9ec7c5e8f4
 	:Base(eTpe_Equipment)
 	,m_is_show(false)
 	,m_select_index(-1)
