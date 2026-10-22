@@ -1,6 +1,5 @@
 #include "Money.h"
 #include "Score.h"
-#include "Game.h"
 static TexAnim _eMoney_Gold[] =
 {
 	{1,1}

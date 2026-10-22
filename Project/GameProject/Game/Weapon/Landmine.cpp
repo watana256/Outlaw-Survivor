@@ -14,14 +14,6 @@ Landmine::Landmine()
 {
 }
 
-const WeaponData& Landmine::GetData()
-{
-    static const WeaponData data = {
-         "’n—‹",         "İ’u‚µ‚Ä“G‚ğ‘Ò‚¿•š‚¹",   "“¥‚Ş‚Æ”š”­‚·‚é",       50,  700
-    };
-    return data;
-}
-
 void Landmine::SetEnable(bool enable)
 {
     m_is_enable = enable;

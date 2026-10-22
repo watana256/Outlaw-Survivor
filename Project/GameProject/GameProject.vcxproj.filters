@@ -88,9 +88,6 @@
     <ClInclude Include="Game\EquipmentIcon.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Weapon\WeaponData.h">
-      <Filter>Weapon</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

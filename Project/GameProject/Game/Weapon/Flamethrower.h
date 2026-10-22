@@ -1,7 +1,6 @@
 
 #pragma once
 #include "Base/Base.h"
-#include "WeaponData.h"
 
 class Flamethrower : public Base {
 private:
@@ -21,7 +20,6 @@ private:
 
 public:
     Flamethrower();
-    static const WeaponData& GetData();
 
     void SetEnable(bool enable);
 

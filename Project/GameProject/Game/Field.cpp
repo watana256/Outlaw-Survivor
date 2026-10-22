@@ -1,6 +1,5 @@
 #include"Field.h"
 #include"../Base/Base.h"
-#include "Game.h"
 Field::Field() :Base(eType_Field)
 {
 	m_img = COPY_RESOURCE("Field", CImage);

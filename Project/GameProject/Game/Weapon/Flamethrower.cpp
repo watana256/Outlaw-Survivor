@@ -12,15 +12,6 @@ Flamethrower::Flamethrower()
 {
 }
 
-const WeaponData& Flamethrower::GetData()
-{
-    static const WeaponData data = {
-        "‰Î‰Š•úŽËŠí","‘O•û‚É‰Š‚ð•úŽË‚·‚é","“G‚ðŠÑ’Ê‚·‚é",  20, 1200 
-    };
-    return data;
-}
-
-
 void Flamethrower::SetEnable(bool enable)
 {
     m_is_enable = enable;

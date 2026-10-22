@@ -2,7 +2,6 @@
 
 #pragma once
 #include "Base/Base.h"
-#include "WeaponData.h"
 
 class StellaBullet;
 
@@ -26,7 +25,6 @@ private:
 
 public:
     Stella();
-    static const WeaponData& GetData();
 
     void SetEnable(bool enable);
 

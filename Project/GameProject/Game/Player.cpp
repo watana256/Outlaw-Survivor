@@ -8,9 +8,6 @@
 #include "Weapon/Rocket.h"
 #include "Weapon/Shotgun.h"
 #include "Weapon/Stella.h"
-<<<<<<< HEAD
-#include "Game.h"
-=======
 #include "Game/Game.h"
 
 static Base* CreateWeapon(int index)
@@ -29,7 +26,6 @@ static Base* CreateWeapon(int index)
 	}
 	return nullptr;
 }
->>>>>>> af7ba514e6715645ab87f5d6d8ab1c9ec7c5e8f4
 
 static void SetWeaponEnable(Base* w, int index, bool enable)
 {
@@ -46,6 +42,7 @@ static void SetWeaponEnable(Base* w, int index, bool enable)
 	case 8: ((Rocket*)w)->SetEnable(enable); break;
 	}
 }
+
 
 
 

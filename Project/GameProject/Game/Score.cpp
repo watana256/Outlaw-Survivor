@@ -1,5 +1,5 @@
 #include "Score.h"
-#include "Game.h"
+
 int Score::s_score = 0;
 
 Score::Score() :Base(eType_Score)

@@ -1,7 +1,6 @@
 
 #pragma once
 #include "Base/Base.h"
-#include"WeaponData.h"
 
 class Landmine : public Base {
 private:
@@ -18,7 +17,6 @@ private:
 
 public:
     Landmine();
-    static const WeaponData& GetData();
 
     void SetEnable(bool enable);
 

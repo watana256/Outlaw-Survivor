@@ -21,7 +21,7 @@ void Title::Update()
 		//全てのオブジェクトを破棄
 	SetKill();
 		//ゲームシーンへ
-		//new Game();//後で追加
+		new Game();//後で追加
 	}
 }
 void Title::Draw()

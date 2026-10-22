@@ -1,19 +1,6 @@
 #include "Equipment.h"
-<<<<<<< HEAD
 #include "Game.h"
-Equipment::Equipment() 
-=======
 #include "Score.h"
-#include "Weapon/Ax.h"
-#include "Weapon/Pistol.h"
-#include "Weapon/Shotgun.h"
-#include "Weapon/Molotov.h"
-#include "Weapon/Flamethrower.h"
-#include "Weapon/Landmine.h"
-#include "Weapon/Drone.h"
-#include "Weapon/Stella.h"
-#include "Weapon/Rocket.h"
-
 
 
 // 武器の詳細データ(並びは EquipmentIcon::SetIndex の番号と同じ)
@@ -24,25 +11,19 @@ struct WeaponInfo {
 	int damage;
 	int price;
 };
-// 番号(EquipmentIcon::SetIndex と同じ並び)から武器のデータを取得
-static const WeaponData& GetWeaponData(int index)
-{
-	switch (index)
-	{
-	case 0: return Ax::GetData();
-	case 1: return Pistol::GetData();
-	case 2: return Shotgun::GetData();
-	case 3: return Molotov::GetData();
-	case 4: return Flamethrower::GetData();
-	case 5: return Landmine::GetData();
-	case 6: return Drone::GetData();
-	case 7: return Stella::GetData();
-	default: return Rocket::GetData();
-	}
-}
+static const WeaponInfo WEAPON_INFO[9] = {
+	{ "斧",           "斧は投げる物",       "",       30,  100 },
+	{ "ピストル",     "扱いやすい基本の銃",     "連射速度は普通",       10,  100 },
+	{ "ショットガン", "近距離で高威力",         "散弾で複数に当たる",   25,  100 },
+	{ "火炎瓶",       "着弾地点を燃やす",       "継続ダメージを与える", 15,  600 },
+	{ "火炎放射器",   "前方に炎を放射する",     "敵を貫通する",         20, 1000 },
+	{ "地雷",         "設置して敵を待ち伏せ",   "踏むと爆発する",       50,  700 },
+	{ "ドローン",     "自動で敵を攻撃する",     "プレイヤーに追従する", 12, 1200 },
+	{ "ステラ",       "特殊な弾を発射する",     "高い性能を持つ",       40, 1500 },
+	{ "ロケット",     "爆発する弾を発射",       "範囲ダメージが大きい", 60, 2000 },
+};
 
 Equipment::Equipment()
->>>>>>> af7ba514e6715645ab87f5d6d8ab1c9ec7c5e8f4
 	:Base(eTpe_Equipment)
 	,m_is_show(false)
 	,m_select_index(-1)
@@ -79,7 +60,6 @@ Equipment::Equipment()
 
 	for (int i = 0; i < 9; i++) m_owned[i] = false;
 	for (int i = 0; i < 3; i++) m_equipped[i] = -1;
-	for (int i = 0; i < 9; i++) m_level[i] = 1;
 }
 bool Equipment::IsShow() const
 {
@@ -91,19 +71,6 @@ void Equipment::Show()
 	m_select_index = -1;
 	m_free_available = (m_show_count == 0);   // 最初のShowだけ無料枠あり
 	m_show_count++;
-}
-
-// 次のレベルに上げる費用(レベルが上がるほど高くなる)
-// Lv1→2: 価格の50%, Lv2→3: 100%, Lv3→4: 150%, Lv4→5: 200%
-int Equipment::GetUpgradeCost(int index) const
-{
-	int base = GetWeaponData(index).price;
-	return base / 2 * m_level[index];
-}
-
-int Equipment::GetLevel(int index) const
-{
-	return m_level[index];
 }
 
 // 武器indexが何番の枠に入っているか(なければ-1)
@@ -203,14 +170,7 @@ void Equipment::UpdateGetButton()
 }
 void Equipment::UpgradeWeapon(int index)
 {
-	if (!m_owned[index]) return;
-	if (m_level[index] >= 5) return;               // 最大レベル
-
-	int cost = GetUpgradeCost(index);
-	if (Score::GetScore() < cost) return;          // スコア不足
-
-	Score::AddScore(-cost);
-	m_level[index]++;
+	// TODO: ここに強化処理を書く
 }
 
 void Equipment::BuyWeapon(int index)
@@ -223,7 +183,7 @@ void Equipment::BuyWeapon(int index)
 		m_free_available = false;
 		return;
 	}
-	int price = GetWeaponData(index).price;
+	int price = WEAPON_INFO[index].price;
 	if (Score::GetScore() < price) return;       // スコア不足
 
 	Score::AddScore(-price);                     // スコアを減らす
@@ -296,7 +256,7 @@ void Equipment::Draw()
 		m_icons[m_select_index].DrawAt(preview_pos);
 
 		// アイコンの下に詳細を表示
-		const WeaponData& info = GetWeaponData(m_select_index);
+		const WeaponInfo& info = WEAPON_INFO[m_select_index];
 		float x = 1060.0f;
 		float y = 470.0f;
 		const float line = 36.0f;
@@ -311,17 +271,7 @@ void Equipment::Draw()
 			font->Draw(x, y + line * 4, 1, 1, 1, "価格: %d", info.price);
 		// 購入状態の表示
 		if (m_owned[m_select_index])
-		{
-			if (m_level[m_select_index] >= 5)
-				font->Draw(x, y + line * 5, 1, 1, 0, "Lv.5 (最大)");
-			else
-			{
-				int cost = GetUpgradeCost(m_select_index);
-				bool ok = Score::GetScore() >= cost;
-				font->Draw(x, y + line * 5, ok ? 0.0f : 1.0f, ok ? 1.0f : 0.0f, 0,
-					"Lv.%d  強化費用: %d", m_level[m_select_index], cost);
-			}
-		}
+			font->Draw(x, y + line * 5, 0, 1, 0, "購入済み");
 		else if (!IsFreePick(m_select_index) && Score::GetScore() < info.price)
 			font->Draw(x, y + line * 5, 1, 0, 0, "お金が足りません");
 		if (m_owned[m_select_index])

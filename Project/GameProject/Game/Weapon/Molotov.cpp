@@ -7,19 +7,11 @@
 #define SPREAD_ANGLE 180.0f
 
 Molotov::Molotov()
-    : Base(eType_Molotov)
+    : Base(eType_Shotgun)
     , m_attak_cnt(0.0f)
     , m_is_enable(false)
     , m_level(1)
 {
-}
-
-const WeaponData& Molotov::GetData()
-{
-    static const WeaponData data = {
-       "‰Î‰Š•r","’…’e’n“_‚ğ”R‚â‚·","Œp‘±ƒ_ƒ[ƒW‚ğ—^‚¦‚é", 15,  600
-    };
-    return data;
 }
 
 void Molotov::SetEnable(bool enable)
