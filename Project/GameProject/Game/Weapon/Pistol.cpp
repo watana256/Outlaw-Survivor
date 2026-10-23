@@ -8,11 +8,11 @@
 // ---------------------------------------------------------
 // レベルごとの性能表(Lv1〜Lv10)。値を変えたいときはここだけ直す
 // ---------------------------------------------------------
-static const int   PISTOL_DAMAGE[MAX_WEAPON_LEVEL] = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
-static const float PISTOL_DIST[MAX_WEAPON_LEVEL] = { 500, 600, 700, 800, 1000, 1100, 1200, 1300, 1400, 1500 };
-static const float PISTOL_SPEED[MAX_WEAPON_LEVEL] = { 7, 8, 9, 10, 12, 13, 14, 15, 16, 17 };
+static const int   PISTOL_DAMAGE[MAX_WEAPON_LEVEL] = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };//攻撃力
+static const float PISTOL_DIST[MAX_WEAPON_LEVEL] = { 500, 600, 700, 800, 1000, 1100, 1200, 1300, 1400, 1500 };//飛距離
+static const float PISTOL_SPEED[MAX_WEAPON_LEVEL] = { 7, 8, 9, 10, 12, 13, 14, 15, 16, 17 };//弾速
 static const float PISTOL_INTERVAL[MAX_WEAPON_LEVEL] = { 0.50f, 0.45f, 0.40f, 0.35f, 0.30f,
-                                                         0.27f, 0.24f, 0.21f, 0.18f, 0.15f };
+                                                         0.27f, 0.24f, 0.21f, 0.18f, 0.15f };//発射間隔
 
 Pistol::Pistol()
     : Base(eType_Pistil)

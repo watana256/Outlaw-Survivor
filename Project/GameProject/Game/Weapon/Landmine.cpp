@@ -8,9 +8,9 @@
 // ---------------------------------------------------------
 // レベルごとの性能表(Lv1〜Lv10)。値を変えたいときはここだけ直す
 // ---------------------------------------------------------
-static const int   MINE_DAMAGE[MAX_WEAPON_LEVEL] = { 20, 30, 40, 50, 60, 70, 80, 90, 100, 110 };
+static const int   MINE_DAMAGE[MAX_WEAPON_LEVEL] = { 50, 80, 90, 100, 110, 120, 140, 160, 180, 200 };//攻撃力
 static const float MINE_INTERVAL[MAX_WEAPON_LEVEL] = { 3.0f, 2.5f, 2.0f, 1.5f, 1.0f,
-                                                       0.9f, 0.8f, 0.7f, 0.6f, 0.5f };
+                                                       0.9f, 0.8f, 0.7f, 0.6f, 0.5f };//設置間隔
 
 Landmine::Landmine()
     : Base(eType_Landmine)

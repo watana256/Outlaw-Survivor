@@ -6,12 +6,12 @@
 // ---------------------------------------------------------
 // レベルごとの性能表(Lv1?Lv10)。値を変えたいときはここだけ直す
 // ---------------------------------------------------------
-static const int   FLAME_DAMAGE[MAX_WEAPON_LEVEL] = { 5, 10, 15, 20, 25, 30, 35, 40, 45, 50 };
-static const float FLAME_DIST[MAX_WEAPON_LEVEL] = { 100, 125, 150, 175, 200, 225, 250, 275, 300, 325 };
-static const float FLAME_SPEED[MAX_WEAPON_LEVEL] = { 7, 8, 9, 10, 12, 13, 14, 15, 16, 17 };
-static const float FLAME_RANGE[MAX_WEAPON_LEVEL] = { 30, 35, 40, 45, 50, 55, 60, 65, 70, 75 };
+static const int   FLAME_DAMAGE[MAX_WEAPON_LEVEL] = { 20,30, 35, 40, 50, 70, 90, 110, 130, 150 };//攻撃力
+static const float FLAME_DIST[MAX_WEAPON_LEVEL] = { 100, 125, 150, 175, 200, 225, 250, 275, 300, 325 };//飛行距離
+static const float FLAME_SPEED[MAX_WEAPON_LEVEL] = { 7, 8, 9, 10, 12, 13, 14, 15, 16, 17 };//弾速
+static const float FLAME_RANGE[MAX_WEAPON_LEVEL] = { 30, 35, 40, 45, 50, 55, 60, 65, 70, 75 };//攻撃範囲
 static const float FLAME_INTERVAL[MAX_WEAPON_LEVEL] = { 0.50f, 0.45f, 0.40f, 0.35f, 0.30f,
-                                                        0.27f, 0.24f, 0.21f, 0.18f, 0.15f };
+                                                        0.27f, 0.24f, 0.21f, 0.18f, 0.15f };//発射間隔
 
 Flamethrower::Flamethrower()
     : Base(eType_Flamethrower)

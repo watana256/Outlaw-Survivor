@@ -8,11 +8,11 @@
 // ---------------------------------------------------------
 // レベルごとの性能表(Lv1〜Lv10)。値を変えたいときはここだけ直す
 // ---------------------------------------------------------
-static const int   MOLOTOV_DAMAGE[MAX_WEAPON_LEVEL] = { 5, 10, 15, 20, 25, 30, 35, 40, 45, 50 };
-static const float MOLOTOV_DIST[MAX_WEAPON_LEVEL] = { 200, 250, 300, 350, 400, 450, 500, 550, 600, 650 };
-static const int   MOLOTOV_COUNT[MAX_WEAPON_LEVEL] = { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+static const int   MOLOTOV_DAMAGE[MAX_WEAPON_LEVEL] = { 5, 10, 15, 20, 25, 30, 35, 40, 45, 50 };//攻撃力
+static const float MOLOTOV_DIST[MAX_WEAPON_LEVEL] = { 200, 250, 300, 350, 400, 450, 500, 550, 600, 650 };//飛距離
+static const int   MOLOTOV_COUNT[MAX_WEAPON_LEVEL] = { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };//本数
 static const float MOLOTOV_FLAME[MAX_WEAPON_LEVEL] = { 3.0f, 3.5f, 4.0f, 4.5f, 5.0f,
-                                                          5.5f, 6.0f, 6.5f, 7.0f, 7.5f };
+                                                          5.5f, 6.0f, 6.5f, 7.0f, 7.5f };//持続時間
 
 Molotov::Molotov()
     : Base(eType_Molotov)

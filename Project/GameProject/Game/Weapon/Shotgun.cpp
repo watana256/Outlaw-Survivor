@@ -8,12 +8,12 @@
 // ---------------------------------------------------------
 // レベルごとの性能表(Lv1〜Lv10)。値を変えたいときはここだけ直す
 // ---------------------------------------------------------
-static const int   SHOTGUN_DAMAGE[MAX_WEAPON_LEVEL] = { 10, 15, 20, 25, 30, 35, 40, 45, 50, 55 };
-static const float SHOTGUN_DIST[MAX_WEAPON_LEVEL] = { 200, 250, 300, 350, 400, 450, 500, 550, 600, 650 };
-static const float SHOTGUN_SPEED[MAX_WEAPON_LEVEL] = { 7, 8, 9, 10, 12, 13, 14, 15, 16, 17 };
-static const int   SHOTGUN_COUNT[MAX_WEAPON_LEVEL] = { 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 };
+static const int   SHOTGUN_DAMAGE[MAX_WEAPON_LEVEL] = { 10, 20, 30, 45, 50, 65, 70, 85, 90, 105 };//攻撃力
+static const float SHOTGUN_DIST[MAX_WEAPON_LEVEL] = { 200, 250, 300, 350, 400, 450, 500, 550, 600, 650 };//飛距離
+static const float SHOTGUN_SPEED[MAX_WEAPON_LEVEL] = { 7, 8, 9, 10, 12, 13, 14, 15, 16, 17 };//弾速
+static const int   SHOTGUN_COUNT[MAX_WEAPON_LEVEL] = { 5, 7, 9, 11, 13, 15, 17, 19, 21, 23 };//弾数
 static const float SHOTGUN_INTERVAL[MAX_WEAPON_LEVEL] = { 0.50f, 0.45f, 0.40f, 0.35f, 0.30f,
-                                                          0.27f, 0.24f, 0.21f, 0.18f, 0.15f };
+                                                          0.27f, 0.24f, 0.21f, 0.18f, 0.15f };//発射間隔
 
 Shotgun::Shotgun()
     : Base(eType_Shotgun)
@@ -26,7 +26,7 @@ Shotgun::Shotgun()
 const WeaponData& Shotgun::GetData()
 {
     static const WeaponData data = {
-        "ショットガン", "近距離で高威力",         "散弾で複数に当たる",   25,  100
+        "ショットガン", "近距離で高威力",         "散弾で複数に当たる",   10,  100
     };
     return data;
 }
