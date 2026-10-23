@@ -46,8 +46,8 @@ static const EnemyParam g_enemy_params[] = {
     {  30,   2.0f,    {28, 48}, "Enemy"},       // 0: ゾンビ 
     {  60,   1.5f,    {28, 48},  "Robot"},       // 1: ロボット
     {  15,   5.5f,    {48, 24},  "Dog"},         // 2: ゾンビ犬 
-    { 500,   2.5f,    {124, 98},  "hennizonnbi"}, // 3: 変位ゾンビ(ボス) 
-    {1000,   1.0f,    {186, 147},  "Tank"},        // 4: 戦車 
+    { 800,   2.5f,    {124, 98},  "hennizonnbi"}, // 3: 変位ゾンビ(ボス) 
+    {2000,   1.0f,    {186, 147},  "Tank"},        // 4: 戦車 
 };
 Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
     m_pos = pos;

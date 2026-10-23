@@ -87,16 +87,26 @@ void EnemySpawner::Update() {
     // =============================================================
     else if (m_phase <= 10) {
 
-        // 1. 規定数まで1.0秒間隔で雑魚敵を出現させる
+        // 1. 規定数まで雑魚敵を出現させる
         if (m_spawned_count < m_max_spawn_count) {
             m_spawn_timer += CFPS::GetDeltaTime();
 
-            if (m_spawn_timer >= 1.0f) {
+            // =========================================================
+            // ★ フェーズごとに短くなる出現間隔（インターバル）を計算！
+            // 例：フェーズ1 = 1.0秒、フェーズ2 = 0.92秒 ... フェーズ10 = 0.28秒
+            // =========================================================
+            float spawn_interval = 1.0f - (m_phase - 1) * 0.08f;
+
+            // 早くなりすぎないための最速限界（例: 最速で0.2秒間隔）
+            if (spawn_interval < 0.2f) {
+                spawn_interval = 0.2f;
+            }
+
+            // ★ 1.0f の代わりに spawn_interval と比較する！
+            if (m_spawn_timer >= spawn_interval) {
                 m_spawn_timer = 0.0f;
                 CVector2D spawn_pos = GetRandomSpawnPos(player->m_pos);
-                // =========================================================
-                // ここを変更！フェーズ7以降は「3:変位ゾンビ」も出現対象にする
-                // =========================================================
+
                 int enemy_type = 0;
                 if (m_phase >= 7) {
                     enemy_type = rand() % 4; // 0,1,2 (雑魚) + 3 (変位ゾンビ)
@@ -105,19 +115,19 @@ void EnemySpawner::Update() {
                     enemy_type = rand() % 3; // 0,1,2 (雑魚)
                 }
 
-                // ★ ここを分岐させて、3番(変位ゾンビ)の時だけポインタで雑魚化！
                 if (enemy_type == 3) {
                     Enemy* enemy = new Enemy(spawn_pos, 3);
-                    enemy->SetAsMutantMinion(); // ★ エラーが出ていた処理をこの1行に変更！
+                    enemy->SetAsMutantMinion();
                 }
                 else {
                     new Enemy(spawn_pos, enemy_type);
                 }
 
-
                 m_spawned_count++;
             }
         }
+    }
+
 
         // 2. 規定数出し切り ＆ 画面の敵が全滅 で 次のフェイズへ！
         if (m_spawned_count >= m_max_spawn_count && Base::FindObject(eType_Enemy) == nullptr) {
@@ -125,7 +135,6 @@ void EnemySpawner::Update() {
             Game::EndRound();
         }
     }
-}
 
 void EnemySpawner::NextPhase()
 {
