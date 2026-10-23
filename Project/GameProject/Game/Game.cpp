@@ -132,20 +132,13 @@ void Game::Update()
 		return;
 	}
 
-	// ラスボスのタンクが撃破されたらゲームクリア
-	if (m_isTankDefeated)
+	if (m_resultTimer >= 5.0f)
 	{
-		m_resultTimer += CFPS::GetDeltaTime();
-
-		// 1秒後にリザルト画面を表示
-		if (m_resultTimer >= 5.0f)
-		{
-			m_isResultCreated = true; SetGamePhase(EGamePhase::GameClear); 
-			// リザルト画面を生成 
-			new Result(); // Gameを破棄 
-			SetKill();
-			return;
-		}
+		m_isResultCreated = true; SetGamePhase(EGamePhase::GameClear);
+		// リザルト画面を生成 
+		new Result();
+		SetKill();
+		return;
 	}
 
 }
