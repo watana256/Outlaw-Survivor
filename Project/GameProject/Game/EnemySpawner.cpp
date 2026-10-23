@@ -141,17 +141,17 @@ void EnemySpawner::NextPhase()
 
     // ★ フェーズごとに出す数を設定 (2から←1は上にある)
     switch (m_phase) {
-    case 2:  m_max_spawn_count = 8; break;
-    case 3:  m_max_spawn_count = 12; break;
-    case 4:  m_max_spawn_count = 17; break;
-    case 5:  m_max_spawn_count = 24; break;
+    case 2:  m_max_spawn_count = 10; break;
+    case 3:  m_max_spawn_count = 18; break;
+    case 4:  m_max_spawn_count = 27; break;
+    case 5:  m_max_spawn_count = 36; break;
 
         // ★ 6はボスフェイズなので飛ばしてOK！
 
-    case 7:  m_max_spawn_count = 28; break; // ボス撃破後のフェイズ7
-    case 8:  m_max_spawn_count = 32; break;
-    case 9:  m_max_spawn_count = 37; break;
-    case 10: m_max_spawn_count = 45; break;
+    case 7:  m_max_spawn_count = 48; break; // ボス撃破後のフェイズ7
+    case 8:  m_max_spawn_count = 59; break;
+    case 9:  m_max_spawn_count = 72; break;
+    case 10: m_max_spawn_count = 84; break;
 
         // ★ 11もラスボスフェイズなので飛ばしてOK！
 
