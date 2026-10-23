@@ -16,7 +16,7 @@ Bullet::Bullet(
     , m_move_speed(speed)
     , m_damage(damage)
 {
-    m_img.Load("Image/Bullet.png");
+    m_Bullet_img = COPY_RESOURCE("Bullet", CImage);
 
     m_pos = pos;
     m_vec = dir;
