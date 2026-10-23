@@ -9,6 +9,7 @@
 #define ANIM_FRAME 2
 #define EXP_RAD 64.0f
 #define EXP_IMG_SIZE 128.0f
+#define ROCKET_IMG_SIZE 50.0f
 
 static TexAnim _explosion_anim[] =
 {
@@ -38,8 +39,8 @@ RocketBullet::RocketBullet(const CVector2D& pos, const CVector2D& dir, float dis
     m_rad = 10;
     m_rect = CRect(-20, -20, 20, 20);
 
-    m_img.SetSize(20, 20);
-    m_img.SetCenter(10, 10);
+    m_img.SetSize(ROCKET_IMG_SIZE, ROCKET_IMG_SIZE);
+    m_img.SetCenter(ROCKET_IMG_SIZE * 0.5f, ROCKET_IMG_SIZE * 0.5f);
     m_img.SetAng(atan2f(-m_vec.y, m_vec.x));
 
     m_explosion_img.SetSize(EXP_IMG_SIZE, EXP_IMG_SIZE);
