@@ -19,8 +19,11 @@ Result::Result(bool is_clear) :Base(eType_Scene)
 	// 最終スコアを保存(先に保存してから表示用のScoreを消す)
 	m_score = Score::GetScore();
 
-	// 結果画面の上にHPバーやスコアが重ならないように消す
-	Base::Kill((1 << eType_Hp) | (1 << eType_Score));
+	// 結果画面が出たら、自分以外のオブジェクトをすべて消す
+	// (プレイヤー、敵、コイン、武器、UI、HP、スコアなど)
+	for (Base* b : Base::m_list) {
+		if (b != this) b->SetKill();
+	}
 }
 void Result::Update()
 {
