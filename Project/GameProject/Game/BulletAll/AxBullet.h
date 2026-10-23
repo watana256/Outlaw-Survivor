@@ -5,6 +5,7 @@
 class AxBullet : public Base {
 public:
     CImage m_img;
+    CImage m_Ax_img;
 
     float m_flying_dist;
     float m_move_dist;

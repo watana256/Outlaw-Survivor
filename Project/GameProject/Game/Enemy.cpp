@@ -136,7 +136,23 @@ Enemy::~Enemy()
             new Money(m_pos + CVector2D(rx, ry), eSilver);
         }
     }
-}
+
+    // ---------------------------------------------------------
+    // 3. 回復アイテムのドロップ    ← ここから追加
+    // ---------------------------------------------------------
+    // 回復アイテムのドロップ率(%)。ここだけ変えれば調整できる
+    const int KIT_RATE = 5;    // 救急キット(回復20)
+    const int BIN_RATE = 1;    // 瓶(回復50)
+
+    int u = rand() % 100;
+    if (u < KIT_RATE) {
+        new Medical(m_pos, eKit);
+    }
+    else if (u < KIT_RATE + BIN_RATE) {
+        new Medical(m_pos, eBin);
+    }
+    // ここまで追加
+}                               // ← デストラクタの閉じ括弧(これは元からあるもの)
 
 
 void Enemy::Update() {
