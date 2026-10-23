@@ -33,4 +33,5 @@ public:
 	void Collision(Base* b);
 	void ClampPosition();
 	static TexAnimData _anim_data[];
+	bool m_isTankDefeated = false;
 };

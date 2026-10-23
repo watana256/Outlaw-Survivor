@@ -1,5 +1,6 @@
 #include "Score.h"
 #include "Game.h"
+#include"Result.h"
 int Score::s_score = 0;
 
 Score::Score() :Base(eType_Score)
@@ -11,7 +12,8 @@ Score::Score() :Base(eType_Score)
 
 void Score::Update()
 {
-	Score::s_score;
+//	Score::s_score;
+	
 }
 void Score::Draw()
 {
@@ -21,6 +23,7 @@ void Score::Draw()
 		m_img.SetRect(100 * s, 0, 100 * s + 100, 128);
 		m_img.SetSize(150, 110);
 		m_img.SetPos(1700 - 102 * i, 10);
+	
 		m_img.Draw();
 	}
 }

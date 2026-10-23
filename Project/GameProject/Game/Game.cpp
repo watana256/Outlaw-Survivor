@@ -127,7 +127,9 @@ void Game::Update()
 	// プレイヤーが死亡したらGameOver
 	if (!Base::FindObject(eType_Player))
 	{
+		m_isResultCreated = true;
 		new Result();
+		SetKill();
 		return;
 	}
 
@@ -137,15 +139,12 @@ void Game::Update()
 		m_resultTimer += CFPS::GetDeltaTime();
 
 		// 1秒後にリザルト画面を表示
-		if (m_resultTimer >= 1.0f)
+		if (m_resultTimer >= 5.0f)
 		{
-			// 二重生成防止
-			if (m_phase != EGamePhase::GameClear)
-			{
-				SetGamePhase(EGamePhase::GameClear);
-				new Result();
-			}
-
+			m_isResultCreated = true; SetGamePhase(EGamePhase::GameClear); 
+			// リザルト画面を生成 
+			new Result(); // Gameを破棄 
+			SetKill();
 			return;
 		}
 	}

@@ -70,8 +70,22 @@ void Medical::Update()
 		eStateBin();
 		break;
 	}
+	// プレイヤーが死亡したらGameOver
+	if (!Base::FindObject(eType_Player))
+	{
+		SetKill();
+		return;
+	}
 
-}
+	// ラスボスのタンクが撃破されたらゲームクリア
+	if (m_isTankDefeated)
+	{
+		SetKill();
+
+			return;
+		}
+	}
+
 void Medical::eStateKit()
 {
 	int Animu = eAnimKit;

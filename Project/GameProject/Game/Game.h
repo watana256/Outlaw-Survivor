@@ -38,4 +38,5 @@ public:
 	static int GetEquippedWeapon(int slot);
 	static int GetWeaponLevel(int index);
 	bool m_isTankDefeated = false;
+	bool m_isResultCreated = false;
 };
