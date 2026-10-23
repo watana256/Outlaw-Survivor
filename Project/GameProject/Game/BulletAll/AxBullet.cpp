@@ -30,8 +30,8 @@ AxBullet::AxBullet(
     , m_move_speed(speed)
     , m_damage(damage)
 {
-    m_Ax_img = COPY_RESOURCE("Ax", CImage);
-    //m_img.Load("Image/AxBullet.png", _anim_data, 100, 100);
+    
+    m_img = COPY_RESOURCE("AxBullet", CImage);
 
     m_pos = pos;
     m_vec = dir;
