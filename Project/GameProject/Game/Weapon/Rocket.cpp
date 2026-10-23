@@ -8,8 +8,8 @@
 // ---------------------------------------------------------
 // レベルごとの性能表(Lv1〜Lv10)。値を変えたいときはここだけ直す
 // ---------------------------------------------------------
-static const int   ROCKET_DAMAGE[MAX_WEAPON_LEVEL] = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
-static const float ROCKET_DIST[MAX_WEAPON_LEVEL] = { 200, 250, 300, 350, 400, 450, 500, 550, 600, 650 };
+static const int   ROCKET_DAMAGE[MAX_WEAPON_LEVEL] = { 100, 120, 130, 140, 150, 160, 170, 180, 190, 200 };//攻撃力
+static const float ROCKET_DIST[MAX_WEAPON_LEVEL] = { 200, 250, 300, 350, 400, 450, 500, 550, 600, 650 };//飛距離
 
 Rocket::Rocket()
     : Base(eType_Rocket)
@@ -22,7 +22,7 @@ Rocket::Rocket()
 const WeaponData& Rocket::GetData()
 {
     static const WeaponData data = {
-        "ロケット",     "爆発する弾を発射", "範囲ダメージが大きい", 60, 2000
+        "ロケット",     "爆発する弾を発射", "範囲ダメージが大きい", 100, 2000
     };
     return data;
 }

@@ -10,9 +10,9 @@
 // レベルごとの性能表(Lv1?Lv10)。値を変えたいときはここだけ直す
 // 画像サイズは攻撃範囲の1.8倍(Lv1?5と同じ比率)
 // ---------------------------------------------------------
-static const int   STELLA_DAMAGE[MAX_WEAPON_LEVEL] = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
-static const float STELLA_RANGE[MAX_WEAPON_LEVEL] = { 100, 125, 150, 175, 200, 225, 250, 275, 300, 325 };
-static const float STELLA_IMAGE[MAX_WEAPON_LEVEL] = { 180, 225, 270, 315, 360, 405, 450, 495, 540, 585 };
+static const int   STELLA_DAMAGE[MAX_WEAPON_LEVEL] = { 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };//攻撃力
+static const float STELLA_RANGE[MAX_WEAPON_LEVEL] = { 100, 125, 150, 175, 200, 225, 250, 275, 300, 325 };//攻撃範囲
+static const float STELLA_IMAGE[MAX_WEAPON_LEVEL] = { 180, 225, 270, 315, 360, 405, 450, 495, 540, 585 };//画像サイズ
 
 Stella::Stella()
     : Base(eType_Stella)

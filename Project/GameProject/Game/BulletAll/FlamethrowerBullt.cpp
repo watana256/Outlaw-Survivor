@@ -69,11 +69,11 @@ void FlamethrowerBullet::Draw()
     m_img.Draw();
 
     // çUåÇîÕàÕÇÃämîFóp
-    Utility::DrawCircle(
-        m_pos,
-        m_attack_range,
-        CVector4D(0, 5, 0, 0.5)
-    );
+    //Utility::DrawCircle(
+       // m_pos,
+       // m_attack_range,
+       // CVector4D(0, 5, 0, 0.5)
+   // );
 }
 
 void FlamethrowerBullet::Collision(Base* b)

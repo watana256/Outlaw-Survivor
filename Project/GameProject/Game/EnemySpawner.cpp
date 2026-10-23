@@ -10,7 +10,7 @@ bool EnemySpawner::boss_kill;
 int EnemySpawner::m_phase = 1;
 
 EnemySpawner::EnemySpawner() : Base(eType_System) {
-    m_phase = 1;               // フェイズ1からスタート
+    m_phase = 7;               // フェイズ1からスタート
     m_spawn_timer = 0.0f;
     m_spawned_count = 0;
     m_max_spawn_count = 5;    // フェイズ1の敵の数
@@ -87,16 +87,26 @@ void EnemySpawner::Update() {
     // =============================================================
     else if (m_phase <= 10) {
 
-        // 1. 規定数まで1.0秒間隔で雑魚敵を出現させる
+        // 1. 規定数まで雑魚敵を出現させる
         if (m_spawned_count < m_max_spawn_count) {
             m_spawn_timer += CFPS::GetDeltaTime();
 
-            if (m_spawn_timer >= 1.0f) {
+            // =========================================================
+            // ★ フェーズごとに短くなる出現間隔（インターバル）を計算！
+            // 例：フェーズ1 = 1.0秒、フェーズ2 = 0.9秒 ... フェーズ4 = 0.1秒
+            // =========================================================
+            float spawn_interval = 1.0f - (m_phase - 1) * 0.1f;
+
+            // 早くなりすぎないための最速限界（例: 最速で0.1秒間隔）
+            if (spawn_interval < 0.1f) {
+                spawn_interval = 0.1f;
+            }
+
+            // ★ 1.0f の代わりに spawn_interval と比較する！
+            if (m_spawn_timer >= spawn_interval) {
                 m_spawn_timer = 0.0f;
                 CVector2D spawn_pos = GetRandomSpawnPos(player->m_pos);
-                // =========================================================
-                // ここを変更！フェーズ7以降は「3:変位ゾンビ」も出現対象にする
-                // =========================================================
+
                 int enemy_type = 0;
                 if (m_phase >= 7) {
                     enemy_type = rand() % 4; // 0,1,2 (雑魚) + 3 (変位ゾンビ)
@@ -105,19 +115,19 @@ void EnemySpawner::Update() {
                     enemy_type = rand() % 3; // 0,1,2 (雑魚)
                 }
 
-                // ★ ここを分岐させて、3番(変位ゾンビ)の時だけポインタで雑魚化！
                 if (enemy_type == 3) {
                     Enemy* enemy = new Enemy(spawn_pos, 3);
-                    enemy->SetAsMutantMinion(); // ★ エラーが出ていた処理をこの1行に変更！
+                    enemy->SetAsMutantMinion();
                 }
                 else {
                     new Enemy(spawn_pos, enemy_type);
                 }
 
-
                 m_spawned_count++;
             }
         }
+    }
+
 
         // 2. 規定数出し切り ＆ 画面の敵が全滅 で 次のフェイズへ！
         if (m_spawned_count >= m_max_spawn_count && Base::FindObject(eType_Enemy) == nullptr) {
@@ -125,7 +135,6 @@ void EnemySpawner::Update() {
             Game::EndRound();
         }
     }
-}
 
 void EnemySpawner::NextPhase()
 {
@@ -141,17 +150,17 @@ void EnemySpawner::NextPhase()
 
     // ★ フェーズごとに出す数を設定 (2から←1は上にある)
     switch (m_phase) {
-    case 2:  m_max_spawn_count = 8; break;
-    case 3:  m_max_spawn_count = 12; break;
-    case 4:  m_max_spawn_count = 17; break;
-    case 5:  m_max_spawn_count = 24; break;
+    case 2:  m_max_spawn_count = 10; break;
+    case 3:  m_max_spawn_count = 18; break;
+    case 4:  m_max_spawn_count = 25; break;
+    case 5:  m_max_spawn_count = 40; break;
 
         // ★ 6はボスフェイズなので飛ばしてOK！
 
-    case 7:  m_max_spawn_count = 28; break; // ボス撃破後のフェイズ7
-    case 8:  m_max_spawn_count = 32; break;
-    case 9:  m_max_spawn_count = 37; break;
-    case 10: m_max_spawn_count = 45; break;
+    case 7:  m_max_spawn_count = 56; break; // ボス撃破後のフェイズ7
+    case 8:  m_max_spawn_count = 72; break;
+    case 9:  m_max_spawn_count = 87; break;
+    case 10: m_max_spawn_count = 99; break;
 
         // ★ 11もラスボスフェイズなので飛ばしてOK！
 
