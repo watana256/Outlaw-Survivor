@@ -238,7 +238,7 @@ void Enemy::TakeDamage(int damage)
 
 void Enemy::SetAsMutantMinion() {
     m_hp = 80;                                    // 雑魚用HP
-    m_speed = 2.5f;
+    m_speed = 3.5f;                               // 速度
     m_img.SetSize(CVector2D(62, 49));             // 等倍サイズ
     m_img.SetCenter(CVector2D(31.0f, 24.5f));     // 中心位置
     m_rect = CRect(-31.0f, -24.5f, 31.0f, 24.5f); // 当たり判定
