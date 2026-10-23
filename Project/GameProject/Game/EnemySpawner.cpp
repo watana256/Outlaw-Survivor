@@ -93,13 +93,13 @@ void EnemySpawner::Update() {
 
             // =========================================================
             // ★ フェーズごとに短くなる出現間隔（インターバル）を計算！
-            // 例：フェーズ1 = 1.0秒、フェーズ2 = 0.92秒 ... フェーズ10 = 0.28秒
+            // 例：フェーズ1 = 1.0秒、フェーズ2 = 0.9秒 ... フェーズ4 = 0.1秒
             // =========================================================
-            float spawn_interval = 1.0f - (m_phase - 1) * 0.08f;
+            float spawn_interval = 1.0f - (m_phase - 1) * 0.1f;
 
-            // 早くなりすぎないための最速限界（例: 最速で0.2秒間隔）
-            if (spawn_interval < 0.2f) {
-                spawn_interval = 0.2f;
+            // 早くなりすぎないための最速限界（例: 最速で0.1秒間隔）
+            if (spawn_interval < 0.1f) {
+                spawn_interval = 0.1f;
             }
 
             // ★ 1.0f の代わりに spawn_interval と比較する！
@@ -152,15 +152,15 @@ void EnemySpawner::NextPhase()
     switch (m_phase) {
     case 2:  m_max_spawn_count = 10; break;
     case 3:  m_max_spawn_count = 18; break;
-    case 4:  m_max_spawn_count = 27; break;
-    case 5:  m_max_spawn_count = 36; break;
+    case 4:  m_max_spawn_count = 25; break;
+    case 5:  m_max_spawn_count = 40; break;
 
         // ★ 6はボスフェイズなので飛ばしてOK！
 
-    case 7:  m_max_spawn_count = 48; break; // ボス撃破後のフェイズ7
-    case 8:  m_max_spawn_count = 59; break;
-    case 9:  m_max_spawn_count = 72; break;
-    case 10: m_max_spawn_count = 84; break;
+    case 7:  m_max_spawn_count = 56; break; // ボス撃破後のフェイズ7
+    case 8:  m_max_spawn_count = 72; break;
+    case 9:  m_max_spawn_count = 87; break;
+    case 10: m_max_spawn_count = 99; break;
 
         // ★ 11もラスボスフェイズなので飛ばしてOK！
 
