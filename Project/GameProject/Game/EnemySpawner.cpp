@@ -10,7 +10,7 @@ bool EnemySpawner::boss_kill;
 int EnemySpawner::m_phase = 1;
 
 EnemySpawner::EnemySpawner() : Base(eType_System) {
-    m_phase = 7;               // フェイズ1からスタート
+    m_phase = 1;               // フェイズ1からスタート
     m_spawn_timer = 0.0f;
     m_spawned_count = 0;
     m_max_spawn_count = 5;    // フェイズ1の敵の数
