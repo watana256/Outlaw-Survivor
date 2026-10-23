@@ -124,13 +124,13 @@ void RocketBullet::Draw()
     if (!m_is_explosion) {
         m_img.SetPos(m_pos);
         m_img.Draw();
-        Utility::DrawCircle(m_pos, m_rad, CVector4D(0, 5, 0, 0.5));
+        //Utility::DrawCircle(m_pos, m_rad, CVector4D(0, 5, 0, 0.5));
     }
     else
     {
         m_explosion_img.SetPos(m_pos);
         m_explosion_img.Draw();
-        Utility::DrawCircle(m_pos, m_rad, CVector4D(1, 0, 0, 0.5));
+       // Utility::DrawCircle(m_pos, m_rad, CVector4D(1, 0, 0, 0.5));
     }
 }
 
