@@ -43,10 +43,10 @@ struct EnemyParam {
 
 static const EnemyParam g_enemy_params[] = {
     // HP,   speed,  見た目変更,  画像名
-    {  30,   2.0f,    {28, 48}, "Enemy"},       // 0: ゾンビ 
-    {  60,   1.5f,    {28, 48},  "Robot"},       // 1: ロボット
-    {  15,   5.5f,    {48, 24},  "Dog"},         // 2: ゾンビ犬 
-    { 800,   2.5f,    {124, 98},  "hennizonnbi"}, // 3: 変位ゾンビ(ボス) 
+    {  30,   3.0f,    {28, 48}, "Enemy"},       // 0: ゾンビ 
+    {  60,   2.0f,    {28, 48},  "Robot"},       // 1: ロボット
+    {  15,   6.0f,    {48, 24},  "Dog"},         // 2: ゾンビ犬 
+    { 800,   1.7f,    {124, 98},  "hennizonnbi"}, // 3: 変位ゾンビ(ボス) 
     {2000,   1.0f,    {186, 147},  "Tank"},        // 4: 戦車 
 };
 Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
@@ -238,6 +238,7 @@ void Enemy::TakeDamage(int damage)
 
 void Enemy::SetAsMutantMinion() {
     m_hp = 80;                                    // 雑魚用HP
+    m_speed = 2.5f;
     m_img.SetSize(CVector2D(62, 49));             // 等倍サイズ
     m_img.SetCenter(CVector2D(31.0f, 24.5f));     // 中心位置
     m_rect = CRect(-31.0f, -24.5f, 31.0f, 24.5f); // 当たり判定
