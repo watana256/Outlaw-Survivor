@@ -8,10 +8,10 @@
 // ---------------------------------------------------------
 static const int   AX_DAMAGE[MAX_WEAPON_LEVEL] = { 5, 10, 15, 20, 25, 30, 45, 50, 55, 60 };//攻撃力
 static const float AX_DIST[MAX_WEAPON_LEVEL] = { 200, 250, 300, 350, 400, 450, 500, 550, 600, 650 };//飛距離
-static const float AX_SPEED[MAX_WEAPON_LEVEL] = { 7, 8, 9, 10, 12, 13, 14, 15, 16, 17 };//弾速
+static const float AX_SPEED[MAX_WEAPON_LEVEL] = { 7, 8, 9, 10, 10, 10, 10, 10, 10, 10 };//弾速
 static const int   AX_COUNT[MAX_WEAPON_LEVEL] = { 2, 3, 5, 8, 12, 14, 16, 18, 20, 24 };//弾数
-static const float AX_INTERVAL[MAX_WEAPON_LEVEL] = { 0.50f, 0.45f, 0.40f, 0.40f, 0.40f,
-                                                      0.40f,  0.40f,  0.40f, 0.40f, 0.40f };//発射間隔
+static const float AX_INTERVAL[MAX_WEAPON_LEVEL] = { 0.50f, 0.49f, 0.48f, 0.47f, 0.46f,
+                                                      0.45f,  0.45f,  0.45f, 0.45f, 0.45f };//発射間隔
 
 Ax::Ax()
     : Base(eType_Ax)
