@@ -24,7 +24,7 @@ Ax::Ax()
 const WeaponData& Ax::GetData()
 {
     static const WeaponData data = {
-        "斧", "斧は投げる物", "攻撃範囲が広い", 1, 100
+        "斧", "斧は投げる物", "攻撃範囲が広い", 5, 300
     };
     return data;
 }

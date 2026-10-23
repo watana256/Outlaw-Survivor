@@ -25,7 +25,7 @@ Pistol::Pistol()
 const WeaponData& Pistol::GetData()
 {
     static const WeaponData data = {
-         "ピストル",     "扱いやすい基本の銃",     "連射速度は普通",       10,  100
+         "ピストル",     "扱いやすい基本の銃",     "連射速度は普通",       10,  300
     };
     return data;
 }
