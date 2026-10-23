@@ -119,14 +119,15 @@ Enemy::~Enemy()
         new Money(m_pos, eSilver);
     }
 
-    // ---------------------------------------------------------
-    // 3. 既存の回復アイテム出現処理（そのまま）
-    // ---------------------------------------------------------
-    int u = rand() % 31;
-    if (u == 2 || u == 3 || u == 4 || u == 5 || u == 6) {
+    // 回復アイテムのドロップ率(%)。ここだけ変えれば調整できる
+    const int KIT_RATE = 5;    // 救急キット(回復20)
+    const int BIN_RATE = 1;    // 瓶(回復50)
+
+    int u = rand() % 100;
+    if (u < KIT_RATE) {
         new Medical(m_pos, eKit);
     }
-    else if (u == 1) {
+    else if (u < KIT_RATE + BIN_RATE) {
         new Medical(m_pos, eBin);
     }
 }
