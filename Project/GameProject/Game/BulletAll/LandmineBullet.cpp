@@ -28,7 +28,7 @@ LandmineBullet::LandmineBullet(const CVector2D& pos, const CVector2D& dir, float
     , m_damage(damage)
     , m_is_explosion(false)
 {
-    m_img.Load("Image/LandmineBullet.png");
+    m_img = COPY_RESOURCE("LandmineBullet", CImage);
     m_explosion_img = COPY_RESOURCE("Explosion", CImage);
 
     m_pos = pos;

@@ -29,8 +29,7 @@ StellaBullet::StellaBullet(
     , m_attack_radius(radius)
     , m_damage(damage)
 {
-    m_img.Load("Image/StellaBullet.png", _anim_data, 64, 64);
-
+    m_img = COPY_RESOURCE("StellaBullet", CImage);
     m_rad = m_attack_radius;
 
     m_img.SetSize(STELLA_SIZE, STELLA_SIZE);   // ‰æ‘œƒTƒCƒY

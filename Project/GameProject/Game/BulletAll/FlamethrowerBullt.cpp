@@ -32,7 +32,7 @@ FlamethrowerBullet::FlamethrowerBullet(
     , m_is_flameeffects(false)
     , m_attack_range(attackRange)
 {
-    m_img.Load("Image/FlamethrowerBullet.png", _anim_data, 64, 64);
+    m_img = COPY_RESOURCE("Flameeffects", CImage);
 
     m_pos = pos;
     m_vec = dir;

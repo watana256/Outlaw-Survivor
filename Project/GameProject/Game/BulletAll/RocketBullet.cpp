@@ -31,7 +31,7 @@ RocketBullet::RocketBullet(const CVector2D& pos, const CVector2D& dir, float dis
     , m_damage(damage)
     , m_is_explosion(false)
 {
-    m_img.Load("Image/RocketBullt.png");
+    m_img = COPY_RESOURCE("RocketBullt", CImage);
     m_explosion_img = COPY_RESOURCE("Explosion", CImage);
 
     m_pos = pos;

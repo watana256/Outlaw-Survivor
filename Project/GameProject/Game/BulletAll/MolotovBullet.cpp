@@ -59,7 +59,7 @@ MolotovBullet::MolotovBullet(
     , m_flame_timer(0.0f)
     , m_damage_timer(0.0f)
 {
-    m_img.Load("Image/MolotovBullet.png", _anim_data, 145, 145);
+    m_img = COPY_RESOURCE("MolotovBullet", CImage);
     m_flameeteffect_img = COPY_RESOURCE("FlameEffect", CImage);
 
     m_pos = pos;
