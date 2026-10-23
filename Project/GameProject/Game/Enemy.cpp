@@ -1,10 +1,10 @@
-#include "Enemy.h"
+ï»¿#include "Enemy.h"
 #include "Player.h"
 #include "EnemySpawner.h"
 #include "Medical.h"
 #include "Money.h"
 #include"Game.h"
-// ƒAƒjƒ[ƒVƒ‡ƒ“’è‹`
+// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å®šç¾©
 static TexAnim Zombie[] = {
     {0,9},
     {1,9}
@@ -26,7 +26,7 @@ static TexAnim TANK[] = {
     {1,5}
 };
 
-// š Enemy.h ‚Ì enum(eZombie, eRobot, eDog, eMutant, eTank) ‚Ì‡”Ô‚ÆŠ®‘S‚Éˆê’v‚³‚¹‚é
+// â˜… Enemy.h ã® enum(eZombie, eRobot, eDog, eMutant, eTank) ã®é †ç•ªã¨å®Œå…¨ã«ä¸€è‡´ã•ã›ã‚‹
 TexAnimData Enemy::_anim_data[] = {
     ANIMDATA(Zombie),
     ANIMDATA(Robot),
@@ -36,25 +36,25 @@ TexAnimData Enemy::_anim_data[] = {
 };
 struct EnemyParam {
     int hp;               // HP
-    float speed;          // ˆÚ“®‘¬“x
-    CVector2D size;  //@Œ©‚½–Ú•ÏX ©(‚¢‚è‚Ü‚·IIII)
-    const char* res_name; // ‰æ‘œƒŠƒ\[ƒX–¼
+    float speed;          // ç§»å‹•é€Ÿåº¦
+    CVector2D size;  //ã€€è¦‹ãŸç›®å¤‰æ›´ â†(ã„ã‚Šã¾ã™ï¼ï¼ï¼ï¼)
+    const char* res_name; // ç”»åƒãƒªã‚½ãƒ¼ã‚¹å
 };
 
 static const EnemyParam g_enemy_params[] = {
-    // HP,   speed,  Œ©‚½–Ú•ÏX,  ‰æ‘œ–¼
-    {  30,   2.0f,    {28, 48}, "Enemy"},       // 0: ƒ]ƒ“ƒr 
-    {  60,   1.5f,    {28, 48},  "Robot"},       // 1: ƒƒ{ƒbƒg
-    {  15,   5.5f,    {48, 24},  "Dog"},         // 2: ƒ]ƒ“ƒrŒ¢ 
-    { 800,   2.5f,    {124, 98},  "hennizonnbi"}, // 3: •ÏˆÊƒ]ƒ“ƒr(ƒ{ƒX) 
-    {2000,   1.0f,    {186, 147},  "Tank"},        // 4: íÔ 
+    // HP,   speed,  è¦‹ãŸç›®å¤‰æ›´,  ç”»åƒå
+    {  30,   2.0f,    {28, 48}, "Enemy"},       // 0: ã‚¾ãƒ³ãƒ“ 
+    {  60,   1.5f,    {28, 48},  "Robot"},       // 1: ãƒ­ãƒœãƒƒãƒˆ
+    {  15,   5.5f,    {48, 24},  "Dog"},         // 2: ã‚¾ãƒ³ãƒ“çŠ¬ 
+    { 800,   2.5f,    {124, 98},  "hennizonnbi"}, // 3: å¤‰ä½ã‚¾ãƒ³ãƒ“(ãƒœã‚¹) 
+    {2000,   1.0f,    {186, 147},  "Tank"},        // 4: æˆ¦è»Š 
 };
 Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
     m_pos = pos;
     m_enemy_type = enemy_type;
     m_flip = false;
 
-    // ˆÀ‘S‘Îôi-1‚Ìê‡‚Íƒ{ƒX•ÏˆÊƒ]ƒ“ƒr‚Ì—v‘f3‚ğQÆj
+    // å®‰å…¨å¯¾ç­–ï¼ˆ-1ã®å ´åˆã¯ãƒœã‚¹å¤‰ä½ã‚¾ãƒ³ãƒ“ã®è¦ç´ 3ã‚’å‚ç…§ï¼‰
     int param_idx = (m_enemy_type < 0) ? 3 : m_enemy_type;
     const EnemyParam& param = g_enemy_params[param_idx];
 
@@ -62,32 +62,32 @@ Enemy::Enemy(const CVector2D& pos, int enemy_type) : Base(eType_Enemy) {
     m_img.ChangeAnimation(0);
 
     // =========================================================
-    // š HP‚ğ (Šî–{HP * ƒ‰ƒEƒ“ƒh”) ‚ÉŒvZI
+    // â˜… HPã‚’ (åŸºæœ¬HP * ãƒ©ã‚¦ãƒ³ãƒ‰æ•°) ã«è¨ˆç®—ï¼
     // =========================================================
-    int current_round = EnemySpawner::m_phase; // ¦ƒvƒƒWƒFƒNƒg‚Åg‚Á‚Ä‚¢‚éƒ‰ƒEƒ“ƒhiƒtƒF[ƒYj•Ï”–¼‚É‡‚í‚¹‚Ä‚­‚¾‚³‚¢
-    m_hp = param.hp * current_round;           // š Šî–{HP ~ ƒ‰ƒEƒ“ƒh”
+    int current_round = EnemySpawner::m_phase; // â€»ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã§ä½¿ã£ã¦ã„ã‚‹ãƒ©ã‚¦ãƒ³ãƒ‰ï¼ˆãƒ•ã‚§ãƒ¼ã‚ºï¼‰å¤‰æ•°åã«åˆã‚ã›ã¦ãã ã•ã„
+    m_hp = param.hp * current_round;           // â˜… åŸºæœ¬HP Ã— ãƒ©ã‚¦ãƒ³ãƒ‰æ•°
 
-    m_speed = param.speed; // ‘¬“x‚Í‚»‚Ì‚Ü‚Ü
+    m_speed = param.speed; // é€Ÿåº¦ã¯ãã®ã¾ã¾
 
-    // ‰æ‘œƒTƒCƒY‚Æ’†SˆÊ’u‚Ìİ’è
+    // ç”»åƒã‚µã‚¤ã‚ºã¨ä¸­å¿ƒä½ç½®ã®è¨­å®š
     m_img.SetSize(param.size);
     m_img.SetCenter(param.size / 2.0f);
 
-    // “–‚½‚è”»’è‚Ì©“®İ’è
+    // å½“ãŸã‚Šåˆ¤å®šã®è‡ªå‹•è¨­å®š
     float half_w = param.size.x / 2.0f;
     float half_h = param.size.y / 2.0f;
     m_rect = CRect(-half_w, -half_h, half_w, half_h);
 
     if (m_enemy_type == 2) {
-        m_rect = CRect(-24.0f, -24.0f, 24.0f, 24.0f); // Œ¢‚Ì”»’è•â³
+        m_rect = CRect(-24.0f, -24.0f, 24.0f, 24.0f); // çŠ¬ã®åˆ¤å®šè£œæ­£
     }
-    m_rad = half_w; // ‰Ÿ‚µ–ß‚µŒvZ—p‚Ì”¼Œa‚ğƒZƒbƒg
+    m_rad = half_w; // æŠ¼ã—æˆ»ã—è¨ˆç®—ç”¨ã®åŠå¾„ã‚’ã‚»ãƒƒãƒˆ
 }
 
 Enemy::~Enemy()
 {
     // ---------------------------------------------------------
-    // 1. ƒ{ƒXŒ‚”j”»’è
+    // 1. ãƒœã‚¹æ’ƒç ´åˆ¤å®š
     // ---------------------------------------------------------
     if (m_enemy_type == eMutant || m_enemy_type == eTank) {
         EnemySpawner::boss_kill = true;
@@ -96,39 +96,45 @@ Enemy::~Enemy()
     }
 
     // ---------------------------------------------------------
-    // 2. ‚¨‹àiƒRƒCƒ“j‚Ìƒhƒƒbƒvˆ—
-    // ---------------------------------------------------------
+// 2. ãŠé‡‘ï¼ˆã‚³ã‚¤ãƒ³ï¼‰ã®ãƒ‰ãƒ­ãƒƒãƒ—å‡¦ç†
+// ---------------------------------------------------------
 
-    //  ‡@ ‚Ü‚¸Å‰‚Éuƒ{ƒXieMutant / eTankjv‚©‚ğ”»’èI ‹à‰İ‘å—ÊƒhƒƒbƒvI
+//  â‘  ãƒœã‚¹ï¼ˆeMutant / eTankï¼‰: é‡‘è²¨ã‚’å¤§é‡ãƒ‰ãƒ­ãƒƒãƒ—
     if (m_enemy_type == eMutant || m_enemy_type == eTank) {
-        int coin_count = (m_enemy_type == eTank) ? 20 : 15; // íÔ‚Í20–‡Aƒ{ƒX•ÏˆÊƒ]ƒ“ƒr‚Í15–‡
+        int coin_count = (m_enemy_type == eTank) ? 30 : 20; // æˆ¦è»Šã¯30æšã€å¤‰ä½ã‚¾ãƒ³ãƒ“ã¯20æš
 
         for (int i = 0; i < coin_count; i++) {
-            // ƒ{ƒX‚ÌˆÊ’u‚ğ’†S‚ÉU‚ç‚Î‚¹‚é
-            float rx = (float)(rand() % 121 - 60); // -60px  ‚©‚ç +60px
+            // ãƒœã‚¹ã®ä½ç½®ã‚’ä¸­å¿ƒã«æ•£ã‚‰ã°ã›ã‚‹
+            float rx = (float)(rand() % 121 - 60); // -60px ã‹ã‚‰ +60px
             float ry = (float)(rand() % 121 - 60);
             new Money(m_pos + CVector2D(rx, ry), eGold);
         }
     }
-    //  ‡A ’†Œ˜G‹›i1:ƒƒ{ƒbƒgA -1:G‹›‰»‚³‚ê‚½•ÏˆÊƒ]ƒ“ƒrj‚Å ‹à‰İ 1–‡
+    //  â‘¡ ä¸­å …é›‘é­šï¼ˆ1:ãƒ­ãƒœãƒƒãƒˆã€-1:é›‘é­šåŒ–ã•ã‚ŒãŸå¤‰ä½ã‚¾ãƒ³ãƒ“ï¼‰
+//     é‡‘è²¨2æš + éŠ€è²¨0ã€œ2æš â†’ åˆè¨ˆ 200 / 250 / 300
     else if (m_enemy_type == 1 || m_enemy_type == -1) {
-        new Money(m_pos, eGold);
+        for (int i = 0; i < 2; i++) {
+            float rx = (float)(rand() % 41 - 20); // -20px ã‹ã‚‰ +20px
+            float ry = (float)(rand() % 41 - 20);
+            new Money(m_pos + CVector2D(rx, ry), eGold);
+        }
+
+        int silver_count = rand() % 3; // 0, 1, 2 ã®ã©ã‚Œã‹
+        for (int i = 0; i < silver_count; i++) {
+            float rx = (float)(rand() % 41 - 20);
+            float ry = (float)(rand() % 41 - 20);
+            new Money(m_pos + CVector2D(rx, ry), eSilver);
+        }
     }
-    //  ‡B •’Ê‚ÌG‹›i0:ƒ]ƒ“ƒrA 2:Œ¢j ‚Å@‹â‰İ 1–‡
+    //  â‘¢ æ™®é€šã®é›‘é­šï¼ˆ0:ã‚¾ãƒ³ãƒ“ã€2:çŠ¬ï¼‰: éŠ€è²¨2ã€œ4æš
     else {
-        new Money(m_pos, eSilver);
-    }
+        int coin_count = 2 + rand() % 3; // 2, 3, 4 ã®ã©ã‚Œã‹
 
-    // ‰ñ•œƒAƒCƒeƒ€‚Ìƒhƒƒbƒv—¦(%)B‚±‚±‚¾‚¯•Ï‚¦‚ê‚Î’²®‚Å‚«‚é
-    const int KIT_RATE = 5;    // ‹~‹}ƒLƒbƒg(‰ñ•œ20)
-    const int BIN_RATE = 1;    // •r(‰ñ•œ50)
-
-    int u = rand() % 100;
-    if (u < KIT_RATE) {
-        new Medical(m_pos, eKit);
-    }
-    else if (u < KIT_RATE + BIN_RATE) {
-        new Medical(m_pos, eBin);
+        for (int i = 0; i < coin_count; i++) {
+            float rx = (float)(rand() % 41 - 20);
+            float ry = (float)(rand() % 41 - 20);
+            new Money(m_pos + CVector2D(rx, ry), eSilver);
+        }
     }
 }
 
@@ -137,7 +143,7 @@ void Enemy::Update() {
     m_img.UpdateAnimation();
     Base* player = Base::FindObject(eType_Player);
 
-    // ƒvƒŒƒCƒ„[‚ª‘¶İ‚·‚éê‡A’Ç”öˆÚ“®
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå­˜åœ¨ã™ã‚‹å ´åˆã€è¿½å°¾ç§»å‹•
     if (player) {
         CVector2D dir = player->m_pos - m_pos;
 
@@ -161,7 +167,7 @@ void Enemy::Update() {
             m_pos += move_dir * m_speed;
         }
 
-        // Œü‚«‚ÌXV
+        // å‘ãã®æ›´æ–°
         m_flip = (player->m_pos.x < m_pos.x);
     }
 }
@@ -171,13 +177,13 @@ void Enemy::Draw() {
     m_img.SetPos(m_pos);
     m_img.Draw();
 
-    // š “–‚½‚è”»’è‚ÌŠm”F—pi•K—v‚É‰‚¶‚ÄƒRƒƒ“ƒgƒAƒEƒg‰ğœj
+    // â˜… å½“ãŸã‚Šåˆ¤å®šã®ç¢ºèªç”¨ï¼ˆå¿…è¦ã«å¿œã˜ã¦ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆè§£é™¤ï¼‰
     //  CRect rect(m_pos.x + m_rect.m_left, m_pos.y + m_rect.m_top, m_pos.x + m_rect.m_right, m_pos.y + m_rect.m_bottom);
     //  Utility::DrawQuad(rect.m_pos, rect.m_size, CVector4D(0, 0, 1, 0.5f)); 
 }
 
 void Enemy::Collision(Base* b) {
-    // 1. ƒvƒŒƒCƒ„[‚Æ‚Ì”»’èi¡‘‚¢‚Ä‚¢‚é‚â‚Âj
+    // 1. ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨ã®åˆ¤å®šï¼ˆä»Šæ›¸ã„ã¦ã„ã‚‹ã‚„ã¤ï¼‰
     if (b->m_type == eType_Player) {
         if (Base::CollisionRect(this, b)) {
             if (Player* p = dynamic_cast<Player*>(b)) {
@@ -186,25 +192,25 @@ void Enemy::Collision(Base* b) {
         }
     }
 
-    // 2. “G“¯m‚Ìd‚È‚è–h~iBase.h ‚ğg‚í‚¸‚É’¼Ú‰Ÿ‚µ–ß‚·Ij
+    // 2. æ•µåŒå£«ã®é‡ãªã‚Šé˜²æ­¢ï¼ˆBase.h ã‚’ä½¿ã‚ãšã«ç›´æ¥æŠ¼ã—æˆ»ã™ï¼ï¼‰
     if (b->m_type == eType_Enemy) {
         CVector2D v = m_pos - b->m_pos;
         float len = v.Length();
-        float dist = m_rad + b->m_rad; // ‚¨Œİ‚¢‚Ì”¼Œa‚Ì‡Œv
+        float dist = m_rad + b->m_rad; // ãŠäº’ã„ã®åŠå¾„ã®åˆè¨ˆ
 
-        // ‚ß‚è‚ñ‚Å‚¢‚éê‡A”¼•ª‚¸‚Â‰Ÿ‚µ–ß‚·
+        // ã‚ã‚Šè¾¼ã‚“ã§ã„ã‚‹å ´åˆã€åŠåˆ†ãšã¤æŠ¼ã—æˆ»ã™
         if (len < dist && len > 0.0001f) {
             CVector2D dir = v.GetNormalize();
             float push = (dist - len) * 0.5f;
-            m_pos += dir * push;     // ©•ª‚ğ—£‚·
-            b->m_pos -= dir * push; // ‘Šè‚ğ—£‚·
+            m_pos += dir * push;     // è‡ªåˆ†ã‚’é›¢ã™
+            b->m_pos -= dir * push; // ç›¸æ‰‹ã‚’é›¢ã™
         }
     }
 }
 
 void Enemy::TakeDamage(int damage)
 {
-    // ‚·‚Å‚ÉŒ‚”j‚³‚ê‚Ä‚¢‚é“G‚É‚Íˆ—‚µ‚È‚¢
+    // ã™ã§ã«æ’ƒç ´ã•ã‚Œã¦ã„ã‚‹æ•µã«ã¯å‡¦ç†ã—ãªã„
     if (m_hp <= 0) return;
 
     m_hp -= damage;
@@ -213,7 +219,7 @@ void Enemy::TakeDamage(int damage)
     {
         m_hp = 0;
 
-        // ƒ‰ƒXƒ{ƒX‚Ìƒ^ƒ“ƒN‚ªŒ‚”j‚³‚ê‚½
+        // ãƒ©ã‚¹ãƒœã‚¹ã®ã‚¿ãƒ³ã‚¯ãŒæ’ƒç ´ã•ã‚ŒãŸ
         if (m_enemy_type == eTank)
         {
             Game* game = dynamic_cast<Game*>(
@@ -231,9 +237,9 @@ void Enemy::TakeDamage(int damage)
 }
 
 void Enemy::SetAsMutantMinion() {
-    m_hp = 80;                                    // G‹›—pHP
-    m_img.SetSize(CVector2D(62, 49));             // “™”{ƒTƒCƒY
-    m_img.SetCenter(CVector2D(31.0f, 24.5f));     // ’†SˆÊ’u
-    m_rect = CRect(-31.0f, -24.5f, 31.0f, 24.5f); // “–‚½‚è”»’è
-    m_enemy_type = -1;                            // ƒ{ƒXŒ‚”jƒtƒ‰ƒO(boss_kill)‰ñ”ğ
+    m_hp = 80;                                    // é›‘é­šç”¨HP
+    m_img.SetSize(CVector2D(62, 49));             // ç­‰å€ã‚µã‚¤ã‚º
+    m_img.SetCenter(CVector2D(31.0f, 24.5f));     // ä¸­å¿ƒä½ç½®
+    m_rect = CRect(-31.0f, -24.5f, 31.0f, 24.5f); // å½“ãŸã‚Šåˆ¤å®š
+    m_enemy_type = -1;                            // ãƒœã‚¹æ’ƒç ´ãƒ•ãƒ©ã‚°(boss_kill)å›é¿
 }
