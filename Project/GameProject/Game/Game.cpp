@@ -69,6 +69,7 @@ void Game::StartPhase()
 		m_elapsed_time = 0.0f;
 		break;
 	case EGamePhase::GameClear:
+
 		break;
 
 	}
