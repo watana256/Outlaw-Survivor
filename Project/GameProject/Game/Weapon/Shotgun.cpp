@@ -26,7 +26,7 @@ Shotgun::Shotgun()
 const WeaponData& Shotgun::GetData()
 {
     static const WeaponData data = {
-        "ショットガン", "近距離で高威力",         "散弾で複数に当たる",   10,  100
+        "ショットガン", "近距離で高威力",         "散弾で複数に当たる",   10,  300
     };
     return data;
 }
