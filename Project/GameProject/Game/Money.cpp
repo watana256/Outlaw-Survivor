@@ -20,6 +20,7 @@ Money::Money(const CVector2D& pos,int money_type) :Base(eType_Money)
 	m_img = COPY_RESOURCE("Money", CImage);
 	m_pos = pos;
 	ClampPosition();
+	m_life = 10.0f;
 	m_rad = 20;
 	m_rect = CRect(-20.0f, -20.0f, 20.0f, 20.0f);   //E‚¦‚é”ÍˆÍ(ƒRƒCƒ“‚Ì’†S‚©‚ç}40px)
 	m_img.SetSize(16, 16);
@@ -40,6 +41,8 @@ Money::Money(const CVector2D& pos,int money_type) :Base(eType_Money)
 }
 void Money ::Update() 
 {
+	m_life -= CFPS::GetDeltaTime();
+	if (m_life <= 0.0f) { SetKill(); return; }
 	m_img.UpdateAnimation();
 	switch (m_state) {
 	case eState_Gold:

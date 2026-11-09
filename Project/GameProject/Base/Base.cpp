@@ -82,18 +82,27 @@ void Base::DrawRect()
         CVector2D(rect.m_width, rect.m_height),
         CVector4D(1, 0, 0, 0.5f));
 }
+static bool NoInteraction(int a, int b)
+{
+    // Money は Player 以外とは何も起きない
+    // (Money / Enemy / Medical の Collision を確認済み)
+    if (a == eType_Money)
+        return b == eType_Money || b == eType_Enemy || b == eType_Medical;
+    if (b == eType_Money)
+        return a == eType_Enemy || a == eType_Medical;
+    return false;
+}
+
 void Base::CollisionAll()
 {
-    //リストの先頭から末尾まで繰り返し
     for (auto it1 = m_list.begin(); it1 != m_list.end(); it1++) {
-        // it2はit1の「次の要素」からスタート
         for (auto it2 = std::next(it1); it2 != m_list.end(); it2++) {
+            if (NoInteraction((*it1)->m_type, (*it2)->m_type)) continue;
             (*it1)->Collision(*it2);
             (*it2)->Collision(*it1);
         }
     }
 }
-
 
 void Base::UpdateAll()
 {

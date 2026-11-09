@@ -127,20 +127,24 @@ void Game::Update()
 	if (!Base::FindObject(eType_Player))
 	{
 		m_isResultCreated = true;
-		new Result();
+		new Result(false);
 		SetKill();
 		return;
 	}
 
-	if (m_resultTimer >= 5.0f)
+	// 戦車を倒したら、少し待ってからゲームクリア
+	if (m_isTankDefeated)
 	{
-		m_isResultCreated = true; SetGamePhase(EGamePhase::GameClear);
-		// リザルト画面を生成 
-		new Result();
+		m_resultTimer += CFPS::GetDeltaTime();
+	}
+	if (m_resultTimer >= 3.0f)
+	{
+		m_isResultCreated = true;
+		SetGamePhase(EGamePhase::GameClear);
+		new Result(true);
 		SetKill();
 		return;
 	}
-
 }
 
 void Game::SetGamePhase(EGamePhase phase)
